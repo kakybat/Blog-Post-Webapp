@@ -1,0 +1,27 @@
+@import "style.css";
+.author-info{
+    /* display: flex;
+    flex-direction: row; */
+    padding: 30px;
+    /* align-items: center; */
+    /* justify-content: center; */
+}
+.author-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.author-image img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+.author-desc {
+    padding: 10px;
+}
+
+
+@media only screen and (max-width: 720px){
+
+} 

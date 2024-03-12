@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <title th:text="${pageTitle}">No Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+<div class="section header-section">
+    <div class="container">
+        <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
+        <p class="title-sub">⎯ &#10023 ⎯</p>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="form-container" id="signupContainer">
+            <h2>Registration</h2>
+            <form id="signupForm" th:action="@{/signup}" th:object="${user}" method="post">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" th:field="*{firstName}" placeholder="first name" required>
+                <div th:errors="*{firstName}" class="warning-msg" th:if="${#fields.hasErrors('firstName')}"></div>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" th:field="*{lastName}" placeholder="last name" required>
+                <div th:errors="*{lastName}" class="warning-msg" th:if="${#fields.hasErrors('lastName')}"></div>
+                <label for="signupEmail">Email:</label>
+                <input type="email" id="signupEmail" name="email" th:field="*{email}" placeholder="your email" required>
+                <div th:errors="*{email}" class="warning-msg" th:if="${#fields.hasErrors('email')}"></div>
+                <label for="signupPassword">Password:</label>
+                <input type="password" id="signupPassword" name="password" th:field="*{password}" placeholder="password" required>
+                <div th:errors="*{password}" class="warning-msg" th:if="${#fields.hasErrors('password')}"></div>
+                <button type="submit" class="btn btn-grad btn-md">Register Now</button>
+            </form>
+            <div class="form-switcher">
+                <p> Already have an account? <a th:href="@{/login}">Login here</a>. </p>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

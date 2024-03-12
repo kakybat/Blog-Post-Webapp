@@ -1,0 +1,51 @@
+@import "style.css";
+
+.posts-list{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.post {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+.post-img {
+    width: 100%;
+    height: 288px;
+    margin: 0;
+    overflow: hidden;
+}
+.post-img img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+.post-desc{
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+}
+.post-desc-text {
+    max-height: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 720px){
+    .post {
+        grid-template-columns: 1fr;
+    }
+    .post-desc-text {
+        max-height: 320px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .post-img {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        overflow: hidden;
+    }
+}

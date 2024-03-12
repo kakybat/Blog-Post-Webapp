@@ -1,0 +1,71 @@
+@import "style.css";
+
+.about-me {
+    padding: var(--xl-padding-size);
+}
+.image-box {
+    max-width: 256px;
+    max-height: 256px;
+    width: fit-content;
+    height: fit-content;
+    overflow: hidden;
+    padding: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    justify-self: end;
+    align-items: center;
+}
+.image-box img {
+    border-radius: 50%;
+    max-width: 100%;
+    justify-self: center;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center
+}
+
+.tm-item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: var(--sm-padding-size);
+    background-color: var(--light-color);
+    align-items: center;
+}
+.tm-yr {
+    padding: 20px 20px;
+    background-image: var(--grad-btn-color);
+    font-size: var(--lg-font-size);
+    font-weight: bold;
+    color: var(--light-color);
+}
+.tm-desc {
+    margin-left: 10px;
+    font-size: var(--md-font-size);
+    font-weight: bolder;
+    color: var(--dark-color);
+}
+.vertical-line {
+    border: none;
+    width: 3px;
+    height: 100px;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), var(--primary-color), rgba(0, 0, 0, 0));
+}
+@media only screen and (max-width: 720px){
+    .about-me {
+        padding: var(--sm-padding-size);
+    }
+
+    .tm-item {
+        flex-direction: column;
+    }
+    .tm-yr {
+        margin: 10px;
+    }
+}
+
+

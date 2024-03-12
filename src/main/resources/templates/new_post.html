@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/K.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+     <title>New Post</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main>
+        <div class="section header-section">
+            <div class="container">
+                <h2 class="text-center">New Post</h2>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="post-container">
+                    <h3>Write new post</h3>
+                    <div class="start-to-start">
+                        <div class="rounded md-padding warning-msg" sec:authorize="!isAuthenticated()">
+                            <p>To publish a post, logging in is required.</p>
+                        </div>
+                    </div>
+                    <form id="postEdit" th:action="@{'/posts/save'}" th:object="${post}" enctype="multipart/form-data" method="post">
+                        <input type="hidden" th:field="*{user.id}">
+                        <input type="hidden" th:field="*{createdAt}" />
+                        <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="img-fluid" style="visibility: hidden;" alt="load image"/>
+                        <label for="input-field">Add A Post Header Image</label>
+                        <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="grad-back rounded md-padding" required/>
+                        <label for="post-title">Post Title</label>
+                        <input type="text" id="post-title" name="post-title" th:field="*{title}"
+                               placeholder="Title of your post goes here..." required />
+                        <label for="short-description">Short Description</label>
+                        <input type="text" id="short-description" name="short-description" th:field="*{shortDescription}"
+                               placeholder="A brief description of your post..." required />
+                        <label for="post-body">Main Content</label>
+                        <textarea id="post-body" name="body" th:field="*{body}" rows="10"
+                                  required></textarea>
+                        <button type="submit" class="btn btn-grad btn-md mr-t">Publish Post</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script>
+        $('#post-body').summernote({
+            placeholder: 'The main content of your post will be written here...',
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['codeview', 'help']]
+            ]
+        });
+    </script>
+
+
+    <script th:src="@{/js/header.js}"></script>
+</body>
+</html>

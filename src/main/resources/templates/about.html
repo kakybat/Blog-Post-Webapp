@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/about.css}">
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/K.png}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <title th:text="${pageTitle}">No Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+    <div class="section header-section">
+        <div class="container">
+            <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
+            <p class="title-sub">⎯ &#10023 ⎯</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="about-me light-back rounded">
+            <div class="two-col-grid  center-to-center">
+                <div class="grid-item start-to-center">
+                    <p class="md-font">
+                        <b><i>Greetings,</i></b>
+                        <br>
+                        I am a self-taught Full Stack Java developer. Until now, I have worked as a
+                        mathematics teacher in different schools for more than 10 years. Currently, I am studying
+                        at the Kazakh-British Technical University (<i>KBTU, Kazakhstan, Almaty</i>) for a master's degree. My future goal is to
+                        become a strong software engineer and work in the field of information technology.
+                    </p>
+                    <p class="md-font"><b><i>Best regards,<br>
+                            Kakybat</i></b>
+                    </p>
+                </div>
+                <div class="grid-item center-to-center">
+                    <div class="image-box">
+                        <img th:src="@{/images/portrait.jpg}" alt="portrait">
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <h2 class="text-center">Timeline of Work & Learning Journey</h2>
+            <hr>
+            <div class="timeline rounded">
+                <div class="tm-item rounded">
+                    <div class="tm-yr rounded">2007 - 2011</div>
+                    <div class="tm-desc">I pursued a Bachelor's degree in mathematics at Abay University. </div>
+                </div>
+                <div class="vertical-line"></div>
+                <div class="tm-item rounded">
+                    <div class="tm-yr rounded">2011  - 2022</div>
+                    <div class="tm-desc">I taught mathematics to students for over 10 years in different schools.</div>
+                </div>
+                <div class="vertical-line"></div>
+                <div class="tm-item rounded">
+                    <div class="tm-yr rounded">2022 - 2024</div>
+                    <div class="tm-desc">I am studying for a master's degree in Software Engineering at KBTU.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section light-back">
+        <div class="container">
+            <div th:replace="~{fragments/loginAction :: loginAction}"></div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

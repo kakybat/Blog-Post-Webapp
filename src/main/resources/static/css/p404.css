@@ -1,0 +1,17 @@
+.p404-container {
+    margin: 10px auto;
+    max-width: 552px;
+    padding: 20px;
+}
+
+.p404-image-box {
+    max-width: 512px;
+    max-height: 512px;
+    overflow: hidden;
+}
+
+.p404-image-box img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}

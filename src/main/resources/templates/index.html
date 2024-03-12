@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" th:href="@{/images/K.png}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/welcome.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <title>Home</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main>
+        <div class="section about-header header-section">
+            <div class="container">
+                <div class="two-col-grid">
+                    <div class="grid-item portrait">
+                        <div class="portrait-border"><img th:src="@{/images/header.jpg}" alt="portrait"></div>
+                    </div>
+                    <div class="grid-item center-to-center">
+                        <h1>Hi, I'm Kakybat <br> a Java full-stack developer</h1>
+                        <p class="content">Welcome to my personal blog website. If you are from the IT field, feel free to read some posts or share your knowledge here...</p>
+                        <a th:href="@{/blog}" class="btn btn-grad btn-lg">Go to Blog &#8702;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <h2 class="text-center">EXPERIENCE & SKILLS</h2>
+                <hr>
+                <div class="three-col-grid">
+                    <div class="grid-item light-back rounded bx start-to-start">
+                        <div class="card-header"><h3 class="text-center">Frontend</h3></div>
+                        <div class="card-img-box"><img th:src="@{/images/front.png}" alt="front"></div>
+                        <p class="text-center">
+                            In my learning experience, I worked with HTML, CSS, a little bit of JS, and React JS.
+                            But In the past, I created a WordPress LMS educational website like Udemy
+                        </p>
+                    </div>
+                    <div class="grid-item rounded light-back bx start-to-start">
+                        <div class="card-header"><h3 class="text-center">Backend</h3></div>
+                        <div class="card-img-box"><img th:src="@{/images/back.png}" alt="front"></div>
+                        <p class="text-center">
+                            Currently, I have a skill of OOP in Java and continue to learn. Also, I'm learning
+                            the Spring framework and Spring Boot Project, Spring MVC, Hibernate, Thymeleaf, and so on
+                        </p>
+                    </div>
+                    <div class="grid-item rounded light-back bx start-to-start">
+                        <div class="card-header"><h3 class="text-center">Database</h3></div>
+                        <div class="card-img-box"><img th:src="@{/images/db.png}" alt="front"></div>
+                        <p class="text-center">
+                            In my learning journey, I have completed some toy projects using H2, database,
+                            and MySQL.However, in this project, I focused on PostgreSQL. And the plan is MongoDB...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section grad-rad-back">
+            <div class="container">
+                <h2 class="text-center">PROFICIENCY LEVELS IN VARIOUS SKILLS</h2>
+                <hr class="light-hr">
+                <div class="slider-container">
+                    <div class="slider-wrapper" id="sliderWrapper">
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">WordPress</h3>
+                            <div><img th:src="@{images/wordpress.png}" alt="WordPress"></div>
+                            <p>Content Management System</p>
+                            <div class="skill-percent">92%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">HTML 5</h3>
+                            <div><img th:src="@{images/html.png}" alt="HTML"></div>
+                            <p>Hyper Text Markup Language</p>
+                            <div class="skill-percent">90%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">CSS 3</h3>
+                            <div><img th:src="@{images/css.png}" alt="CSS"></div>
+                            <p>Cascading Style Sheet</p>
+                            <div class="skill-percent">90%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">JavaScript</h3>
+                            <div><img th:src="@{images/js.png}" alt="JavaScript"></div>
+                            <p>Programming Language</p>
+                            <div class="skill-percent">50%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">React JS</h3>
+                            <div><img th:src="@{images/rjs.png}" alt="React JS"></div>
+                            <p>JS Library</p>
+                            <div class="skill-percent">40%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">Java 17</h3>
+                            <div><img th:src="@{images/java.png}" alt="Java"></div>
+                            <p>Programming Language</p>
+                            <div class="skill-percent">65%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">Spring Framework</h3>
+                            <div><img th:src="@{images/spf.png}" alt="Spring Framework"></div>
+                            <p>Java Backend Framework</p>
+                            <div class="skill-percent">65%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">Thymeleaf</h3>
+                            <div><img th:src="@{images/thymeleaf.png}" alt="Thymeleaf"></div>
+                            <p>Java Template Engine</p>
+                            <div class="skill-percent">60%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">Hibernate ORM</h3>
+                            <div><img th:src="@{images/hibernate.png}" alt="Hibernate"></div>
+                            <p>Object Relational Mapping</p>
+                            <div class="skill-percent">70%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">MySQL</h3>
+                            <div><img th:src="@{images/mysql.png}" alt="MySQL"></div>
+                            <p>RDBMS</p>
+                            <div class="skill-percent">70%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">H2 Database</h3>
+                            <div><img th:src="@{images/h2.png}" alt="H2 Database"></div>
+                            <p>RDBMS</p>
+                            <div class="skill-percent">75%+</div>
+                        </div>
+                        <div class="slider-box rounded">
+                            <h3 class="text-center">Postgresql</h3>
+                            <div><img th:src="@{images/postgre.png}" alt="Postgresql"></div>
+                            <p>RDBMS</p>
+                            <div class="skill-percent">70%+</div>
+                        </div>
+                    </div>
+                    <div id="prevBtn">&#10094</div>
+                    <div id="nextBtn">&#10095</div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <h2 class="text-center">My SUITE OF TOOLS</h2>
+                <hr>
+                <div class="tbx-wrapper">
+                    <div class="bx tool-box rounded">
+                        <h3 class="text-center">Git</h3>
+                        <div><img th:src="@{images/git.png}" alt="Git"></div>
+                        <p>Version Control System</p>
+                    </div>
+                    <div class="bx tool-box rounded">
+                        <h3 class="text-center">IntelliJ</h3>
+                        <div><img th:src="@{images/intellij.png}" alt="IntelliJ"></div>
+                        <p>Java IDE</p>
+                    </div>
+                    <div class="bx tool-box rounded">
+                        <h3 class="text-center">Postman</h3>
+                        <div><img th:src="@{images/postman.png}" alt="Postman"></div>
+                        <p>Collaboration platform</p>
+                    </div>
+                    <div class="bx tool-box rounded">
+                        <h3 class="text-center">GitHub</h3>
+                        <div><img th:src="@{images/github-tbx.png}" alt="GitHub"></div>
+                        <p>Web-based Version Control</p>
+                    </div>
+                    <div class="bx tool-box rounded">
+                        <h3 class="text-center">Ubuntu</h3>
+                        <div><img th:src="@{images/ubuntu.png}" alt="Ubuntu"></div>
+                        <p>Linux Distribution</p>
+                    </div>
+                    <div class="bx tool-box rounded">
+                        <h3 class="text-center">Jenkins</h3>
+                        <div><img th:src="@{images/jenkins.png}" alt="Hibernate"></div>
+                        <p>Automation server</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section light-back" sec:authorize="!isAuthenticated()">
+            <div class="container">
+                <div th:replace="~{fragments/loginAction :: loginAction}"></div>
+            </div>
+        </div>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/header.js}"></script>
+    <script th:src="@{/js/slider.js}"></script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+@import "style.css";
+.nav-wrapper {
+    background-color: var(--light-color);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+    z-index: 3;
+}
+.navbar {
+    /*background-color: var(--light-color);*/
+    /*margin: 0 40px;*/
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    align-items: center;
+    height: 65px;
+    overflow: hidden;
+    /*box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);*/
+    /*-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);*/
+    /*-moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);*/
+
+}
+.nav-group{
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    align-items: center;
+}
+.navbar a img {
+    justify-self: start;
+}
+
+.navbar-brand a {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--md-font-size);
+    color: var(--dark-color);
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.navbar-brand a .k {
+    background-image: var(--grad-color);
+    border-radius: var(--xs-border-radius);
+    height: 30px;
+    padding: 0 3px 0 4px;
+    color: var(--light-color);
+    text-align: center;
+}
+.navbar .nav {
+    list-style: none;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.navbar .auth {
+    list-style: none;
+    justify-self: end;
+    display: grid;
+    grid-column-gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
+
+.nav-item a {
+    color: var(--dark-color);
+    font-size: var(--sm-font-size);
+    font-weight: normal;
+    text-decoration: none;
+    padding: 0 10px;
+    transition: color 0.2s ease-out;
+}
+.nav-item a:hover {
+    color: #4b4b4b;
+
+}
+.user-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.user-img img {
+    object-fit: cover;
+    border-radius: 50%;
+    width: inherit;
+    height: inherit;
+}
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--dark-color);
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-toggle {
+    justify-self: end;
+    margin-right: 25px;
+    display: none;
+}
+.menu-toggle:hover{
+    cursor: pointer;
+}
+#mobile-menu.is-active .bar:nth-child(2){
+    opacity: 0;
+}
+#mobile-menu.is-active .bar:nth-child(2){
+    opacity: 0;
+}
+#mobile-menu.is-active .bar:nth-child(1){
+    -webkit-transform: translateY(8px) rotate(45deg);
+    -ms-transform: translateY(8px) rotate(45deg);
+    -o-transform: translateY(8px) rotate(45deg);
+    transform: translateY(8px) rotate(45deg);
+}
+#mobile-menu.is-active .bar:nth-child(3){
+    -webkit-transform: translateY(-8px) rotate(-45deg);
+    -ms-transform: translateY(-8px) rotate(-45deg);
+    -o-transform: translateY(-8px) rotate(-45deg);
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+
+@media only screen and (max-width: 720px){
+    .navbar{
+        margin: 0 10px;
+    }
+    .nav-group{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        justify-content: start;
+        border-radius: 10px;
+        top: 67px;
+        background-color: var(--light-color);
+        transform: translate(-120%);
+        text-align: center;
+        overflow: hidden;
+        box-sizing: border-box;
+        transition: transform 0.3s ease-out;
+    }
+    .nav-group .nav, .nav-group .auth {
+        display: flex;
+        flex-direction: column;
+
+    }
+    .nav li, .auth li {
+        margin: 15px;
+    }
+    .nav li:first-child {
+        margin-top: 50px;
+    }
+    .nav li a {
+        font-size: 1rem;
+    }
+    .menu-toggle, .bar {
+        display: block;
+        cursor: pointer;
+    }
+    .nav-group.show {
+        transform: translateX(-50%);
+        left: 50%;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+        -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+        -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.3);
+    }
+    .mobile-nav {
+        transform: translate(0%) !important;
+    }
+}
