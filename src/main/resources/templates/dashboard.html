@@ -23,7 +23,7 @@
     <div class="section">
         <div class="container">
             <div class="rounded three-col-grid author-info light-back">
-                <div class="author-image center-to-center"><img th:src="@{/images/user.jpg}" alt="author"> </div>
+                <div class="author-image center-to-center"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="author"> </div>
                 <div class="author-desc center-to-center">
                     <p th:text="'Username: ' + ${user.name}">My Name</p>
                     <p th:text="'Email: ' + ${user.email}">user@example.com</p>

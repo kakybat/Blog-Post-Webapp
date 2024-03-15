@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +68,7 @@
             </div>
         </div>
     </div>
-    <div class="section light-back">
+    <div class="section light-back" sec:authorize="!isAuthenticated()">
         <div class="container">
             <div th:replace="~{fragments/loginAction :: loginAction}"></div>
         </div>

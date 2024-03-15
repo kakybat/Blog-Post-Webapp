@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="images/png" th:href="@{/images/K.png}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/post.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <title th:text="${myPost.title}">Post Details</title>
+</head>
+<body>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main>
+        <div class="section header-section">
+            <div class="container">
+                <h2 class="text-center" th:text="${myPost.title}">No Title</h2>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
+            </div>
+        </div>
+        <div class="section gray-back">
+            <div class="container">
+                <div class="post-padding light-back rounded">
+                    <div class="start-to-start"><a class="btn btn-icon btn-grad" th:href="@{/dashboard}">&#8701;</a></div>
+                    <div class="post-header-image rounded"><img th:src="@{'/postHeaderImage/' + ${myPost.imageFilePath}}" alt="post-image"></div>
+                    <div class="post-content">
+
+                        <p th:text="'&#x23F2; Published on: ' + ${myPost.createdAt}">Created At</p>
+                        <p th:text="'&#x23F2; Last Updated on: ' + ${myPost.updatedAt}" class="post-time">Updated At</p>
+                        <p th:text="'Author: ' + ${myPost.getUser().getName()}">Author Name</p>
+                        <div class="post-short-desc"><p th:text="${myPost.shortDescription}">Short description</p></div>
+                        <div class="post-body"><p th:utext="${myPost.body}">Post Body</p></div>
+
+                        <div th:if="${#authentication.name} == ${myPost.getUser().getEmail()}" class="mr-t">
+                            <a th:href="@{'/posts/' + ${myPost.id} + '/edit'}" class="btn btn-md btn-grad">&#9998 Edit</a>
+                            <a th:href="@{'/posts/' + ${myPost.id} + '/delete'}" class="btn btn-md btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="post-padding light-back rounded">
+                    <h3>Comments</h3>
+                    <!-- Display comments -->
+                    <div th:each="comment : ${comments}" class="body">
+                        <div class="body-meta">
+                            <span th:text="${comment.user.name}"></span>
+                            <span th:text="${comment.createdAt}"></span>
+                            <span th:if="${#authentication.name == comment.user.email}">
+                        <a th:href="@{'/comments/' + ${comment.id} + '/edit'}">Edit</a>
+                        <a th:href="@{'/comments/' + ${comment.id} + '/delete'}">Delete</a>
+                    </span>
+                        </div>
+                        <div class="body-body" th:text="${comment.body}"></div>
+                    </div>
+                </div>
+                <div class="post-padding light-back rounded mr-t">
+                    <!-- Comment form -->
+                    <form th:action="@{'/posts/' + ${myPost.id}}" method="post" class="body-form">
+                        <label for="body-body">Your Comment</label>
+                        <textarea id="body-body" name="body" rows="4" cols="50" required></textarea>
+
+                        <button type="submit" class="btn btn-grad btn-md">Publish Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="section light-back" sec:authorize="!isAuthenticated()">
+            <div class="container">
+                <div th:replace="~{fragments/loginAction :: loginAction}"></div>
+            </div>
+        </div>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/header.js}"></script>
+</body>
+</html>

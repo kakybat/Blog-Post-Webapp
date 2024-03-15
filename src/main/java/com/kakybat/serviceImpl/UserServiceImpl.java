@@ -42,7 +42,11 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
-
+    public void updateUser(User user){
+        user.setName(user.getName());
+        user.setPassword(user.getPassword());
+        userRepository.save(user);
+    }
     @Override
     public User findUserByEmail(String email){
         return userRepository.findByEmail(email);

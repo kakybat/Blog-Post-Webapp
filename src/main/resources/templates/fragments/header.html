@@ -27,9 +27,10 @@
                             <li><a th:href="@{/login}" class="btn btn-primary btn-md">Sign In</a></li>
                             <li><a th:href="@{/signup}" class="btn btn-secondary btn-md">Sign Up</a></li>
                         </ul>
-                        <ul class="auth" sec:authorize="isAuthenticated()">
+                        <ul class="auth" sec:authorize="isAuthenticated()" >
                             <li><a th:href="@{/logout}"  class="btn btn-secondary btn-md">Logout</a></li>
                             <li><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{/images/user.jpg}" alt="user"></div></a></li>
+<!--                            <li><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="user"></div></a></li>-->
                         </ul>
                     </div>
                 </div>

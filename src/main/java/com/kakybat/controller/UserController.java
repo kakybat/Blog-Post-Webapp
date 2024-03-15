@@ -4,14 +4,18 @@ import com.kakybat.dto.UserDto;
 // import com.kakybat.model.Comment;
 import com.kakybat.model.Post;
 import com.kakybat.model.User;
+import com.kakybat.service.FileService;
 import com.kakybat.service.UserService;
 import com.kakybat.serviceImpl.PostService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.security.Principal;
@@ -20,11 +24,14 @@ import java.util.Optional;
 
 @Controller
 public class UserController {
+    public static Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final PostService postService;
-    public UserController(UserService userService, PostService postService){
+    private final FileService fileService;
+    public UserController(UserService userService, PostService postService, FileService fileService){
         this.userService = userService;
         this.postService = postService;
+        this.fileService = fileService;
     }
     @GetMapping("/dashboard")
     public String getDashboardPage(Model model, Principal principal){
@@ -45,10 +52,11 @@ public class UserController {
         Optional<Post> optionalPost = postService.getById(postId);
         // List<Comment> comments = commentService.getAllCommentsForPost(postId);
         if(optionalPost.isPresent()){
-            Post post = optionalPost.get();
-            model.addAttribute("post", post);
+            Post myPost = optionalPost.get();
+//            model.addAttribute("post", post);
+            model.addAttribute("myPost", myPost);
             // model.addAttribute("comments", comments);
-            return "post";
+            return "my_post";
         } else {
             return "p404";
         }
@@ -78,6 +86,25 @@ public class UserController {
         model.addAttribute("user", user);
         return "edit_me";
     }
+
+    @PostMapping("/update_me")
+    @PreAuthorize("isAuthenticated()")
+    public String updateMe(Principal principal, @RequestParam("file") MultipartFile file){
+        String userEmail = principal.getName();
+        User user = userService.findUserByEmail(userEmail);
+
+        try {
+            fileService.save(file);
+            user.setImageFilePath(file.getOriginalFilename());
+        } catch (Exception e){
+            logger.error("Error processing file: {}", file.getOriginalFilename());
+        }
+        userService.updateUser(user);
+
+        return "redirect:/dashboard";
+    }
+
+
     @GetMapping("/user")
     public User findUserByEmail(String email){
         return userService.findUserByEmail(email);

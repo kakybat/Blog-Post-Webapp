@@ -12,11 +12,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 @Service
 public class FileService {
-//    private final Path root = Paths.get("./uploads");
     private final Path root;
 
     public FileService(){
-//        this.root = Paths.get("./uploads");
         this.root = Paths.get("uploads");
     }
     public void init(){
