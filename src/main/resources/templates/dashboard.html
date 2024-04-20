@@ -25,7 +25,7 @@
             <div class="rounded three-col-grid author-info light-back">
                 <div class="author-image center-to-center"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="author"> </div>
                 <div class="author-desc center-to-center">
-                    <p th:text="'Username: ' + ${user.name}">My Name</p>
+                    <p th:text="'Full Name: ' + ${user.name}">My Name</p>
                     <p th:text="'Email: ' + ${user.email}">user@example.com</p>
                 </div>
                 <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn btn-secondary btn-md">Edit Me</a> </div>

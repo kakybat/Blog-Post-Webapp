@@ -35,7 +35,9 @@ public class PostController {
     }
 
     @GetMapping("/blog")
-    public String getPostList(Model model){
+    @PreAuthorize("isAnonymous()")
+    public String getPostList(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         List<Post> posts = postService.getAll();
         model.addAttribute("pageTitle", "Blog");
         model.addAttribute("posts", posts);
@@ -43,7 +45,9 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}")
-    public String getSinglePost(@PathVariable Long postId, Model model){
+    @PreAuthorize("isAnonymous()")
+    public String getSinglePost(@PathVariable Long postId, Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         Optional<Post> optionalPost = postService.getById(postId);
         List<Comment> comments = commentService.getAllCommentsForPost(postId);
         if(optionalPost.isPresent()){
@@ -56,16 +60,20 @@ public class PostController {
         }
     }
     @GetMapping("/posts/new")
-    public String createNewPost(Model model){
-            Post post = new Post();
-            model.addAttribute("post", post);
-            return "new_post";
+    @PreAuthorize("isAnonymous()")
+    public String createNewPost(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
+        Post post = new Post();
+        model.addAttribute("post", post);
+        return "new_post";
     }
     @PostMapping("/posts/save")
-    public String saveNewPost(@ModelAttribute Post post, Principal principal, MultipartFile file){
+    public String saveNewPost(@ModelAttribute Post post, Model model, Principal principal, MultipartFile file){
         String authUsername = "anonymousUser";
         if(principal != null){
             authUsername = principal.getName();
+            User user = userService.findUserByEmail(authUsername);
+            model.addAttribute("user", user);
         } else {
             throw new IllegalArgumentException("Account not found");
         }
@@ -83,7 +91,8 @@ public class PostController {
     }
     @RequestMapping("/posts/{id}/edit")
     @PreAuthorize("isAuthenticated()")
-    public String getPostForEdit(@PathVariable Long id, Model model){
+    public String getPostForEdit(@PathVariable Long id, Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         Optional<Post> optionalPost = postService.getById(id);
         if(optionalPost.isPresent()){
             Post post = optionalPost.get();
@@ -96,7 +105,8 @@ public class PostController {
 
     @PostMapping("/posts/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String updatePost(@PathVariable Long id, Post post, @RequestParam("file") MultipartFile file){
+    public String updatePost(@PathVariable Long id, Post post, Model model, Principal principal, @RequestParam("file") MultipartFile file){
+        setUserModelAttribute(model, principal);
         Optional<Post> optionalPost = postService.getById(id);
         if(optionalPost.isPresent()){
             Post existingPost = optionalPost.get();
@@ -126,6 +136,14 @@ public class PostController {
             return "redirect:/blog";
         } else {
             return "p404";
+        }
+    }
+
+    private void setUserModelAttribute(Model model, Principal principal){
+        if(principal != null){
+            String email = principal.getName();
+            User user = userService.findUserByEmail(email);
+            model.addAttribute("user", user);
         }
     }
 

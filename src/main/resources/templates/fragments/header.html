@@ -17,7 +17,7 @@
                         <span class="bar"></span>
                     </div>
                     <div class="nav-group" id="navGroup">
-                        <ul class="nav">
+                        <ul class="nav" sec:authentication="">
                             <li class="nav-item"><a href="#" th:href="@{/}">Home</a> </li>
                             <li class="nav-item"><a href="#" th:href="@{/about}">About</a> </li>
                             <li class="nav-item"><a href="#" th:href="@{/blog}">Blog</a> </li>
@@ -29,8 +29,8 @@
                         </ul>
                         <ul class="auth" sec:authorize="isAuthenticated()" >
                             <li><a th:href="@{/logout}"  class="btn btn-secondary btn-md">Logout</a></li>
-                            <li><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{/images/user.jpg}" alt="user"></div></a></li>
-<!--                            <li><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="user"></div></a></li>-->
+<!--                            <li><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{/images/user.jpg}" alt="user"></div></a></li>-->
+                            <li><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="user"></div></a></li>
                         </ul>
                     </div>
                 </div>

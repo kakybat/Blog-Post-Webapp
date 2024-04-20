@@ -3,18 +3,13 @@ package com.kakybat.controller;
 import com.kakybat.dto.UserDto;
 import com.kakybat.model.User;
 import com.kakybat.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class PageController {
@@ -25,17 +20,16 @@ public class PageController {
     }
 
     @GetMapping("/")
-    public String getIndexPage(){
+    @PreAuthorize("isAnonymous()")
+    public String getIndexPage(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         return "index";
     }
 
-    @GetMapping("/header")
-    public String getHeader(){
-        return "/fragments/header";
-    }
-
     @GetMapping("/about")
-    public String getAboutPage(Model model){
+    @PreAuthorize("isAnonymous()")
+    public String getAboutPage(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         model.addAttribute("pageTitle", "About Me");
         return "about";
     }
@@ -46,26 +40,36 @@ public class PageController {
     }
 
     @GetMapping("/contact")
-    public String getContactPage(Model model){
+    @PreAuthorize("isAnonymous()")
+    public String getContactPage(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         model.addAttribute("pageTitle", "Contact Me");
         return "contact";
     }
     @GetMapping("/login")
-    public String getLoginPage(Model model){
+    @PreAuthorize("isAnonymous()")
+    public String getLoginPage(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         model.addAttribute("pageTitle", "Login");
         model.addAttribute("user", new UserDto());
         return "/login";
     }
     @GetMapping("/signup")
-    public String showSignupForm(Model model){
+    @PreAuthorize("isAnonymous()")
+    public String showSignupForm(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         UserDto user = new UserDto();
         model.addAttribute("user", user);
         model.addAttribute("pageTitle", "Register");
         return "signup";
     }
 
+    private void setUserModelAttribute(Model model, Principal principal){
+        if(principal != null){
+            String email = principal.getName();
+            User user = userService.findUserByEmail(email);
+            model.addAttribute("user", user);
+        }
+    }
 
-
-
-//
 }

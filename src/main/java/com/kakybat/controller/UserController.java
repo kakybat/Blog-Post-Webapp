@@ -48,7 +48,9 @@ public class UserController {
 
 
     @GetMapping("/myPosts/{postId}")
-    public String getSinglePost(@PathVariable Long postId, Model model){
+    @PreAuthorize("isAuthenticated()")
+    public String getSinglePost(@PathVariable Long postId, Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         Optional<Post> optionalPost = postService.getById(postId);
         // List<Comment> comments = commentService.getAllCommentsForPost(postId);
         if(optionalPost.isPresent()){
@@ -79,20 +81,16 @@ public class UserController {
     @GetMapping("/edit-user-details")
     @PreAuthorize("isAuthenticated()")
     public String selfUserEdit(Model model, Principal principal){
-        String userEmail = principal.getName();
-        User user = userService.findUserByEmail(userEmail);
-
+        setUserModelAttribute(model, principal);
         model.addAttribute("pageTitle", "Edit User Details");
-        model.addAttribute("user", user);
         return "edit_me";
     }
 
     @PostMapping("/update_me")
     @PreAuthorize("isAuthenticated()")
-    public String updateMe(Principal principal, @RequestParam("file") MultipartFile file){
-        String userEmail = principal.getName();
-        User user = userService.findUserByEmail(userEmail);
-
+    public String updateMe(Model model, Principal principal, @RequestParam("file") MultipartFile file){
+        String email = principal.getName();
+        User user = userService.findUserByEmail(email);
         try {
             fileService.save(file);
             user.setImageFilePath(file.getOriginalFilename());
@@ -106,16 +104,24 @@ public class UserController {
 
 
     @GetMapping("/user")
+    @PreAuthorize("isAuthenticated()")
     public User findUserByEmail(String email){
         return userService.findUserByEmail(email);
     }
     @GetMapping("/users")
-    public String getAllUsers(Model model){
+    public String getAllUsers(Model model, Principal principal){
+        setUserModelAttribute(model, principal);
         List<UserDto> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
-
+    private void setUserModelAttribute(Model model, Principal principal){
+        if(principal != null){
+            String email = principal.getName();
+            User user = userService.findUserByEmail(email);
+            model.addAttribute("user", user);
+        }
+    }
 
 }
