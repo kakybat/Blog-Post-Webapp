@@ -32,10 +32,16 @@
                             <h3 th:text="${post.title}">Title</h3>
                             <p th:text="'&#x23F2; Published on: ' + ${post.createdAt}">Created At</p>
                             <p th:text="'&#x23F2; Last Updated on: ' + ${post.updatedAt}">Updated At</p>
-                            <p th:text="'Author: ' + ${post.getUser().name}">Author</p>
+
                             <p th:text="${post.shortDescription}" class="start-to-center">Short Description</p>
                         </div>
-                        <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn btn-secondary btn-lg"> Read More &#8702;</a></div>
+                        <div class="two-col-grid">
+                            <div class="start-to-end fit-first-col">
+                                <div class="user-img"><img th:src="@{'/userImage/' + ${post.getUser().imageFilePath}}" alt="user"></div>
+                                <div class="start-to-center"><p th:text="${post.getUser().name}">Author</p></div>
+                            </div>
+                            <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn btn-secondary btn-lg"> Read More &#8702;</a></div>
+                        </div>
                     </div>
                 </div>
             </div>

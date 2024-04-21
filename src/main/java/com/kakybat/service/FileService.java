@@ -1,6 +1,8 @@
 package com.kakybat.service;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +16,8 @@ import java.nio.file.Paths;
 public class FileService {
     private final Path root;
 
-    public FileService(){
+
+    public FileService(ResourceLoader resourceLoader){
         this.root = Paths.get("uploads");
     }
     public void init(){
@@ -43,6 +46,28 @@ public class FileService {
                 return resource;
             } else {
                 throw new RuntimeException("Could not read the file!");
+            }
+        } catch (MalformedURLException mue){
+            throw new RuntimeException("Error: " + mue.getMessage());
+        }
+    }
+    public Resource userImageLoad(String filename){
+        try{
+            Path file = root.resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+
+            if(resource.exists() || resource.isReadable()){
+                return resource;
+            } else {
+                //throw new RuntimeException("Could not read the file!");
+                // If file not found, return default image from uploads folder
+                Path defaultImagePath = root.resolve("user.jpg");
+                Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());
+                if (defaultImageResource.exists() || defaultImageResource.isReadable()) {
+                    return defaultImageResource;
+                } else {
+                    throw new RuntimeException("Default image not found in 'uploads' folder");
+                }
             }
         } catch (MalformedURLException mue){
             throw new RuntimeException("Error: " + mue.getMessage());

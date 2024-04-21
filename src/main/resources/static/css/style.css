@@ -440,19 +440,30 @@ textarea:focus{
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
+.fit-first-col {
+    display: grid;
+    grid-template-columns: min-content 1fr; /* First column shrinks to fit content, second column takes remaining space */
+    gap: 10px;
+    margin-bottom: 12px;
+}
 .start-to-start {
     display: grid;
     justify-content: start;
     align-content: start;
 }
-.center-to-center {
-    display: grid;
-    justify-content: center;
-    align-content: center;
-}
 .start-to-center {
     display: grid;
     justify-content: start;
+    align-content: center;
+}
+.start-to-end {
+    display: grid;
+    justify-content: start;
+    align-content: end;
+}
+.center-to-center {
+    display: grid;
+    justify-content: center;
     align-content: center;
 }
 .end-to-center {

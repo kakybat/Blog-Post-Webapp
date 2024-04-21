@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ImageController {
-    private final FileService fileService;
+    private FileService fileService;
 
     public ImageController(FileService fileService){
         this.fileService = fileService;
@@ -19,6 +19,6 @@ public class ImageController {
     }
     @GetMapping("/userImage/{id}")
     public Resource getUserImage(@PathVariable("id") String imageUri){
-        return fileService.load(imageUri);
+        return fileService.userImageLoad(imageUri);
     }
 }
