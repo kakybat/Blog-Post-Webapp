@@ -39,13 +39,6 @@ public class PageController {
         return "p404";
     }
 
-    @GetMapping("/contact")
-    @PreAuthorize("isAnonymous()")
-    public String getContactPage(Model model, Principal principal){
-        setUserModelAttribute(model, principal);
-        model.addAttribute("pageTitle", "Contact Me");
-        return "contact";
-    }
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
     public String getLoginPage(Model model, Principal principal){

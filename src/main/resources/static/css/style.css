@@ -5,6 +5,7 @@
     --accent-color: /*#C41699*/#810EA9 /*#ffc31a*/;
     --success-color: #09a453;
     --danger-color: #de0445;
+    --danger-back: #fcbcca;
     --light-color: #fff;
     --dark-color: #0a0f14/*#202427*/;
     --gray-color: #808080;
@@ -398,17 +399,17 @@ textarea:focus{
     color: var(--gray-color);
 }
 .warning-msg {
-    background-color: #fcbcca;
-    border: 1px solid var(--danger-color);
+    background-color: var(--danger-back);
+    border: 2px solid var(--danger-color);
     border-radius: var(--sm-border-radius);
     color: var(--danger-color);
     text-align: center;
-    padding: 4px 20px;
+    padding: 10px 20px;
     margin: 5px;
 }
 .success-msg {
     background-color: #bcfcd6;
-    border: 1px solid var(--success-color);
+    border: 2px solid var(--success-color);
     border-radius: var(--sm-border-radius);
     color: var(--success-color);
     text-align: center;

@@ -51,6 +51,7 @@ public class FileService {
             throw new RuntimeException("Error: " + mue.getMessage());
         }
     }
+
     public Resource userImageLoad(String filename){
         try{
             Path file = root.resolve(filename);
@@ -59,7 +60,7 @@ public class FileService {
             if(resource.exists() || resource.isReadable()){
                 return resource;
             } else {
-                //throw new RuntimeException("Could not read the file!");
+
                 // If file not found, return default image from uploads folder
                 Path defaultImagePath = root.resolve("user.jpg");
                 Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());

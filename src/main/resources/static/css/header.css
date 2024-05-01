@@ -62,18 +62,25 @@
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
 }
+.nav-item {
+    text-align: center;
+}
 
 .nav-item a {
     color: var(--dark-color);
     font-size: var(--sm-font-size);
     font-weight: normal;
     text-decoration: none;
-    padding: 0 10px;
+    padding: 4px 10px;
     transition: color 0.2s ease-out;
+}
+.especial {
+    padding: 4px 5px;
+    background-color: var(--danger-back);
+    border-radius: var(--md-border-radius);
 }
 .nav-item a:hover {
     color: #4b4b4b;
-
 }
 .user-img {
     width: 45px;

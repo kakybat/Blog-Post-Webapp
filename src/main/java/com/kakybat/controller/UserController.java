@@ -108,6 +108,8 @@ public class UserController {
     public User findUserByEmail(String email){
         return userService.findUserByEmail(email);
     }
+
+
     @GetMapping("/users")
     public String getAllUsers(Model model, Principal principal){
         setUserModelAttribute(model, principal);

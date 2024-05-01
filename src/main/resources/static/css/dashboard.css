@@ -6,6 +6,11 @@
     /* align-items: center; */
     /* justify-content: center; */
 }
+.author-box{
+    display: grid;
+    justify-content: start;
+    align-content: center;
+}
 .author-image {
     width: 80px;
     height: 80px;
@@ -23,5 +28,8 @@
 
 
 @media only screen and (max-width: 720px){
-
+    .author-box{
+        justify-content: center;
+        align-items: center;
+    }
 } 
