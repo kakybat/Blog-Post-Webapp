@@ -1,7 +1,7 @@
 @import "style.css";
 .footer {
     margin-top: auto;
-    background-color: var(--dark-color);
+    background-color: var(--dark-blue);
     padding: 20px;
     bottom: 0;
     color: var(--gray-color);

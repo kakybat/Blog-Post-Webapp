@@ -40,7 +40,7 @@
     letter-spacing: 1px;
 }
 .navbar-brand a .k {
-    background-image: var(--grad-color);
+    background-color: var(--primary-color);
     border-radius: var(--xs-border-radius);
     height: 30px;
     padding: 0 3px 0 4px;
@@ -76,7 +76,7 @@
 }
 .especial {
     padding: 4px 5px;
-    background-color: var(--danger-back);
+    background-color: var(--accent-color);
     border-radius: var(--md-border-radius);
 }
 .nav-item a:hover {

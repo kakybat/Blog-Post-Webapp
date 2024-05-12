@@ -38,7 +38,7 @@
 }
 .tm-yr {
     padding: 20px 20px;
-    background-image: var(--grad-btn-color);
+    background-color: var(--primary-color);
     font-size: var(--lg-font-size);
     font-weight: bold;
     color: var(--light-color);

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ImageController {
-    private FileService fileService;
+    private final FileService fileService;
 
     public ImageController(FileService fileService){
         this.fileService = fileService;

@@ -23,18 +23,22 @@
     <div class="container">
         <div class="form-container" id="loginForm">
             <h2>Login</h2>
-            <div class="warning-msg" th:if="${param.error}">
-                Incorrect Email or password.</div>
-            <div class="success-msg" th:if="${param.logout}">
-                You have been logged out.</div>
-            <form th:action="@{/login}" method="post">
+<!--            <div class="warning-msg" th:if="${param.error}">-->
+<!--                Incorrect Email or password.</div>-->
+<!--            <div class="success-msg" th:if="${param.logout}">-->
+<!--                You have been logged out.</div>-->
+            <ul>
+                <li class="warning-msg" th:if="${!#strings.isEmpty(errorMessage)}" th:text="${errorMessage}" />
+                <li class="success-msg" th:if="${!#strings.isEmpty(logoutMessage)}" th:text="${logoutMessage}" />
+            </ul>
+            <form action="/login" method="post">
                 <label for="email">Email:</label>
-                <input type="text" id="email" name="email" placeholder="enter email address" required>
+                <input type="text" id="email" name="email" placeholder="enter email address" />
 
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="enter password" required>
+                <input type="password" id="password" name="password" placeholder="enter password" />
 
-                <button type="submit" class="btn btn-grad btn-md">Login Now</button>
+                <button type="submit" class="btn btn-primary btn-md">Login Now</button>
             </form>
             <div class="form-switcher">
 <!--                <p> Don't have an user? <a href="#" th:onclick="toggleForm()">Register one</a>.</p>-->

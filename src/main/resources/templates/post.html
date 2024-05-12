@@ -22,7 +22,7 @@
         <div class="section gray-back">
             <div class="container">
                 <div class="post-padding light-back rounded">
-                    <div class="start-to-start"><a class="btn btn-icon btn-grad" th:href="@{/blog}">&#8701;</a></div>
+                    <div class="start-to-start"><a class="btn btn-icon btn-primary" th:href="@{/blog}">&#8701;</a></div>
                     <div class="post-header-image rounded"><img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="post-image"></div>
                     <div class="post-content">
 
@@ -37,7 +37,7 @@
                         <div class="post-body"><p th:utext="${post.body}">Post Body</p></div>
 
                         <div th:if="${#authentication.name} == ${post.getUser().getEmail()}" class="mr-t">
-                            <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-md btn-grad">&#9998 Edit</a>
+                            <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-md btn-accent">&#9998 Edit</a>
                             <a th:href="@{'/posts/' + ${post.id} + '/delete'}" class="btn btn-md btn-danger">Delete</a>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         <label for="body-body">Your Comment</label>
                         <textarea id="body-body" name="body" rows="4" cols="50" required></textarea>
 
-                        <button type="submit" class="btn btn-grad btn-md">Publish Comment</button>
+                        <button type="submit" class="btn btn-primary btn-md">Publish Comment</button>
                     </form>
                 </div>
             </div>

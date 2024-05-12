@@ -22,13 +22,14 @@
     </div>
     <div class="section">
         <div class="container">
-            <div class="rounded three-col-grid author-info light-back">
+            <div class="end-to-end"><div class="rounded md-padding light-back"><a class="btn btn-primary btn-icon" th:href="@{/posts/new}">+</a></div></div>
+            <div class="rounded three-col-grid author-info light-back mr-t">
                 <div class="author-box"><div class="author-image"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="author"> </div></div>
                 <div class="author-desc center-to-center">
                     <p th:text="'Full Name: ' + ${user.name}">My Name</p>
                     <p th:text="'Email: ' + ${user.email}">user@example.com</p>
                 </div>
-                <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn btn-secondary btn-md">Edit Me</a> </div>
+                <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn btn-gray btn-md">Edit Me</a> </div>
             </div>
             <div>
                 <h3 class="mr-t">My Posts</h3>
@@ -47,7 +48,7 @@
                                 <p th:text="'Author: ' + ${post.getUser().name}">Author</p>
                                 <p th:text="${post.shortDescription}" class="start-to-center">Short Description</p>
                             </div>
-                            <div class=" end-to-end"><a th:href="@{'/myPosts/' + ${post.id}}" class="btn btn-secondary btn-lg"> Read More &#8702;</a></div>
+                            <div class=" end-to-end"><a th:href="@{'/myPosts/' + ${post.id}}" class="btn btn-gray btn-lg"> Read More &#8702;</a></div>
                         </div>
                     </div>
                 </div>

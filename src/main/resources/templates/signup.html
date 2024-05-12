@@ -36,7 +36,7 @@
                     <label for="signupPassword">Password:</label>
                     <input type="password" id="signupPassword" name="password" th:field="*{password}" placeholder="password" required>
                     <div th:errors="*{password}" class="warning-msg" th:if="${#fields.hasErrors('password')}"></div>
-                    <button type="submit" class="btn btn-grad btn-md">Register Now</button>
+                    <button type="submit" class="btn btn-primary btn-md">Register Now</button>
                 </form>
                 <div class="form-switcher">
                     <p> Already have an account? <a th:href="@{/login}">Login here</a>. </p>
