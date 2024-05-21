@@ -35,7 +35,7 @@
                             <label for="signupPassword">New password:</label>
                             <input type="password" id="signupPassword" name="password" th:field="*{password}" placeholder="password" required>
                             <div th:errors="*{password}" class="warning-msg" th:if="${#fields.hasErrors('password')}"></div>
-                            <button type="submit" class="btn btn-accent btn-md">Update Me</button>
+                            <button type="submit" class="btn btn-md secondary-back">Update Me</button>
                         </form>
                     </div>
                 </div>

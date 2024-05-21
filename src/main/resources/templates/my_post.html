@@ -19,10 +19,10 @@
                 <p class="title-sub">⎯ &#10023 ⎯</p>
             </div>
         </div>
-        <div class="section gray-back">
+        <div class="section">
             <div class="container">
                 <div class="post-padding light-back rounded">
-                    <div class="start-to-start"><a class="btn btn-icon btn-primary" th:href="@{/dashboard}">&#8701;</a></div>
+                    <div class="start-to-start"><a class="btn btn-icon secondary-back" th:href="@{/dashboard}">&#8701;</a></div>
                     <div class="post-header-image rounded"><img th:src="@{'/postHeaderImage/' + ${myPost.imageFilePath}}" alt="post-image"></div>
                     <div class="post-content">
 
@@ -33,8 +33,8 @@
                         <div class="post-body"><p th:utext="${myPost.body}">Post Body</p></div>
 
                         <div th:if="${#authentication.name} == ${myPost.getUser().getEmail()}" class="mr-t">
-                            <a th:href="@{'/posts/' + ${myPost.id} + '/edit'}" class="btn btn-md btn-accent">&#9998 Edit</a>
-                            <a th:href="@{'/posts/' + ${myPost.id} + '/delete'}" class="btn btn-md btn-danger">Delete</a>
+                            <a th:href="@{'/posts/' + ${myPost.id} + '/edit'}" class="btn btn-md accent-back">&#9998 Edit</a>
+                            <a th:href="@{'/posts/' + ${myPost.id} + '/delete'}" class="btn btn-md danger-back">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                         <label for="body-body">Your Comment</label>
                         <textarea id="body-body" name="body" rows="4" cols="50" required></textarea>
 
-                        <button type="submit" class="btn btn-primary btn-md">Publish Comment</button>
+                        <button type="submit" class="btn secondary-back btn-md">Publish Comment</button>
                     </form>
                 </div>
             </div>

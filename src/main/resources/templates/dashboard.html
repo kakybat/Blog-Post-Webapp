@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,21 +15,22 @@
 <div th:replace="~{/fragments/header :: header}"></div>
 <main>
     <div class="section header-section">
-        <div class="container">
+        <div class="container rounded big-padding light-blue4-back">
             <h2 class="text-center" th:text="${pageTitle}">Title</h2>
             <p class="title-sub">⎯ &#10023 ⎯</p>
         </div>
     </div>
     <div class="section">
         <div class="container">
-            <div class="end-to-end"><div class="rounded md-padding light-back"><a class="btn btn-primary btn-icon" th:href="@{/posts/new}">+</a></div></div>
+            <div class="start-to-start"><div sec:authorise="hasRole('ROLE_ADMIN')"><p>Make this for Admin!!! </p><a th:href="@{/displayMessages}" class="btn btn-lg secondary-back"><img th:src="@{/images/email.png}" alt="Email"/> Messages</a> </div> </div>
+            <div class="end-to-end"><div class="rounded md-padding gray-back"><a class="btn secondary-back btn-icon" th:href="@{/posts/new}">+</a></div></div>
             <div class="rounded three-col-grid author-info light-back mr-t">
                 <div class="author-box"><div class="author-image"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="author"> </div></div>
                 <div class="author-desc center-to-center">
                     <p th:text="'Full Name: ' + ${user.name}">My Name</p>
                     <p th:text="'Email: ' + ${user.email}">user@example.com</p>
                 </div>
-                <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn btn-gray btn-md">Edit Me</a> </div>
+                <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn gray-back btn-md">Edit Me</a> </div>
             </div>
             <div>
                 <h3 class="mr-t">My Posts</h3>
@@ -48,7 +49,7 @@
                                 <p th:text="'Author: ' + ${post.getUser().name}">Author</p>
                                 <p th:text="${post.shortDescription}" class="start-to-center">Short Description</p>
                             </div>
-                            <div class=" end-to-end"><a th:href="@{'/myPosts/' + ${post.id}}" class="btn btn-gray btn-lg"> Read More &#8702;</a></div>
+                            <div class=" end-to-end"><a th:href="@{'/myPosts/' + ${post.id}}" class="btn gray-back btn-lg"> Read More &#8702;</a></div>
                         </div>
                     </div>
                 </div>

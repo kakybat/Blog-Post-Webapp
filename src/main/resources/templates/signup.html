@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
-
     <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
     <title th:text="${pageTitle}">No Title</title>
 </head>
@@ -13,30 +12,26 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <main>
     <div class="section header-section">
-        <div class="container">
+        <div class="container rounded big-padding light-blue4-back">
             <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
             <p class="title-sub">⎯ &#10023 ⎯</p>
         </div>
     </div>
-
     <div class="section">
         <div class="container">
             <div class="form-container" id="signupContainer">
-                <h2>Registration</h2>
+                <h3 class="text-center">Welcome! &#x1F389;</h3>
+                <p class="text-center">Please, enter your details and start your work!</p>
                 <form id="signupForm" th:action="@{/signup}" th:object="${user}" method="post">
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" th:field="*{firstName}" placeholder="first name" required>
+                    <input type="text" id="firstName" name="firstName" th:field="*{firstName}" placeholder="First name" required>
                     <div th:errors="*{firstName}" class="warning-msg" th:if="${#fields.hasErrors('firstName')}"></div>
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" th:field="*{lastName}" placeholder="last name" required>
+                    <input type="text" id="lastName" name="lastName" th:field="*{lastName}" placeholder="Last name" required>
                     <div th:errors="*{lastName}" class="warning-msg" th:if="${#fields.hasErrors('lastName')}"></div>
-                    <label for="signupEmail">Email:</label>
-                    <input type="email" id="signupEmail" name="email" th:field="*{email}" placeholder="your email" required>
+                    <input type="email" id="signupEmail" name="email" th:field="*{email}" placeholder="Your email" required>
                     <div th:errors="*{email}" class="warning-msg" th:if="${#fields.hasErrors('email')}"></div>
-                    <label for="signupPassword">Password:</label>
-                    <input type="password" id="signupPassword" name="password" th:field="*{password}" placeholder="password" required>
+                    <input type="password" id="signupPassword" name="password" th:field="*{password}" placeholder="Password" required>
                     <div th:errors="*{password}" class="warning-msg" th:if="${#fields.hasErrors('password')}"></div>
-                    <button type="submit" class="btn btn-primary btn-md">Register Now</button>
+                    <button type="submit" class="btn btn-md accent-back">Register Now</button>
                 </form>
                 <div class="form-switcher">
                     <p> Already have an account? <a th:href="@{/login}">Login here</a>. </p>

@@ -14,18 +14,17 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <main>
     <div class="section header-section">
-        <div class="container">
+        <div class="container rounded big-padding light-blue4-back">
             <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
             <p class="title-sub">⎯ &#10023 ⎯</p>
         </div>
     </div>
-
     <div class="section">
         <div class="container">
             <h2 class="text-center">Get in Touch</h2>
-            <hr>
+            <hr class="dark-hr">
             <div class="contact-form">
-                <div class="contact-info rounded center-to-center ">
+                <div class="contact-info rounded center-to-center">
                     <h3 class="text-center">Contact Information</h3>
                     <div>
                         <p class="md-padding"><b>Personal Email:</b> kakybat@gmail.com</p>
@@ -35,20 +34,20 @@
 
                 </div>
                 <div class="form-container">
-                    <h3 class="text-center">Contact</h3>
+                    <h3 class="text-center">&#x270D; Send Me A Message</h3>
                     <ul>
                         <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('contact.*')}" th:text="${error}" />
                     </ul>
                     <form id="contactForm" th:action="@{/saveMessage}" method="post" th:object="${contact}">
 <!--                        <label for="contactName">Username:</label>-->
-                        <input type="text" th:field="*{contactName}" placeholder="Your Name"/>
+                        <input type="text" th:field="*{contactName}" placeholder="Name"/>
 <!--                        <label for="contactEmail">Your Email:</label>-->
-                        <input type="text" th:field="*{contactEmail}" placeholder="Your Email" />
+                        <input type="text" th:field="*{contactEmail}" placeholder="Email" />
 <!--                        <label for="Subject">Subject:</label>-->
-                        <input type="text" th:field="*{contactSubject}" placeholder="Your Subject"/>
+                        <input type="text" th:field="*{contactSubject}" placeholder="Subject"/>
 <!--                        <label for="contactMessage">Your Message:</label>-->
-                        <textarea th:field="*{contactMessage}" rows="4" placeholder="Your Message"></textarea>
-                        <button class="btn btn-primary btn-md">Send Message</button>
+                        <textarea th:field="*{contactMessage}" rows="4" placeholder="Message ..."></textarea>
+                        <button class="btn accent-back btn-md">Send Message</button>
                     </form>
                 </div>
             </div>

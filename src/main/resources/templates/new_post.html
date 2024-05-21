@@ -16,13 +16,13 @@
     <div th:replace="~{fragments/header :: header}"></div>
     <main>
         <div class="section header-section">
-            <div class="container">
+            <div class="container rounded big-padding gray-back">
                 <h2 class="text-center">New Post</h2>
                 <p class="title-sub">⎯ &#10023 ⎯</p>
             </div>
         </div>
         <div class="section">
-            <div class="container">
+            <div class="container rounded big-padding light-blue4-back">
                 <div class="post-container">
                     <h3>Write new post</h3>
                     <div class="start-to-start">
@@ -45,7 +45,7 @@
                         <label for="post-body">Main Content</label>
                         <textarea id="post-body" name="body" th:field="*{body}" rows="10"
                                   required></textarea>
-                        <button type="submit" class="btn btn-primary btn-md mr-t">Publish Post</button>
+                        <button type="submit" class="btn btn-accent btn-md mr-t">Publish Post</button>
                     </form>
                 </div>
             </div>

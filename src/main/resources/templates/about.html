@@ -14,7 +14,7 @@
 <div th:replace="~{fragments/header :: header}"></div>
 <main>
     <div class="section header-section">
-        <div class="container">
+        <div class="container rounded big-padding light-blue4-back">
             <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
             <p class="title-sub">⎯ &#10023 ⎯</p>
         </div>
@@ -49,7 +49,7 @@
     <div class="section">
         <div class="container">
             <h2 class="text-center">Timeline of Work & Learning Journey</h2>
-            <hr>
+            <hr class="dark-hr">
             <div class="timeline rounded">
                 <div class="tm-item rounded">
                     <div class="tm-yr rounded">2007 - 2011</div>
@@ -68,7 +68,7 @@
             </div>
         </div>
     </div>
-    <div class="section light-back" sec:authorize="!isAuthenticated()">
+    <div class="section" sec:authorize="!isAuthenticated()">
         <div class="container">
             <div th:replace="~{fragments/loginAction :: loginAction}"></div>
         </div>

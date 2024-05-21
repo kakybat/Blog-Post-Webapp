@@ -10,68 +10,36 @@
     <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
-<main>
-<div class="section header-section">
-    <div class="container">
-        <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
-        <p class="title-sub">⎯ &#10023 ⎯</p>
-    </div>
-</div>
-
-<div class="section">
-    <div class="container">
-        <div class="form-container" id="loginForm">
-            <h2>Login</h2>
-<!--            <div class="warning-msg" th:if="${param.error}">-->
-<!--                Incorrect Email or password.</div>-->
-<!--            <div class="success-msg" th:if="${param.logout}">-->
-<!--                You have been logged out.</div>-->
-            <ul>
-                <li class="warning-msg" th:if="${!#strings.isEmpty(errorMessage)}" th:text="${errorMessage}" />
-                <li class="success-msg" th:if="${!#strings.isEmpty(logoutMessage)}" th:text="${logoutMessage}" />
-            </ul>
-            <form action="/login" method="post">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email" placeholder="enter email address" />
-
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="enter password" />
-
-                <button type="submit" class="btn btn-primary btn-md">Login Now</button>
-            </form>
-            <div class="form-switcher">
-<!--                <p> Don't have an user? <a href="#" th:onclick="toggleForm()">Register one</a>.</p>-->
-                <p> Don't have an user? <a th:href="@{/signup}">Register one</a>.</p>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <main>
+        <div class="section header-section">
+            <div class="container rounded big-padding light-blue4-back">
+                <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
             </div>
         </div>
-
-<!--        <div class="form-container" style="display: none;" id="signupContainer">-->
-<!--            <h2>Registration</h2>-->
-<!--            <form id="signupForm" th:action="@{/signup}" th:object="${user}" method="post">-->
-<!--                <label for="firstName">First Name:</label>-->
-<!--                <input type="text" id="firstName" name="firstName" th:field="*{firstName}" placeholder="first name" required>-->
-<!--                <div th:errors="*{firstName}" class="warning-msg" th:if="${#fields.hasErrors('firstName')}"></div>-->
-<!--                <label for="lastName">Last Name:</label>-->
-<!--                <input type="text" id="lastName" name="lastName" th:field="*{lastName}" placeholder="last name" required>-->
-<!--                <div th:errors="*{lastName}" class="warning-msg" th:if="${#fields.hasErrors('lastName')}"></div>-->
-<!--                <label for="signupEmail">Email:</label>-->
-<!--                <input type="email" id="signupEmail" name="email" th:field="*{email}" placeholder="your email" required>-->
-<!--                <div th:errors="*{email}" class="warning-msg" th:if="${#fields.hasErrors('email')}"></div>-->
-<!--                <label for="signupPassword">Password:</label>-->
-<!--                <input type="password" id="signupPassword" name="password" th:field="*{password}" placeholder="password" required>-->
-<!--                <div th:errors="*{password}" class="warning-msg" th:if="${#fields.hasErrors('password')}"></div>-->
-<!--                <button type="submit" class="btn btn-accent btn-md">Register Now</button>-->
-<!--            </form>-->
-<!--            <div class="form-switcher">-->
-<!--                <p> Already have a user? <a href="#" th:onclick="toggleForm()">Login here</a>. </p>-->
-<!--            </div>-->
-<!--        </div>-->
-    </div>
-</div>
-</main>
-<div th:replace="~{fragments/footer :: footer}"></div>
-<script th:src="@{/js/header.js}"></script>
-<!--<script th:src="@{/js/formSwitcher.js}"></script>-->
+        <div class="section">
+            <div class="container">
+                <div class="form-container" id="loginForm">
+                    <h3 class="text-center">Log in to your Account</h3>
+                    <p class="text-center">Welcome back! &#x1F44B;</p>
+                    <ul>
+                        <li class="warning-msg" th:if="${!#strings.isEmpty(errorMessage)}" th:text="${errorMessage}" />
+                        <li class="success-msg" th:if="${!#strings.isEmpty(logoutMessage)}" th:text="${logoutMessage}" />
+                    </ul>
+                    <form action="/login" method="post">
+                        <input type="text" id="email" name="email" placeholder="Email" />
+                        <input type="password" id="password" name="password" placeholder="Password" />
+                        <button type="submit" class="btn btn-md accent-back">Login Now</button>
+                    </form>
+                    <div class="form-switcher">
+                        <p> Don't have an user? <a th:href="@{/signup}">Register one</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/header.js}"></script>
 </body>
 </html>
