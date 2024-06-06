@@ -37,35 +37,35 @@ public class Contact extends BaseEntity {
         return contactId;
     }
 
-    public @NotBlank(message = "Name must not be blank") @Size(min = 3, message = "Contact name must be at least 3 characters long") String getContactName() {
+    public  String getContactName() {
         return contactName;
     }
 
-    public void setContactName(@NotBlank(message = "Name must not be blank") @Size(min = 3, message = "Contact name must be at least 3 characters long") String contactName) {
+    public void setContactName(String contactName) {
         this.contactName = contactName;
     }
 
-    public @NotBlank(message = "Email must not be blank") @Email(message = "Please provide a valid email address") String getContactEmail() {
+    public String getContactEmail() {
         return contactEmail;
     }
 
-    public void setContactEmail(@NotBlank(message = "Email must not be blank") @Email(message = "Please provide a valid email address") String contactEmail) {
+    public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
 
-    public @NotBlank(message = "Subject must not be blank") @Size(min = 5, message = "Subject must be at least 5 characters long") String getContactSubject() {
+    public String getContactSubject() {
         return contactSubject;
     }
 
-    public void setContactSubject(@NotBlank(message = "Subject must not be blank") @Size(min = 5, message = "Subject must be at least 5 characters long") String contactSubject) {
+    public void setContactSubject(String contactSubject) {
         this.contactSubject = contactSubject;
     }
 
-    public @NotBlank(message = "Message must not be blank") @Size(min = 10, message = "Message must be at least 10 characters long") String getContactMessage() {
+    public String getContactMessage() {
         return contactMessage;
     }
 
-    public void setContactMessage(@NotBlank(message = "Message must not be blank") @Size(min = 10, message = "Message must be at least 10 characters long") String contactMessage) {
+    public void setContactMessage( String contactMessage) {
         this.contactMessage = contactMessage;
     }
 

@@ -1,6 +1,5 @@
 package com.kakybat.controller;
 
-import com.kakybat.constants.AppConstants;
 import com.kakybat.model.Contact;
 import com.kakybat.model.User;
 import com.kakybat.service.ContactService;
@@ -49,7 +48,7 @@ public class ContactController {
     public String saveMessage(@Valid @ModelAttribute("contact") Contact contact, Errors errors, Model model, Principal principal){
         setUserModelAttribute(model, principal);
         if(errors.hasErrors()){
-            log.error("Contact form validation failed due to : " + errors.toString());
+            log.error("Contact form validation failed due to : " + errors);
             return "contact";
         }
         contactService.saveMessageDetails(contact);
@@ -69,7 +68,7 @@ public class ContactController {
     @RequestMapping(value = "/closeMessage", method = GET)
     public String closeMessage(@RequestParam int id, Authentication authentication, Model model){
         setUserModelAttribute(model, authentication);
-        contactService.updateMessageStatus(id, authentication.getName());
+        contactService.updateMessageStatus(id);
         return "redirect:/displayMessages";
     }
 

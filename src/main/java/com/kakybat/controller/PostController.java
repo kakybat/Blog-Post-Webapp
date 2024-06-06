@@ -7,11 +7,13 @@ import com.kakybat.service.CommentService;
 import com.kakybat.service.FileService;
 import com.kakybat.serviceImpl.UserServiceImpl;
 import com.kakybat.serviceImpl.PostService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -67,27 +69,32 @@ public class PostController {
         model.addAttribute("post", post);
         return "new_post";
     }
-    @PostMapping("/posts/save")
-    public String saveNewPost(@ModelAttribute Post post, Model model, Principal principal, MultipartFile file){
-        String authUsername = "anonymousUser";
-        if(principal != null){
-            authUsername = principal.getName();
-            User user = userService.findUserByEmail(authUsername);
-            model.addAttribute("user", user);
+    @RequestMapping(value = "/posts/save", method = {RequestMethod.POST})
+    public String saveNewPost(@Valid @ModelAttribute("post") Post post, Errors errors, Model model, Principal principal, MultipartFile file){
+        setUserModelAttribute(model, principal);
+        if(errors.hasErrors()){
+            return "new_post";
         } else {
-            throw new IllegalArgumentException("Account not found");
-        }
-        User user = userService.findUserByEmail(authUsername);
-        try{
-            fileService.save(file);
-            post.setImageFilePath(file.getOriginalFilename());
-        } catch (Exception e){
-            logger.error("Error processing file: {}", file.getOriginalFilename());
-        }
+            String authUsername = "anonymousUser";
+            if(principal != null){
+                authUsername = principal.getName();
+                User user = userService.findUserByEmail(authUsername);
+                model.addAttribute("user", user);
+            } else {
+                throw new IllegalArgumentException("Account not found");
+            }
+            User user = userService.findUserByEmail(authUsername);
+            try{
+                fileService.save(file);
+                post.setImageFilePath(file.getOriginalFilename());
+            } catch (Exception e){
+                logger.error("Error processing file: {}", file.getOriginalFilename());
+            }
 
-        post.setUser(user);
-        postService.save(post);
-        return "redirect:/posts/" + post.getId();
+            post.setUser(user);
+            postService.save(post);
+            return "redirect:/posts/" + post.getId();
+        }
     }
     @RequestMapping("/posts/{id}/edit")
     @PreAuthorize("isAuthenticated()")
@@ -105,7 +112,7 @@ public class PostController {
 
     @PostMapping("/posts/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String updatePost(@PathVariable Long id, Post post, Model model, Principal principal, @RequestParam("file") MultipartFile file){
+    public String updatePost(@Valid @ModelAttribute("post")  Post post, Errors errors, @PathVariable Long id, Model model, Principal principal, @RequestParam("file") MultipartFile file){
         setUserModelAttribute(model, principal);
         Optional<Post> optionalPost = postService.getById(id);
         if(optionalPost.isPresent()){

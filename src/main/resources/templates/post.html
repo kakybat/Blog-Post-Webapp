@@ -22,12 +22,12 @@
         <div class="section">
             <div class="container">
                 <div class="post-padding light-back rounded">
-                    <div class="start-to-start"><a class="btn btn-icon secondary-back" th:href="@{/blog}">&#8701;</a></div>
+                    <div class="start-to-start"><a class="btn btn-arrow secondary-back" th:href="@{/blog}">&#x1F860;</a></div>
                     <div class="post-header-image rounded"><img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="post-image"></div>
                     <div class="post-content">
 
-                        <p th:text="'&#x23F2; Published on: ' + ${post.createdAt}">Created At</p>
-                        <p th:text="'&#x23F2; Last Updated on: ' + ${post.updatedAt}" class="post-time">Updated At</p>
+                        <p th:text="'&#x1F551; Published on: ' + ${post.createdAt}">Created At</p>
+                        <p th:text="'&#x1F55F; Last Updated on: ' + ${post.updatedAt}" class="post-time mr-b-md">Updated At</p>
 <!--                        <p th:text="'Author: ' + ${post.getUser().getName()}">Author Name</p>-->
                         <div class="start-to-end fit-first-col">
                             <div class="user-img"><img th:src="@{'/userImage/' + ${post.getUser().imageFilePath}}" alt="user"></div>

@@ -16,36 +16,39 @@
     <div th:replace="~{fragments/header :: header}"></div>
     <main>
         <div class="section header-section">
-            <div class="container rounded big-padding gray-back">
+            <div class="container">
                 <h2 class="text-center">New Post</h2>
                 <p class="title-sub">⎯ &#10023 ⎯</p>
             </div>
         </div>
         <div class="section">
-            <div class="container rounded big-padding light-blue4-back">
+            <div class="container rounded big-padding light-back">
                 <div class="post-container">
                     <h3>Write new post</h3>
                     <div class="start-to-start">
-                        <div class="rounded md-padding warning-msg" sec:authorize="!isAuthenticated()">
+                        <div class="rounded md-padding warning-back" sec:authorize="!isAuthenticated()">
                             <p>To publish a post, logging in is required.</p>
                         </div>
                     </div>
+                    <ul>
+                        <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('post.*')}" th:text="${error}" />
+                    </ul>
                     <form id="postEdit" th:action="@{'/posts/save'}" th:object="${post}" enctype="multipart/form-data" method="post">
                         <input type="hidden" th:field="*{user.id}">
                         <input type="hidden" th:field="*{createdAt}" />
                         <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="img-fluid" style="visibility: hidden;" alt="load image"/>
-                        <label for="input-field">Add A Post Header Image</label>
-                        <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding" required/>
-                        <label for="post-title">Post Title</label>
+                        <label for="input-field">Add A Post Header Image:</label>
+                        <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding" />
+                        <label for="post-title">Post Title:</label>
                         <input type="text" id="post-title" name="post-title" th:field="*{title}"
-                               placeholder="Title of your post goes here..." required />
-                        <label for="short-description">Short Description</label>
+                               placeholder="Title of your post goes here..." />
+                        <label for="short-description">Short Description:</label>
                         <input type="text" id="short-description" name="short-description" th:field="*{shortDescription}"
-                               placeholder="A brief description of your post..." required />
-                        <label for="post-body">Main Content</label>
+                               placeholder="A brief description of your post..." />
+                        <label for="post-body">Main Content:</label>
                         <textarea id="post-body" name="body" th:field="*{body}" rows="10"
-                                  required></textarea>
-                        <button type="submit" class="btn btn-accent btn-md mr-t">Publish Post</button>
+                                  ></textarea>
+                        <button type="submit" class="btn accent-back btn-md mr-t">Publish Post</button>
                     </form>
                 </div>
             </div>

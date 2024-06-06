@@ -13,5 +13,5 @@
 .p404-image-box img {
     width: inherit;
     height: inherit;
-    object-fit: cover;
+    object-fit: contain;
 }

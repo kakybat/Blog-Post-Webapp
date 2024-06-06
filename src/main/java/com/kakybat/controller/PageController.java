@@ -3,8 +3,13 @@ package com.kakybat.controller;
 import com.kakybat.dto.UserDto;
 import com.kakybat.model.User;
 import com.kakybat.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,14 +27,14 @@ public class PageController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @RequestMapping(value = {"/", "home"})
     @PreAuthorize("isAnonymous()")
     public String getIndexPage(Model model, Principal principal){
         setUserModelAttribute(model, principal);
         return "index";
     }
 
-    @GetMapping("/about")
+    @RequestMapping("/about")
     @PreAuthorize("isAnonymous()")
     public String getAboutPage(Model model, Principal principal){
         setUserModelAttribute(model, principal);
@@ -64,6 +69,17 @@ public class PageController {
         model.addAttribute("logoutMessage", logoutMessage);
         return "/login";
     }
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response){
+        setUserModelAttribute(model, principal);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout=true";
+
+    }
+
     @GetMapping("/signup")
     @PreAuthorize("isAnonymous()")
     public String showSignupForm(Model model, Principal principal){

@@ -28,7 +28,7 @@
     align-items: center;
 }
 .foo-brand .logo-footer .logo-image-footer {
-    background-color: var(--gray-color);
+    background-color: var(--gray-dark);
     border-radius: var(--sm-border-radius);
     position: relative;
     height: 30px;

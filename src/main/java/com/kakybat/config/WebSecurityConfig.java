@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,9 +33,10 @@ public class WebSecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
+                .csrf((csrf) -> csrf.ignoringRequestMatchers("/saveMessage"))
                 .authorizeHttpRequests((auth) -> auth
-                    .requestMatchers("/", "/blog", "/contact", "/about", "/signup", "/postHeaderImage/**", "/userImage/**", "/saveMessage").permitAll()
+                    .requestMatchers("/", "/home", "/blog", "/contact", "/about", "/signup", "/postHeaderImage/**", "/userImage/**", "/saveMessage").permitAll()
                     .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**", "/fonts/**","/posts/*", "/comments/save").permitAll()
 
                     .anyRequest().authenticated())
@@ -44,11 +46,13 @@ public class WebSecurityConfig{
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/dashboard")
-                       .failureUrl("/login?error")
+                       .failureUrl("/login?error=true")
                         .permitAll())
                 .logout(logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll());
+                                .logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true)
+                                .permitAll())
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
     @Autowired

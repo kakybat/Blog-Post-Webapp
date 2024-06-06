@@ -141,18 +141,23 @@
     color: var(--light-color);
     padding: 5px 20px;
     font-weight: bolder;
-    border-radius: var(--lg-border-radius);
+    border-radius: var(--md-border-radius);
     margin-top: 10px;
 }
  #prevBtn, #nextBtn {
+     background-color: var(--accent-color);
+     width: 30px;
+     height: 30px;
      border-radius: 50%;
      position: absolute;
      top: 50%;
      transform: translateY(-50%);
+     text-align: center;
      font-size: var(--lg-font-size);
-     color: var(--accent-color);
+     color: var(--light-color);
      cursor: pointer;
      user-select: none;
+     z-index: 31;
  }
  #prevBtn {
      left: 0;

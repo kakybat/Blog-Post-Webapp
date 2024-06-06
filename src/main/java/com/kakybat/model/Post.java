@@ -1,7 +1,8 @@
 package com.kakybat.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,13 +12,24 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotBlank(message = "Post title must not be blank")
+    @Size(min = 10, message = "Post title must be at least 10 characters long")
     private String title;
+
+    @NotBlank(message = "Short description must not be blank")
+    @Size(min = 10, max = 100, message = "Short description should be between 20 and 100 characters")
     private String shortDescription;
+
     @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "Post content must not be blank")
+    @Size(min = 10, message = "Post content must be at least 200 characters long")
     private String body;
+
+    @NotBlank(message = "Post header image required")
+    private String imageFilePath;
     private LocalDate createdAt;
     private LocalDate updatedAt;
-    private String imageFilePath;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -51,30 +63,30 @@ public class Post {
         this.id = id;
     }
 
-    public String getTitle() {
+    public @NotBlank(message = "Post title must not be blank") @Size(min = 10, message = "Post title must be at least 10 characters long") String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@NotBlank(message = "Post title must not be blank") @Size(min = 10, message = "Post title must be at least 10 characters long") String title) {
         this.title = title;
     }
 
-    public String getShortDescription() {
+    public @NotBlank(message = "Short description must not be blank") @Size(min = 10, max = 100, message = "Short description should be between 20 and 100 characters") String getShortDescription() {
         return shortDescription;
     }
 
-    public void setShortDescription(String shortDescription) {
+    public void setShortDescription(@NotBlank(message = "Short description must not be blank") @Size(min = 10, max = 100, message = "Short description should be between 20 and 100 characters") String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
-    public String getBody() {
+    public @NotBlank(message = "Post content must not be blank") @Size(min = 10, message = "Post content must be at least 200 characters long") String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(@NotBlank(message = "Post content must not be blank") @Size(min = 10, message = "Post content must be at least 200 characters long") String body) {
         this.body = body;
     }
-    @JsonFormat(pattern = "dd/MM/yyyy")
+
     public LocalDate getCreatedAt() {
         return createdAt;
     }
@@ -83,23 +95,27 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    public LocalDate getUpdatedAt(){
+    public LocalDate getUpdatedAt() {
         return updatedAt;
     }
-    public void setUpdatedAt(LocalDate updatedAt){
+
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public String getImageFilePath(){
+
+    public String getImageFilePath() {
         return imageFilePath;
     }
-    public void setImageFilePath(String imageFilePath){
+
+    public void setImageFilePath(String imageFilePath) {
         this.imageFilePath = imageFilePath;
     }
-    public User getUser(){
+
+    public User getUser() {
         return user;
     }
-    public void setUser(User user){
+
+    public void setUser(User user) {
         this.user = user;
     }
 
