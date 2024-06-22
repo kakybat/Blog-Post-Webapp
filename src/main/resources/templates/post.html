@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,13 +30,13 @@
                         <p th:text="'&#x1F55F; Last Updated on: ' + ${post.updatedAt}" class="post-time mr-b-md">Updated At</p>
 <!--                        <p th:text="'Author: ' + ${post.getUser().getName()}">Author Name</p>-->
                         <div class="start-to-end fit-first-col">
-                            <div class="user-img"><img th:src="@{'/userImage/' + ${post.getUser().imageFilePath}}" alt="user"></div>
-                            <div class="start-to-center"><p th:text="${post.getUser().name}">Author</p></div>
+                            <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
+                            <div class="start-to-center"><p th:text="${post.getPerson().name}">Author</p></div>
                         </div>
                         <div class="post-short-desc"><p th:text="${post.shortDescription}">Short description</p></div>
                         <div class="post-body"><p th:utext="${post.body}">Post Body</p></div>
 
-                        <div th:if="${#authentication.name} == ${post.getUser().getEmail()}" class="mr-t">
+                        <div th:if="${#authentication.name} == ${post.getPerson().getEmail()}" class="mr-t">
                             <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-md secondary-back">&#9998 Edit</a>
                             <a th:href="@{'/posts/' + ${post.id} + '/delete'}" class="btn btn-md danger-back">Delete</a>
                         </div>
@@ -44,28 +44,35 @@
                 </div>
             </div>
         </div>
-        <div class="section">
+        <div class="section-pb-100">
             <div class="container">
                 <div class="post-padding light-back rounded">
-                    <h3>Comments</h3>
+                    <h4 class="mr-b-md">Comments</h4>
                     <!-- Display comments -->
-                    <div th:each="comment : ${comments}" class="body">
-                        <div class="body-meta">
-                            <span th:text="${comment.user.name}"></span>
-                            <span th:text="${comment.createdAt}"></span>
-                            <span th:if="${#authentication.name == comment.user.email}">
-                        <a th:href="@{'/comments/' + ${comment.id} + '/edit'}">Edit</a>
-                        <a th:href="@{'/comments/' + ${comment.id} + '/delete'}">Delete</a>
-                    </span>
+                    <div th:each="comment : ${post.comments}" class="mr-b-md">
+                        <div class="fit-first-col">
+                            <div class="start-to-start">
+                                <div class="user-img"><img th:src="@{'/userImage/' + ${comment.person.imageFilePath}}" alt="person"></div>
+                            </div>
+                            <div class="primary-back rounded md-padding">
+                                <div class="start-to-start mr-b-xsm"><p><b th:text="${comment.person.name}">Author</b></p></div>
+                                <div class="body-body" th:text="${comment.body}"></div>
+                                <div th:text="'&#x1F4C5; ' + ${#temporals.format(comment.createdAt, 'MMMM d, yyyy')}" class="end-to-end sm-font"></div>
+                            </div>
                         </div>
-                        <div class="body-body" th:text="${comment.body}"></div>
+
+                        <div th:if="${#authentication.name == comment.person.email}">
+                            <a th:href="@{'/comments/' + ${comment.commentId} + '/edit'}" class="btn btn-sm secondary-back">Edit</a>
+                            <a th:href="@{'/comments/' + ${comment.commentId} + '/delete'}" class="btn btn-sm accent-back">Delete</a>
+                        </div>
                     </div>
                 </div>
                 <div class="post-padding light-back rounded mr-t">
                     <!-- Comment form -->
-                    <form th:action="@{'/posts/' + ${post.id}}" method="post" class="body-form">
+<!--                    <form th:action="@{'/posts/' + ${post.id}}" method="post" class="body-form">-->
+                    <form th:action="@{'/posts/'+ ${post.id} +'/comments'}" th:object="${newComment}" method="post" class="body-form">
                         <label for="body-body">Your Comment</label>
-                        <textarea id="body-body" name="body" rows="4" cols="50" required></textarea>
+                        <textarea th:field="*{body}" id="body-body" name="body" rows="4" cols="50" required></textarea>
 
                         <button type="submit" class="btn btn-md secondary-back">Publish Comment</button>
                     </form>

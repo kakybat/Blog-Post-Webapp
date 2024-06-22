@@ -1,15 +1,16 @@
 package com.kakybat.controller;
 
 import com.kakybat.model.Comment;
-import com.kakybat.model.User;
+import com.kakybat.model.Person;
 import com.kakybat.model.Post;
-import com.kakybat.service.CommentService;
+import com.kakybat.repository.CommentRepository;
 import com.kakybat.service.FileService;
-import com.kakybat.serviceImpl.UserServiceImpl;
-import com.kakybat.serviceImpl.PostService;
+import com.kakybat.service.PersonService;
+import com.kakybat.service.PostService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
+import org.springframework.security.core.Authentication;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,21 +26,23 @@ import java.util.Optional;
 public class PostController {
     public static Logger logger = LoggerFactory.getLogger(PostController.class);
     private final PostService postService;
-    private final UserServiceImpl userService;
+    private final PersonService personService;
     private final FileService fileService;
-    private final CommentService commentService;
+//    private final CommentService commentService;
+    @Autowired
+    CommentRepository commentRepository;
 
-    public PostController(PostService postService, UserServiceImpl userService, FileService fileService, CommentService commentService){
+    public PostController(PostService postService, PersonService personService, FileService fileService){
         this.postService = postService;
-        this.userService = userService;
+        this.personService = personService;
         this.fileService = fileService;
-        this.commentService = commentService;
+//        this.commentService = commentService;
     }
 
     @GetMapping("/blog")
     @PreAuthorize("isAnonymous()")
-    public String getPostList(Model model, Principal principal){
-        setUserModelAttribute(model, principal);
+    public String getPostList(Model model, Authentication auth){
+        setUserModelAttribute(model, auth);
         List<Post> posts = postService.getAll();
         model.addAttribute("pageTitle", "Blog");
         model.addAttribute("posts", posts);
@@ -48,42 +51,50 @@ public class PostController {
 
     @GetMapping("/posts/{postId}")
     @PreAuthorize("isAnonymous()")
-    public String getSinglePost(@PathVariable Long postId, Model model, Principal principal){
-        setUserModelAttribute(model, principal);
+    public String getSinglePost(@PathVariable Long postId, Model model, Authentication auth){
+        setUserModelAttribute(model, auth);
+        // ***********************************************
+//        Post postComment = postService.findById(postId);
+//        Person person = personService.findUserByEmail(auth.getName()); // Assuming you have a method to find the currently authenticated user
+        Comment newComment = new Comment();
+//        newComment.setPerson(person); // Set the person for the new comment (optional if you want to associate comments with users)
+//        model.addAttribute("postComment", postComment);
+        model.addAttribute("newComment", newComment);
+        // *****************************************
         Optional<Post> optionalPost = postService.getById(postId);
-        List<Comment> comments = commentService.getAllCommentsForPost(postId);
+//        List<Comment> comments = commentService.getAllCommentsForPost(postId);
         if(optionalPost.isPresent()){
             Post post = optionalPost.get();
             model.addAttribute("post", post);
-            model.addAttribute("comments", comments);
+//            model.addAttribute("comments", comments);
             return "post";
         } else {
-            return "p404";
+            return "error";
         }
     }
     @GetMapping("/posts/new")
     @PreAuthorize("isAnonymous()")
-    public String createNewPost(Model model, Principal principal){
-        setUserModelAttribute(model, principal);
+    public String createNewPost(Model model, Authentication auth){
+        setUserModelAttribute(model, auth);
         Post post = new Post();
         model.addAttribute("post", post);
         return "new_post";
     }
     @RequestMapping(value = "/posts/save", method = {RequestMethod.POST})
-    public String saveNewPost(@Valid @ModelAttribute("post") Post post, Errors errors, Model model, Principal principal, MultipartFile file){
-        setUserModelAttribute(model, principal);
+    public String saveNewPost(@Valid @ModelAttribute("post") Post post, Errors errors, Model model, Authentication auth, MultipartFile file){
+        setUserModelAttribute(model, auth);
         if(errors.hasErrors()){
             return "new_post";
         } else {
             String authUsername = "anonymousUser";
-            if(principal != null){
-                authUsername = principal.getName();
-                User user = userService.findUserByEmail(authUsername);
-                model.addAttribute("user", user);
+            if(auth != null){
+                authUsername = auth.getName();
+                Person person = personService.findUserByEmail(authUsername);
+                model.addAttribute("user", person);
             } else {
                 throw new IllegalArgumentException("Account not found");
             }
-            User user = userService.findUserByEmail(authUsername);
+            Person person = personService.findUserByEmail(authUsername);
             try{
                 fileService.save(file);
                 post.setImageFilePath(file.getOriginalFilename());
@@ -91,29 +102,29 @@ public class PostController {
                 logger.error("Error processing file: {}", file.getOriginalFilename());
             }
 
-            post.setUser(user);
+            post.setPerson(person);
             postService.save(post);
             return "redirect:/posts/" + post.getId();
         }
     }
     @RequestMapping("/posts/{id}/edit")
     @PreAuthorize("isAuthenticated()")
-    public String getPostForEdit(@PathVariable Long id, Model model, Principal principal){
-        setUserModelAttribute(model, principal);
+    public String getPostForEdit(@PathVariable Long id, Model model, Authentication auth){
+        setUserModelAttribute(model, auth);
         Optional<Post> optionalPost = postService.getById(id);
         if(optionalPost.isPresent()){
             Post post = optionalPost.get();
             model.addAttribute("post", post);
             return "post_edit";
         } else {
-            return "p404";
+            return "error";
         }
     }
 
     @PostMapping("/posts/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String updatePost(@Valid @ModelAttribute("post")  Post post, Errors errors, @PathVariable Long id, Model model, Principal principal, @RequestParam("file") MultipartFile file){
-        setUserModelAttribute(model, principal);
+    public String updatePost(@Valid @ModelAttribute("post")  Post post, Errors errors, @PathVariable Long id, Model model, Authentication auth, @RequestParam("file") MultipartFile file){
+        setUserModelAttribute(model, auth);
         Optional<Post> optionalPost = postService.getById(id);
         if(optionalPost.isPresent()){
             Post existingPost = optionalPost.get();
@@ -142,15 +153,27 @@ public class PostController {
             postService.delete(post);
             return "redirect:/blog";
         } else {
-            return "p404";
+            return "error";
         }
     }
 
-    private void setUserModelAttribute(Model model, Principal principal){
-        if(principal != null){
-            String email = principal.getName();
-            User user = userService.findUserByEmail(email);
-            model.addAttribute("user", user);
+    @PostMapping("/posts/{postId}/comments")
+    public String addComment(@PathVariable Long postId, @ModelAttribute("newComment") Comment newComment, Model model, Authentication auth) {
+        setUserModelAttribute(model, auth);
+        Post post = postService.findById(postId);
+        Person person = personService.findUserByEmail(auth.getName());
+        newComment.setPerson(person);
+        newComment.setPost(post);
+        commentRepository.save(newComment);
+//        model.addAttribute("comment", newComment);
+        return "redirect:/posts/" + postId; // Redirect to post details page
+    }
+
+    private void setUserModelAttribute(Model model, Authentication auth){
+        if(auth != null){
+            String email = auth.getName();
+            Person person = personService.findUserByEmail(email);
+            model.addAttribute("person", person);
         }
     }
 

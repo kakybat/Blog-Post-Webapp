@@ -9,15 +9,15 @@
     <title>Error</title>
 </head>
 <body>
-<main>
+<main class="secondary-back">
     <div class="section">
-        <div class="p404-container primary-back rounded">
-            <div class="p404-image-box rounded">
-                <img th:src="@{/images/404.jpg}" alt="404">
+        <div class="p404-container ">
+            <div class="p404-image-box">
+                <img th:src="@{/images/baby-shark.png}" alt="404">
             </div>
-            <h1 class="text-center">Something went wrong !!!</h1>
+            <h1 class="text-center">Baby Shark, doo-doo, doo-doo, doo-doo</h1>
             <p class="text-center" th:text="${'Error Message - ' + errorMessage}"></p>
-            <div><a th:href="@{/}" class="btn btn-lg accent-back">Back to Home</a> </div>
+            <div class="center-to-center"><a th:href="@{/}" class="btn btn-lg accent-back">Back to Home</a> </div>
         </div>
     </div>
 

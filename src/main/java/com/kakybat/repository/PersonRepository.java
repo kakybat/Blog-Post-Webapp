@@ -1,13 +1,13 @@
 package com.kakybat.repository;
 
-import com.kakybat.model.User;
+import com.kakybat.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface PersonRepository extends JpaRepository<Person, Long> {
 
-    User findByEmail(String email);
+    Person findByEmail(String email);
 }

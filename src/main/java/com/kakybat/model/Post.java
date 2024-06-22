@@ -26,24 +26,25 @@ public class Post {
     @Size(min = 10, message = "Post content must be at least 200 characters long")
     private String body;
 
-    @NotBlank(message = "Post header image required")
+//    @NotBlank(message = "Post header image required")
     private String imageFilePath;
     private LocalDate createdAt;
     private LocalDate updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    @ManyToOne(fetch = FetchType.EAGER)//, cascade = CascadeType.PERSIST, targetEntity = User.class
+    @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = false)
+    private Person person;
     //name = "account_id", referencedColumnName = "id", nullable = false
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "comment_id", referencedColumnName = "id", nullable = false)
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+//    @JoinColumn(name = "comment_id", referencedColumnName = "commentId", nullable = true)
     private List<Comment> comments;
 
     public Post(){
         //
     }
 
-    public Post(Long id, String title, String shortDescription, String body, LocalDate createdAt, LocalDate updatedAt, String imageFilePath, User user, List<Comment> comments) {
+    public Post(Long id, String title, String shortDescription, String body, LocalDate createdAt, LocalDate updatedAt, String imageFilePath, Person person, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
@@ -51,7 +52,7 @@ public class Post {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.imageFilePath = imageFilePath;
-        this.user = user;
+        this.person = person;
         this.comments = comments;
     }
 
@@ -111,12 +112,12 @@ public class Post {
         this.imageFilePath = imageFilePath;
     }
 
-    public User getUser() {
-        return user;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public List<Comment> getComments() {
@@ -137,7 +138,7 @@ public class Post {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", imageFilePath=" + imageFilePath +
-                ", user=" + user +
+                ", person=" + person +
                 ", comments=" + comments +
                 '}';
     }

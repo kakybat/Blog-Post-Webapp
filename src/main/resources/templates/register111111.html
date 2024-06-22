@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="images/png" th:href="@{/images/K.png}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <title th:text="${pageTitle}">No Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+    <div class="section header-section">
+        <div class="container rounded big-padding light-blue4-back">
+            <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
+            <p class="title-sub">⎯ &#10023 ⎯</p>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <h2 class="text-center">Register</h2>
+            <hr class="dark-hr">
+
+                <div class="form-container">
+                    <h3 class="text-center">Create An Account &#x1F4EC;</h3>
+                    <ul>
+                        <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('person.*')}" th:text="${error}" />
+                    </ul>
+                    <form th:action="@{/public/createUser}" method="post" th:object="${person}">
+
+                        <input type="text" th:field="*{name}" placeholder="Name"/>
+
+                        <input type="text" th:field="*{email}" placeholder="Email" />
+
+                        <input type="text" th:field="*{confirmEmail}" placeholder="Confirm Email"/>
+
+                        <input type="password" th:field="*{password}" placeholder="Password"/>
+
+                        <input type="text" th:field="*{confirmPassword}" placeholder="Confirm Password"/>
+
+                        <button class="btn accent-back btn-md">Register Now</button>
+                    </form>
+                </div>
+
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

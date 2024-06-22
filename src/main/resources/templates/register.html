@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
+<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+  <title th:text="${pageTitle}">No Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+  <div class="section header-section">
+    <div class="container rounded big-padding light-blue4-back">
+      <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
+      <p class="title-sub">⎯ &#10023 ⎯</p>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="form-container" id="signupContainer">
+
+        <h3 class="text-center">Welcome! &#x1F389;</h3>
+        <p class="text-center">Please, enter your details and start your work!</p>
+        <ul>
+          <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('person.*')}" th:text="${error}"></li>
+        </ul>
+
+        <ul>
+          <li class="success-msg" th:if="${!#strings.isEmpty(registerMessage)}" th:text="${registerMessage}" />
+        </ul>
+
+        <form id="signupForm" th:action="@{/public/createUser}"  method="post" th:object="${person}">
+          <input type="text" th:field="*{name}" placeholder="Full name" />
+
+          <input type="text" th:field="*{email}" placeholder="Your email" />
+
+          <input type="text" th:field="*{confirmEmail}" placeholder="Confirm email" />
+
+          <div class="two-col-grid">
+            <div class="form-element">
+              <input type="password" th:field="*{password}" placeholder="Password" />
+            </div>
+            <div class="form-element">
+              <input type="password" th:field="*{confirmPassword}" placeholder="Confirm password" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-md accent-back">Register Now</button>
+        </form>
+        <div class="form-switcher">
+          <p> Already have an account? <a th:href="@{/login}">Login here</a>. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script th:src="@{/js/header.js}"></script>
+</body>
+</html>

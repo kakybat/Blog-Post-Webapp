@@ -1,49 +1,33 @@
 package com.kakybat.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
-import java.util.List;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false, unique = true)
-    private String name;
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native")
+    private Long roleId;
+
+    private String roleName;
+
 
     public Role() {
     }
-
-    public Role(String name, List<User> users) {
-        this.name = name;
-        this.users = users;
+    public Role(String roleName){
+        this.roleName = roleName;
     }
 
-    public Long getId() {
-        return id;
+    public Long getId(){
+        return roleId;
     }
-
-    public void setId(Long id) {
-        this.id = id;
+    public String getRoleName(){
+        return roleName;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setRoleName(String roleName){
+        this.roleName = roleName;
     }
 }

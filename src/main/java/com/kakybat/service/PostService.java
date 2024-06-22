@@ -1,7 +1,7 @@
-package com.kakybat.serviceImpl;
+package com.kakybat.service;
 
+import com.kakybat.model.Person;
 import com.kakybat.model.Post;
-import com.kakybat.model.User;
 import com.kakybat.repository.PostRepository;
 
 import org.springframework.stereotype.Service;
@@ -22,11 +22,18 @@ public class PostService {
     public Optional<Post> getById(Long id){
         return postRepository.findById(id);
     }
+    // FOR COMMENT SYSTEM
+    public Post findById(Long postId){
+        return postRepository.findById(postId).orElse(null);
+    }
+
+
     public List<Post> getAll(){
         return postRepository.findAll();
     }
-    public List<Post> getMyPosts(User user){
-        return user.getPosts();
+    public List<Post> getMyPosts(Person person){
+//        return user.getPosts();
+        return postRepository.findByPerson(person);
 
     }
     public void save(Post post){

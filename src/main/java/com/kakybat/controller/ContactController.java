@@ -1,9 +1,9 @@
 package com.kakybat.controller;
 
 import com.kakybat.model.Contact;
-import com.kakybat.model.User;
+import com.kakybat.model.Person;
 import com.kakybat.service.ContactService;
-import com.kakybat.service.UserService;
+import com.kakybat.service.PersonService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -28,25 +27,25 @@ public class ContactController {
     public static final Logger log = LoggerFactory.getLogger(ContactController.class);
 
     private final ContactService contactService;
-    private final UserService userService;
+    private final PersonService personService;
 
-    public ContactController(ContactService contactService, UserService userService){
+    public ContactController(ContactService contactService, PersonService personService){
         this.contactService = contactService;
-        this.userService = userService;
+        this.personService = personService;
     }
 
     @RequestMapping("/contact")
     @PreAuthorize("isAnonymous()")
-    public String displayContactPage(Model model, Principal principal){
-        setUserModelAttribute(model, principal);
+    public String displayContactPage(Model model, Authentication auth){
+        setUserModelAttribute(model, auth);
         model.addAttribute("pageTitle", "Contact Me");
         model.addAttribute("contact", new Contact());
         return "contact";
     }
 
     @RequestMapping(value = "/saveMessage", method = POST)
-    public String saveMessage(@Valid @ModelAttribute("contact") Contact contact, Errors errors, Model model, Principal principal){
-        setUserModelAttribute(model, principal);
+    public String saveMessage(@Valid @ModelAttribute("contact") Contact contact, Errors errors, Model model, Authentication auth){
+        setUserModelAttribute(model, auth);
         if(errors.hasErrors()){
             log.error("Contact form validation failed due to : " + errors);
             return "contact";
@@ -56,8 +55,8 @@ public class ContactController {
     }
 
     @RequestMapping("/displayMessages")
-    public ModelAndView displayMessages(Model model, Principal principal){
-        setUserModelAttribute(model, principal);
+    public ModelAndView displayMessages(Model model, Authentication auth){
+        setUserModelAttribute(model, auth);
         List<Contact> contactMessages = contactService.findMessageWithOpenStatus();
         ModelAndView modelAndView = new ModelAndView("messages");
         modelAndView.addObject("contactMessages", contactMessages);
@@ -72,11 +71,11 @@ public class ContactController {
         return "redirect:/displayMessages";
     }
 
-    private void setUserModelAttribute(Model model, Principal principal){
-        if(principal != null){
-            String email = principal.getName();
-            User user = userService.findUserByEmail(email);
-            model.addAttribute("user", user);
+    private void setUserModelAttribute(Model model, Authentication auth){
+        if(auth != null){
+            String email = auth.getName();
+            Person person = personService.findUserByEmail(email);
+            model.addAttribute("person", person);
         }
     }
 }

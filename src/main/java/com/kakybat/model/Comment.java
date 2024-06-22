@@ -5,18 +5,17 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Comment {
+public class Comment extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long commentId;
+
     @Column(columnDefinition = "TEXT")
     private String body;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = false)
+    private Person person;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
@@ -25,20 +24,19 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(String body, LocalDateTime createdAt, LocalDateTime updatedAt, User user, Post post) {
+    public Comment(Long commentId, String body, Person person, Post post) {
+        this.commentId = commentId;
         this.body = body;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.user = user;
+        this.person = person;
         this.post = post;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCommentId() {
+        return commentId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
     }
 
     public String getBody() {
@@ -49,28 +47,12 @@ public class Comment {
         this.body = body;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Post getPost() {

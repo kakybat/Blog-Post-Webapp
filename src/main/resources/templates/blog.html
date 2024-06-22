@@ -37,8 +37,8 @@
                         </div>
                         <div class="two-col-grid">
                             <div class="start-to-end fit-first-col">
-                                <div class="user-img"><img th:src="@{'/userImage/' + ${post.getUser().imageFilePath}}" alt="user"></div>
-                                <div class="start-to-center"><p th:text="${post.getUser().name}">Author</p></div>
+                                <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
+                                <div class="start-to-center"><p th:text="${post.getPerson().name}">Author</p></div>
                             </div>
                             <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn primary-back btn-lg"> Read More &#x1F86A;</a></div>
                         </div>

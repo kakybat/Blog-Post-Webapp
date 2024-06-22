@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,25 +22,48 @@
     </div>
     <div class="section">
         <div class="container">
-            <div class="start-to-start">
-                <div sec:authorise="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/displayMessages}" class="btn btn-lg grad-back">
-                        <div class="two-col-grid"><img th:src="@{/images/email.png}" class="start-to-center" alt="Email"/><p class="end-to-center">Messages</p></div>
-                    </a>
+            <div class="three-col-grid-fit">
+                <!-- Display Profile Card -->
+                <div>
+                    <div class="start-to-start">
+                        <div>
+                            <a th:href="@{/displayProfile}" class="btn btn-lg grad-back">
+                                <div class="two-col-grid"><img th:src="@{/images/profile.png}" class="start-to-center" alt="Email"/><p class="end-to-center">Profile</p></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Display Message Card -->
+                <div>
+                    <div class="start-to-start">
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/displayMessages}" class="btn btn-lg grad-back">
+                                <div class="two-col-grid"><img th:src="@{/images/email.png}" class="start-to-center grid-item" alt="Email"/> <p class="end-to-center grid-item">Messages</p></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- EMPTY ??????????????????????? -->
+                    <div class="end-to-center"><div class="rounded md-padding light-back"><a class="btn secondary-back btn-icon" th:href="@{/posts/new}">+</a></div></div>
                 </div>
             </div>
-            <div class="end-to-end"><div class="rounded md-padding light-back"><a class="btn secondary-back btn-icon" th:href="@{/posts/new}">+</a></div></div>
+
             <div class="rounded three-col-grid author-info light-back mr-t">
-                <div class="author-box"><div class="author-image"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="author"> </div></div>
+                <div class="author-box"><div class="author-image"><img th:src="@{'/userImage/' + ${person.imageFilePath}}" alt="author"> </div></div>
                 <div class="author-desc center-to-center">
-                    <p th:text="'Full Name: ' + ${user.name}">My Name</p>
-                    <p th:text="'Email: ' + ${user.email}">user@example.com</p>
+                    <p th:text="'Full Name: ' + ${person.name}">My Name</p>
+                    <p th:text="'Email: ' + ${person.email}">person@example.com</p>
                 </div>
-                <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn btn-md primary-back">Edit Me</a> </div>
+                <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn btn-md primary-back">Change User Image</a> </div>
             </div>
             <div>
                 <h3 class="mr-t">My Posts</h3>
+                <p th:text="${'You logged in as - ' + role}"></p>
+                <p th:text="${'You logged in as - ' + person.getEmail()}"></p>
                 <p>You can edit or delete your posts in this section</p>
+
                 <div class="posts-list"  th:each="post : ${myPosts}">
 
                     <div class="post rounded light-back bx">
@@ -52,7 +75,7 @@
                                 <h3 th:text="${post.title}">Title</h3>
                                 <p th:text="'&#x23F2; Published on: ' + ${post.createdAt}">Created At</p>
                                 <p th:text="'&#x23F2; Last Updated on: ' + ${post.updatedAt}">Updated At</p>
-                                <p th:text="'Author: ' + ${post.getUser().name}">Author</p>
+                                <p th:text="'Author: ' + ${post.getPerson().name}">Author</p>
                                 <p th:text="${post.shortDescription}" class="start-to-center">Short Description</p>
                             </div>
                             <div class=" end-to-end"><a th:href="@{'/myPosts/' + ${post.id}}" class="btn btn-lg primary-back"> Read More &#x1F862;</a></div>

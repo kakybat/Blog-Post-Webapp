@@ -30,11 +30,12 @@
                         </ul>
                         <ul class="auth" sec:authorize="!isAuthenticated()">
                             <li><a th:href="@{/login}" class="btn btn-md accent-back">Sign In</a></li>
-                            <li><a th:href="@{/signup}" class="btn btn-md secondary-back">Sign Up</a></li>
+<!--                            <li><a th:href="@{/signup}" class="btn btn-md secondary-back">Sign Up</a></li>-->
+                            <li><a th:href="@{/public/register}" class="btn btn-md secondary-back">Sign Up</a></li>
                         </ul>
                         <ul class="auth" sec:authorize="isAuthenticated()" >
                             <li><a th:href="@{/logout}"  class="btn btn-md secondary-back">Logout</a></li>
-                            <li class="end-to-center"><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" alt="user"></div></a></li>
+                            <li class="end-to-center"><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{'/userImage/' + ${person.imageFilePath}}" alt="person"></div></a></li>
                         </ul>
                     </div>
                 </div>
