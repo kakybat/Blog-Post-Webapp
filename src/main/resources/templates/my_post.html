@@ -22,12 +22,14 @@
         <div class="section">
             <div class="container">
                 <div class="post-padding light-back rounded">
-                    <div class="start-to-start"><a class="btn btn-arrow secondary-back" th:href="@{/dashboard}">&#x1F860;</a></div>
-                    <div class="post-header-image rounded"><img th:src="@{'/postHeaderImage/' + ${myPost.imageFilePath}}" alt="post-image"></div>
+                    <div class="post-header-image rounded">
+                        <img th:src="@{'/postHeaderImage/' + ${myPost.imageFilePath}}" alt="post-image">
+                        <div class="btn-over"><a class="btn btn-arrow accent-back" th:href="@{/dashboard}">&#x1F860;</a></div>
+                    </div>
                     <div class="post-content">
 
-                        <p th:text="'&#x1F551; Published on: ' + ${myPost.createdAt}">Created At</p>
-                        <p th:text="'&#x1F55F; Last Updated on: ' + ${myPost.updatedAt}" class="post-time mr-b-md">Updated At</p>
+                        <p th:text="'&#x23F2; Published on: ' + ${myPost.createdAt}">Created At</p>
+                        <p th:text="'&#x23F2; Last Updated on: ' + ${myPost.updatedAt}" class="post-time mr-b-md">Updated At</p>
 <!--                        <p th:text="'Author: ' + ${myPost.getPerson().getName()}">Author Name</p>-->
                         <div class="start-to-end fit-first-col">
                             <div class="user-img"><img th:src="@{'/userImage/' + ${myPost.getPerson().imageFilePath}}" alt="person"></div>

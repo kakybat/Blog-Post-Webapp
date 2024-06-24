@@ -1,6 +1,6 @@
 :root{
     /*colors*/
-    --primary-color: #f5f4f9/*#dee8f1*/;
+    --primary-color: #f5f4f9/*#f7f7f7/*#dee8f1*/;
     --secondary-color: #031371/*#27238b*/;
     --additional: #0155f6;
     --additional2: #00cbf3;
@@ -465,6 +465,12 @@ textarea:focus{
     margin: 12px;
     padding: 10px 25px;
     font-size: var(--md-font-size);
+}
+.btn-over {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    z-index: 1;
 }
 .form-switcher {
     text-align: center;

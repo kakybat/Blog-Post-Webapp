@@ -22,12 +22,15 @@
         <div class="section">
             <div class="container">
                 <div class="post-padding light-back rounded">
-                    <div class="start-to-start"><a class="btn btn-arrow secondary-back" th:href="@{/blog}">&#x1F860;</a></div>
-                    <div class="post-header-image rounded"><img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="post-image"></div>
+<!--                    <div class="start-to-start"><a class="btn btn-arrow secondary-back" th:href="@{/blog}">&#x1F860;</a></div>-->
+                    <div class="post-header-image rounded">
+                        <img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="post-image">
+                        <div class="btn-over"><a class="btn btn-arrow accent-back" th:href="@{/blog}">&#x1F860;</a></div>
+                    </div>
                     <div class="post-content">
 
-                        <p th:text="'&#x1F551; Published on: ' + ${post.createdAt}">Created At</p>
-                        <p th:text="'&#x1F55F; Last Updated on: ' + ${post.updatedAt}" class="post-time mr-b-md">Updated At</p>
+                        <p th:text="'&#x23F2; Published on: ' + ${post.createdAt}">Created At</p>
+                        <p th:text="'&#x23F2; Last Updated on: ' + ${post.updatedAt}" class="post-time mr-b-md">Updated At</p>
 <!--                        <p th:text="'Author: ' + ${post.getUser().getName()}">Author Name</p>-->
                         <div class="start-to-end fit-first-col">
                             <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
@@ -61,18 +64,17 @@
                             </div>
                         </div>
 
-                        <div th:if="${#authentication.name == comment.person.email}">
-                            <a th:href="@{'/comments/' + ${comment.commentId} + '/edit'}" class="btn btn-sm secondary-back">Edit</a>
-                            <a th:href="@{'/comments/' + ${comment.commentId} + '/delete'}" class="btn btn-sm accent-back">Delete</a>
+                        <div th:if="${#authentication.name == comment.person.email}" class="end-to-end">
+                            <a th:href="@{'/comments/' + ${comment.commentId} + '/edit'}" class="btn btn-md secondary-back">Edit</a>
+                            <a th:href="@{'/comments/' + ${comment.commentId} + '/delete'}" class="btn btn-md accent-back">Delete</a>
                         </div>
                     </div>
                 </div>
                 <div class="post-padding light-back rounded mr-t">
                     <!-- Comment form -->
-<!--                    <form th:action="@{'/posts/' + ${post.id}}" method="post" class="body-form">-->
                     <form th:action="@{'/posts/'+ ${post.id} +'/comments'}" th:object="${newComment}" method="post" class="body-form">
                         <label for="body-body">Your Comment</label>
-                        <textarea th:field="*{body}" id="body-body" name="body" rows="4" cols="50" required></textarea>
+                        <textarea th:field="*{body}" id="body-body" name="body" rows="4" cols="50" placeholder="Write a comment" required></textarea>
 
                         <button type="submit" class="btn btn-md secondary-back">Publish Comment</button>
                     </form>
