@@ -44,8 +44,14 @@
                     </div>
                 </div>
 
-                <div>
-                    <!-- EMPTY ??????????????????????? -->
+                <div class="fit-first-col">
+                    <div class="start-to-start">
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/users}" class="btn btn-lg grad-back">
+                                <div class="two-col-grid"><img th:src="@{/images/users.png}" class="start-to-center grid-item" alt="Email"/> <p class="end-to-center grid-item">Users</p></div>
+                            </a>
+                        </div>
+                    </div>
                     <div class="end-to-center"><div class="rounded md-padding light-back"><a class="btn secondary-back btn-icon" th:href="@{/posts/new}">+</a></div></div>
                 </div>
             </div>
@@ -55,17 +61,20 @@
                 <div class="author-desc center-to-center">
                     <p th:text="'Full Name: ' + ${person.name}">My Name</p>
                     <p th:text="'Email: ' + ${person.email}">person@example.com</p>
+                    <p th:text="'Role: ' + ${person.role.roleName}">My Role</p>
                 </div>
                 <div class="center-to-center"><a th:href="@{/edit-user-details}" class="btn btn-md primary-back">Change User Image</a> </div>
             </div>
             <div>
-                <h3 class="mr-t">My Posts</h3>
-                <p th:text="${'You logged in as - ' + role}"></p>
-                <p th:text="${'You logged in as - ' + person.getEmail()}"></p>
-                <p>You can edit or delete your posts in this section</p>
+                <div th:if="${myPosts.isEmpty()}">
+                    <h3 class="mr-t">You do not have any posts.</h3>
+                </div>
+                <div th:if="${!myPosts.isEmpty()}">
+                    <h3 class="mr-t">My Posts</h3>
+                    <p>You can <b>edit</b> or <b>delete</b> your post here.</p>
+                </div>
 
                 <div class="posts-list"  th:each="post : ${myPosts}">
-
                     <div class="post rounded light-back bx">
                         <div class="post-img">
                             <img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="Post Image">
@@ -73,12 +82,16 @@
                         <div class="post-desc">
                             <div class="post-desc-text">
                                 <h3 th:text="${post.title}">Title</h3>
-                                <p th:text="'&#x23F2; Published on: ' + ${post.createdAt}">Created At</p>
-                                <p th:text="'&#x23F2; Last Updated on: ' + ${post.updatedAt}">Updated At</p>
-                                <p th:text="'Author: ' + ${post.getPerson().name}">Author</p>
-                                <p th:text="${post.shortDescription}" class="start-to-center">Short Description</p>
+                                <p th:text="'&#x23F2; ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}" class="mr-b-md">Created At</p>
+                                <p th:text="${post.shortDescription}" class="start-to-center light-gray-text">Short Description</p>
                             </div>
-                            <div class=" end-to-end"><a th:href="@{'/myPosts/' + ${post.id}}" class="btn btn-lg primary-back"> Read More &#x1F862;</a></div>
+                            <div class="two-col-grid">
+                                <div class="start-to-end fit-first-col">
+                                    <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
+                                    <div class="start-to-center"><p th:text="${post.getPerson().name}">Author</p></div>
+                                </div>
+                                <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn btn-lg primary-back"> Read More &#x1F86A;</a></div>
+                            </div>
                         </div>
                     </div>
                 </div>

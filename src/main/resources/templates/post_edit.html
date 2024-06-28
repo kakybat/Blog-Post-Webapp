@@ -24,18 +24,21 @@
         <div class="container">
             <div class="post-container light-back">
                 <h3>Update post</h3>
+                <ul>
+                    <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('post.*')}" th:text="${error}"></li>
+                </ul>
                 <form th:action="@{'/posts/{id}'(id=${post.id})}" th:object="${post}" enctype="multipart/form-data" method="post">
                     <input type="hidden" th:field="*{createdAt}" />
-                    <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="rounded img-fluid" alt="load image"/>
+<!--                    <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="rounded img-fluid" alt="load image"/>-->
                     <label for="input-field">Add A Post Header Image</label>
                     <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding"/>
                     <label for="post-title">Post Title</label>
-                    <input type="text" id="post-title" name="post-title" th:field="*{title}" required />
+                    <input type="text" id="post-title" name="post-title" th:field="*{title}" />
                     <label for="short-description">Short Description</label>
-                    <input type="text" id="short-description" name="short-description" th:field="*{shortDescription}" required />
+                    <input type="text" id="short-description" name="short-description" th:field="*{shortDescription}" />
                     <label for="post-body">Main Content</label>
-                    <textarea id="post-body" name="post-body" th:field="*{body}" rows="10" required></textarea>
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <textarea id="post-body" name="post-body" th:field="*{body}" rows="10"></textarea>
+<!--                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
                     <button type="submit" class="btn btn-md secondary-back mr-t">Update Post</button>
                 </form>
             </div>

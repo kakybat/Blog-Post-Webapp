@@ -36,7 +36,7 @@
                     <form id="postEdit" th:action="@{'/posts/save'}" th:object="${post}" enctype="multipart/form-data" method="post">
                         <input type="hidden" th:field="*{person.userId}">
                         <input type="hidden" th:field="*{createdAt}" />
-                        <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="img-fluid" style="visibility: hidden;" alt="load image"/>
+<!--                        <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="img-fluid" style="visibility: hidden;" alt="load image"/>-->
                         <label for="input-field">Add A Post Header Image:</label>
                         <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding" required/>
                         <label for="post-title">Post Title:</label>

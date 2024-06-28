@@ -30,17 +30,15 @@
                     <div class="post-desc">
                         <div class="post-desc-text">
                             <h3 th:text="${post.title}">Title</h3>
-                            <p th:text="'&#x23F2; Published on: ' + ${post.createdAt}">Created At</p>
-                            <p th:text="'&#x23F2; Last Updated on: ' + ${post.updatedAt}">Updated At</p>
-
-                            <p th:text="${post.shortDescription}" class="start-to-center">Short Description</p>
+                            <p th:text="'&#x23F2; ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}" class="mr-b-md">Created At</p>
+                            <p th:text="${post.shortDescription}" class="start-to-center light-gray-text">Short Description</p>
                         </div>
                         <div class="two-col-grid">
                             <div class="start-to-end fit-first-col">
                                 <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
                                 <div class="start-to-center"><p th:text="${post.getPerson().name}">Author</p></div>
                             </div>
-                            <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn primary-back btn-lg"> Read More &#x1F86A;</a></div>
+                            <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn btn-lg primary-back"> Read More &#x1F86A;</a></div>
                         </div>
                     </div>
                 </div>

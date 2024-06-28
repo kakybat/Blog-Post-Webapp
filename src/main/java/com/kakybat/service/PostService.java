@@ -6,7 +6,7 @@ import com.kakybat.repository.PostRepository;
 
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ public class PostService {
     public Optional<Post> getById(Long id){
         return postRepository.findById(id);
     }
-    // FOR COMMENT SYSTEM
+
     public Post findById(Long postId){
         return postRepository.findById(postId).orElse(null);
     }
@@ -32,15 +32,13 @@ public class PostService {
         return postRepository.findAll();
     }
     public List<Post> getMyPosts(Person person){
-//        return user.getPosts();
         return postRepository.findByPerson(person);
-
     }
     public void save(Post post){
         if(post.getId() == null){
-            post.setCreatedAt(LocalDate.now());
+            post.setCreatedAt(LocalDateTime.now());
         }
-        post.setUpdatedAt(LocalDate.now());
+        post.setUpdatedAt(LocalDateTime.now());
         postRepository.save(post);
     }
 

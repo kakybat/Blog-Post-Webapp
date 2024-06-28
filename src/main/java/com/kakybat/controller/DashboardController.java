@@ -1,11 +1,14 @@
 package com.kakybat.controller;
 
+import com.kakybat.model.Comment;
 import com.kakybat.model.Person;
 import com.kakybat.model.Post;
+import com.kakybat.repository.CommentRepository;
 import com.kakybat.repository.PersonRepository;
 import com.kakybat.service.FileService;
 import com.kakybat.service.PersonService;
 import com.kakybat.service.PostService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +30,12 @@ public class DashboardController {
     private final PersonService personService;
     private final PostService postService;
     private final FileService fileService;
-    public DashboardController(PersonService personService, PostService postService, FileService fileService){
+    private final CommentRepository commentRepository;
+    public DashboardController(PersonService personService, PostService postService, FileService fileService, CommentRepository commentRepository){
         this.personService = personService;
         this.postService = postService;
         this.fileService = fileService;
+        this.commentRepository = commentRepository;
     }
     @Autowired
     PersonRepository personRepository;
@@ -57,16 +62,41 @@ public class DashboardController {
     @PreAuthorize("isAuthenticated()")
     public String getSinglePost(@PathVariable Long postId, Model model, Authentication auth){
         setUserModelAttribute(model, auth);
+        Comment newComment = new Comment();
+        model.addAttribute("newComment", newComment);
+
         Optional<Post> optionalPost = postService.getById(postId);
-        // List<Comment> comments = commentService.getAllCommentsForPost(postId);
         if(optionalPost.isPresent()){
             Post myPost = optionalPost.get();
-//            model.addAttribute("post", post);
             model.addAttribute("myPost", myPost);
-            // model.addAttribute("comments", comments);
             return "my_post";
         } else {
             return "p404";
+        }
+    }
+
+
+    @PostMapping("/myPosts/{postId}/comments")
+    public String addComment(@PathVariable Long postId, @ModelAttribute("newComment") Comment newComment, Model model, Authentication auth) {
+        setUserModelAttribute(model, auth);
+        Post post = postService.findById(postId);
+        Person person = personService.findUserByEmail(auth.getName());
+        newComment.setPerson(person);
+        newComment.setPost(post);
+        commentRepository.save(newComment);
+        return "redirect:/myPosts/" + postId;
+    }
+    @GetMapping("/myPostComments/deleteComment/{commentId}")
+    public String deleteComment(@PathVariable Long commentId, Model model, Authentication auth) {
+        setUserModelAttribute(model, auth);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+        Post post = comment.getPost();
+        postService.save(post);
+        if(auth.getName().equals(comment.getPerson().getEmail()) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+            commentRepository.delete(comment);
+            return "redirect:/posts/" + post.getId();
+        } else {
+            throw new EntityNotFoundException("Comment not found");
         }
     }
 
@@ -108,8 +138,9 @@ public class DashboardController {
     @GetMapping("/users")
     public String getAllUsers(Model model, Authentication auth){
         setUserModelAttribute(model, auth);
-        List<Person> people = personService.findAllUsers();
-        model.addAttribute("users", people);
+        model.addAttribute("pageTitle", "User Details");
+            List<Person> people = personService.findAllUsers();
+            model.addAttribute("users", people);
         return "users";
     }
 

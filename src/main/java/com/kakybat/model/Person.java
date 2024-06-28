@@ -34,7 +34,7 @@ public class Person extends BaseEntity{
     private Long userId;
 
     @NotBlank(message = "Name must not be blank")
-    @Size(min = 3, message = "Name must be at least 3 characters long")
+    @Size(min = 3, max = 50, message = "Name should be between 3 and 50 characters")
     private String name;
 
     @NotBlank(message = "Email must not be blank")
@@ -64,13 +64,8 @@ public class Person extends BaseEntity{
     @JoinColumn(name = "role_id", referencedColumnName = "roleId", nullable = false)
     private Role role;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH) // mappedBy = "user", orphanRemoval = true
-//    private List<Post> posts;
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "users_posts", joinColumns = {
-//            @JoinColumn(name = "user_id", referencedColumnName = "userId")},
-//            inverseJoinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")}
-//    )
+
     private List<Post> posts = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Address.class)
@@ -80,13 +75,13 @@ public class Person extends BaseEntity{
     public Person() {
     }
 
-    public Person(String confirmPassword, Long userId, String name, String email, String confirmEmail, String password, String imageFilePath, Role role, List<Post> posts, Address address) {
-        this.confirmPassword = confirmPassword;
+    public Person(Long userId, String name, String email, String confirmEmail, String password, String confirmPassword, String imageFilePath, Role role, List<Post> posts, Address address) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.confirmEmail = confirmEmail;
         this.password = password;
+        this.confirmPassword = confirmPassword;
         this.imageFilePath = imageFilePath;
         this.role = role;
         this.posts = posts;
@@ -101,11 +96,11 @@ public class Person extends BaseEntity{
         this.userId = userId;
     }
 
-    public @NotBlank(message = "Name must not be blank") @Size(min = 3, message = "Name must be at least 3 characters long") String getName() {
+    public @NotBlank(message = "Name must not be blank") @Size(min = 3, max = 50, message = "Name should be between 3 and 50 characters") String getName() {
         return name;
     }
 
-    public void setName(@NotBlank(message = "Name must not be blank") @Size(min = 3, message = "Name must be at least 3 characters long") String name) {
+    public void setName(@NotBlank(message = "Name must not be blank") @Size(min = 3, max = 50, message = "Name should be between 3 and 50 characters") String name) {
         this.name = name;
     }
 

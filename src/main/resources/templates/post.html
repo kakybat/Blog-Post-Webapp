@@ -21,27 +21,30 @@
         </div>
         <div class="section">
             <div class="container">
-                <div class="post-padding light-back rounded">
-<!--                    <div class="start-to-start"><a class="btn btn-arrow secondary-back" th:href="@{/blog}">&#x1F860;</a></div>-->
-                    <div class="post-header-image rounded">
+                <div class="light-back rounded">
+                    <div class="post-header-image">
                         <img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="post-image">
-                        <div class="btn-over"><a class="btn btn-arrow accent-back" th:href="@{/blog}">&#x1F860;</a></div>
+                        <div class="btn-over"><a class="btn btn-arrow primary-back box-shadow" th:href="@{/blog}">&#x1F860;</a></div>
                     </div>
-                    <div class="post-content">
+                    <div class="post-padding">
 
-                        <p th:text="'&#x23F2; Published on: ' + ${post.createdAt}">Created At</p>
-                        <p th:text="'&#x23F2; Last Updated on: ' + ${post.updatedAt}" class="post-time mr-b-md">Updated At</p>
-<!--                        <p th:text="'Author: ' + ${post.getUser().getName()}">Author Name</p>-->
-                        <div class="start-to-end fit-first-col">
-                            <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
-                            <div class="start-to-center"><p th:text="${post.getPerson().name}">Author</p></div>
-                        </div>
-                        <div class="post-short-desc"><p th:text="${post.shortDescription}">Short description</p></div>
-                        <div class="post-body"><p th:utext="${post.body}">Post Body</p></div>
+                        <div class="post-content">
 
-                        <div th:if="${#authentication.name} == ${post.getPerson().getEmail()}" class="mr-t">
-                            <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-md secondary-back">&#9998 Edit</a>
-                            <a th:href="@{'/posts/' + ${post.id} + '/delete'}" class="btn btn-md danger-back">Delete</a>
+                            <p th:text="'&#x23F2; Published : ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}">Created At</p>
+                            <p th:if="${post.updatedAt != null}" th:text="'&#x23F2; Updated   : ' + ${#temporals.format(post.updatedAt, 'MMMM d, yyyy')}" class="post-time mr-b-md">Updated At</p>
+
+
+                            <div class="start-to-end fit-first-col mr-b-md">
+                                <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
+                                <div class="start-to-center"><p th:text="${post.getPerson().name}">Author</p></div>
+                            </div>
+                            <div class="post-short-desc"><p th:text="${post.shortDescription}">Short description</p></div>
+                            <div class="post-body"><p th:utext="${post.body}">Post Body</p></div>
+
+                            <div th:if="${#authentication.name} == ${post.getPerson().getEmail()}" class="mr-t">
+                                <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-md secondary-back">&#9998 Edit</a>
+                                <a th:href="@{'/posts/' + ${post.id} + '/delete'}" class="btn btn-md danger-back">Delete</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,13 +64,12 @@
                                 <div class="start-to-start mr-b-xsm"><p><b th:text="${comment.person.name}">Author</b></p></div>
                                 <div class="body-body" th:text="${comment.body}"></div>
                                 <div th:text="'&#x1F4C5; ' + ${#temporals.format(comment.createdAt, 'MMMM d, yyyy')}" class="end-to-end sm-font"></div>
+                                <div th:if="${#authentication.name == comment.person.email} or ${#authentication.name == 'admin@example.com'}" class="end-to-end">
+                                <a th:href="@{'/comments/deleteComment/' + ${comment.commentId}}" class="btn btn-sm danger-back">Delete Comment</a>
+                            </div>
                             </div>
                         </div>
 
-                        <div th:if="${#authentication.name == comment.person.email}" class="end-to-end">
-                            <a th:href="@{'/comments/' + ${comment.commentId} + '/edit'}" class="btn btn-md secondary-back">Edit</a>
-                            <a th:href="@{'/comments/' + ${comment.commentId} + '/delete'}" class="btn btn-md accent-back">Delete</a>
-                        </div>
                     </div>
                 </div>
                 <div class="post-padding light-back rounded mr-t">

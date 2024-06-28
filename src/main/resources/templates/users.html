@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--  <meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}">
+    <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-
+<div th:replace="~{fragments/header :: header}"></div>
+<main>
+    <div class="section header-section">
+        <div class="container rounded big-padding light-blue4-back">
+            <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
+            <p class="title-sub">⎯ &#10023 ⎯</p>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="rounded light-back three-col-grid md-padding mr-b-xsm" th:each="user : ${users}">
+                <div class="fit-first-col">
+                    <div class="user-img"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" class="start-to-center" alt="User Image"></div>
+                    <span th:text="${user.name}" class="start-to-center">Name</span>
+                </div>
+                <div class="start-to-center" th:text="${user.email}">Email</div>
+                <div class="end-to-center"><a th:href="@{/deleteUser}" class="btn btn-md danger-back">Delete User</a> </div>
+            </div>
+            <div class="center-to-center">
+                <a th:href="@{/dashboard}" class="btn btn-md secondary-back">BACK</a>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
+<script th:src="@{/js/header.js}"></script>
 </body>
 </html>

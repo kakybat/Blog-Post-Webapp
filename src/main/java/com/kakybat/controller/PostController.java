@@ -7,6 +7,7 @@ import com.kakybat.repository.CommentRepository;
 import com.kakybat.service.FileService;
 import com.kakybat.service.PersonService;
 import com.kakybat.service.PostService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class PostController {
         this.postService = postService;
         this.personService = personService;
         this.fileService = fileService;
-//        this.commentService = commentService;
+
     }
 
     @GetMapping("/blog")
@@ -53,20 +54,15 @@ public class PostController {
     @PreAuthorize("isAnonymous()")
     public String getSinglePost(@PathVariable Long postId, Model model, Authentication auth){
         setUserModelAttribute(model, auth);
-        // ***********************************************
-//        Post postComment = postService.findById(postId);
-//        Person person = personService.findUserByEmail(auth.getName()); // Assuming you have a method to find the currently authenticated user
+
         Comment newComment = new Comment();
-//        newComment.setPerson(person); // Set the person for the new comment (optional if you want to associate comments with users)
-//        model.addAttribute("postComment", postComment);
         model.addAttribute("newComment", newComment);
-        // *****************************************
+
         Optional<Post> optionalPost = postService.getById(postId);
-//        List<Comment> comments = commentService.getAllCommentsForPost(postId);
+
         if(optionalPost.isPresent()){
             Post post = optionalPost.get();
             model.addAttribute("post", post);
-//            model.addAttribute("comments", comments);
             return "post";
         } else {
             return "error";
@@ -123,24 +119,34 @@ public class PostController {
 
     @PostMapping("/posts/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String updatePost(@Valid @ModelAttribute("post")  Post post, Errors errors, @PathVariable Long id, Model model, Authentication auth, @RequestParam("file") MultipartFile file){
+    public String updatePost(@Valid @ModelAttribute("post") Post post, Errors errors, @PathVariable Long id, Model model, Authentication auth, @RequestParam("file") MultipartFile file){
         setUserModelAttribute(model, auth);
-        Optional<Post> optionalPost = postService.getById(id);
-        if(optionalPost.isPresent()){
-            Post existingPost = optionalPost.get();
-            existingPost.setTitle(post.getTitle());
-            existingPost.setShortDescription(post.getShortDescription());
-            existingPost.setBody(post.getBody());
-
-            try {
-                fileService.save(file);
-                existingPost.setImageFilePath(file.getOriginalFilename());
-            } catch (Exception e){
-                logger.error("Error processing file: {}", file.getOriginalFilename());
+        if(errors.hasErrors()){
+            Optional<Post> optionalPost = postService.getById(id);
+            if(optionalPost.isPresent()){
+                Post postToUpdate = optionalPost.get();
+                model.addAttribute("post", postToUpdate);
             }
-            postService.save(existingPost);
+
+            return "post_edit";
+        } else {
+            Optional<Post> optionalPost = postService.getById(id);
+            if(optionalPost.isPresent()){
+                Post existingPost = optionalPost.get();
+                existingPost.setTitle(post.getTitle());
+                existingPost.setShortDescription(post.getShortDescription());
+                existingPost.setBody(post.getBody());
+
+                try {
+                    fileService.save(file);
+                    existingPost.setImageFilePath(file.getOriginalFilename());
+                } catch (Exception e){
+                    logger.error("Error processing file: {}", file.getOriginalFilename());
+                }
+                postService.save(existingPost);
+            }
+            return "redirect:/posts/" + post.getId();
         }
-        return "redirect:/posts/" + post.getId();
     }
 
     @GetMapping("/posts/{id}/delete")
@@ -165,9 +171,23 @@ public class PostController {
         newComment.setPerson(person);
         newComment.setPost(post);
         commentRepository.save(newComment);
-//        model.addAttribute("comment", newComment);
-        return "redirect:/posts/" + postId; // Redirect to post details page
+        return "redirect:/posts/" + postId;
     }
+    @GetMapping("/comments/deleteComment/{commentId}")
+    public String deleteComment(@PathVariable Long commentId, Model model, Authentication auth) {
+        setUserModelAttribute(model, auth);
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+        Post post = comment.getPost();
+        postService.save(post);
+        if(auth.getName().equals(comment.getPerson().getEmail()) || auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))){
+            commentRepository.delete(comment);
+            return "redirect:/posts/" + post.getId();
+        } else {
+            throw new EntityNotFoundException("Comment not found");
+        }
+    }
+
+
 
     private void setUserModelAttribute(Model model, Authentication auth){
         if(auth != null){
