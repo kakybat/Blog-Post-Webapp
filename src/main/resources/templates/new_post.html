@@ -13,41 +13,48 @@
      <title>New Post</title>
 </head>
 <body>
-    <div th:replace="~{fragments/header :: header}"></div>
     <main>
-        <div class="section header-section">
-            <div class="container">
-                <h2 class="text-center">New Post</h2>
-                <p class="title-sub">⎯ &#10023 ⎯</p>
+        <div class="light-grad-back">
+            <div th:replace="~{fragments/header :: header}"></div>
+            <div class="section header-section">
+                <div class="container big-padding">
+                    <h1 class="text-center">Add New Post</h1>
+                    <p class="title-sub">⎯ &#10023 ⎯</p>
+                </div>
             </div>
         </div>
         <div class="section">
             <div class="container rounded big-padding light-back">
                 <div class="post-container">
-                    <h3>Write new post</h3>
+                    <h3>Write new post &#x1F4D1;</h3>
                     <div class="start-to-start">
-                        <div class="rounded-sm md-padding danger-back" sec:authorize="!isAuthenticated()">
+                        <div class="warning-msg" sec:authorize="!isAuthenticated()">
                             <p>To publish a post, logging in is required.</p>
                         </div>
                     </div>
-                    <ul>
-                        <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('post.*')}" th:text="${error}" />
-                    </ul>
+
                     <form id="postEdit" th:action="@{'/posts/save'}" th:object="${post}" enctype="multipart/form-data" method="post">
                         <input type="hidden" th:field="*{person.userId}">
                         <input type="hidden" th:field="*{createdAt}" />
 <!--                        <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="img-fluid" style="visibility: hidden;" alt="load image"/>-->
-                        <label for="input-field">Add A Post Header Image:</label>
+                        <label for="input-field" class="mr-t">Add A Post Header Image:</label>
                         <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding" required/>
-                        <label for="post-title">Post Title:</label>
+
+<!--                        <label for="post-title">Post Title:</label>-->
                         <input type="text" id="post-title" name="post-title" th:field="*{title}"
-                               placeholder="Title of your post goes here..." />
-                        <label for="short-description">Short Description:</label>
+                               placeholder="Post Title" />
+                        <div class="warning-msg" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+<!--                        <label for="short-description">Short Description:</label>-->
                         <input type="text" id="short-description" name="short-description" th:field="*{shortDescription}"
-                               placeholder="A brief description of your post..." />
-                        <label for="post-body">Main Content:</label>
-                        <textarea id="post-body" name="body" th:field="*{body}" rows="10"
+                               placeholder="Short Description" />
+                        <div class="warning-msg" th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></div>
+
+<!--                        <label for="post-body">Main Content:</label>-->
+                        <textarea id="post-body" name="body" th:field="*{body}" rows="10" placeholder="Main Content"
                                   ></textarea>
+                        <div class="warning-msg" th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></div>
+
                         <button type="submit" class="btn accent-back btn-md mr-t">Publish Post</button>
                     </form>
                 </div>

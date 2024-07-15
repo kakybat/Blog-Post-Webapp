@@ -2,8 +2,10 @@ package com.kakybat.constants;
 
 public interface AppConstants {
 
-    static final String OPEN = "Open";
-    static final String CLOSE = "Close";
-    static final String AUTHOR_ROLE = "AUTHOR";
-    static final String ADMIN_ROLE = "ADMIN";
+    String OPEN = "Open";
+    String CLOSE = "Close";
+    String AUTHOR_ROLE = "AUTHOR";
+    String ADMIN_ROLE = "ADMIN";
+    String POST_STATUS_ACTIVE = "ACTIVE";
+    String POST_STATUS_INACTIVE = "INACTIVE";
 }

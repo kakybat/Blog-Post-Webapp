@@ -12,23 +12,26 @@
     <title th:text="${pageTitle}">Title</title>
 </head>
 <body>
-<div th:replace="~{/fragments/header :: header}"></div>
+<!--<div th:replace="~{/fragments/header :: header}"></div>-->
 <main>
-    <div class="section header-section">
-        <div class="container rounded big-padding light-blue4-back">
-            <h2 class="text-center" th:text="${pageTitle}">Title</h2>
-            <p class="title-sub">⎯ &#10023 ⎯</p>
+    <div class="light-grad-back">
+        <div th:replace="~{fragments/header :: header}"></div>
+        <div class="section header-section">
+            <div class="container big-padding">
+                <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
+            </div>
         </div>
     </div>
-    <div class="section">
+    <div class="section-pb-100">
         <div class="container">
             <div class="three-col-grid-fit">
                 <!-- Display Profile Card -->
                 <div>
                     <div class="start-to-start">
                         <div>
-                            <a th:href="@{/displayProfile}" class="btn btn-lg grad-back">
-                                <div class="two-col-grid"><img th:src="@{/images/profile.png}" class="start-to-center" alt="Email"/><p class="end-to-center">Profile</p></div>
+                            <a th:href="@{/displayProfile}" class="btn btn-lg grad-back-two">
+                                <div class="fit-first-col"><div class="icon-box"><img th:src="@{/images/profile.png}" class="start-to-center" alt="Profile"/></div><p class="end-to-center">Profile</p></div>
                             </a>
                         </div>
                     </div>
@@ -37,22 +40,29 @@
                 <div>
                     <div class="start-to-start">
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a th:href="@{/displayMessages}" class="btn btn-lg grad-back">
-                                <div class="two-col-grid"><img th:src="@{/images/email.png}" class="start-to-center grid-item" alt="Email"/> <p class="end-to-center grid-item">Messages</p></div>
+                            <a th:href="@{/displayMessages}" class="btn btn-lg grad-back-two">
+                                <div class="fit-first-col"><div class="icon-box"><img th:src="@{/images/message.png}" class="start-to-center grid-item" alt="Message"/></div> <p class="end-to-center grid-item">Messages</p></div>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="fit-first-col">
+                <div class="three-col-grid-fit">
                     <div class="start-to-start">
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a th:href="@{/users}" class="btn btn-lg grad-back">
-                                <div class="two-col-grid"><img th:src="@{/images/users.png}" class="start-to-center grid-item" alt="Email"/> <p class="end-to-center grid-item">Users</p></div>
+                            <a th:href="@{/users}" class="btn btn-lg grad-back-two">
+                                <div class="fit-first-col"><div class="icon-box"><img th:src="@{/images/users.png}" class="start-to-center grid-item" alt="users"/></div> <p class="end-to-center grid-item">Users</p></div>
                             </a>
                         </div>
                     </div>
-                    <div class="end-to-center"><div class="rounded md-padding light-back"><a class="btn secondary-back btn-icon" th:href="@{/posts/new}">+</a></div></div>
+                    <div class="start-to-start">
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/displayInactivePosts}" class="btn btn-lg grad-back-two">
+                                <div class="fit-first-col"><div class="icon-box"><img th:src="@{/images/posts.png}" class="start-to-center grid-item" alt="posts"/></div> <p class="end-to-center grid-item">Posts</p></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="end-to-center"><div class="rounded md-padding light-back"><a class="btn btn-icon grad-back-two" th:href="@{/posts/new}">+</a></div></div>
                 </div>
             </div>
 
@@ -81,8 +91,8 @@
                         </div>
                         <div class="post-desc">
                             <div class="post-desc-text">
-                                <h3 th:text="${post.title}">Title</h3>
-                                <p th:text="'&#x23F2; ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}" class="mr-b-md">Created At</p>
+                                <p th:text="'&#x23F2; ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}" class="mr-b-xsm">Created At</p>
+                                <h3 th:text="${post.title}" class="mr-b-md">Title</h3>
                                 <p th:text="${post.shortDescription}" class="start-to-center light-gray-text">Short Description</p>
                             </div>
                             <div class="two-col-grid">

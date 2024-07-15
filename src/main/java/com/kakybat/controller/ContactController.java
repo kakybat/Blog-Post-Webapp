@@ -1,9 +1,9 @@
 package com.kakybat.controller;
 
 import com.kakybat.model.Contact;
-import com.kakybat.model.Person;
 import com.kakybat.service.ContactService;
 import com.kakybat.service.PersonService;
+import com.kakybat.service.UserAttributeService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +28,22 @@ public class ContactController {
 
     private final ContactService contactService;
     private final PersonService personService;
+    private final UserAttributeService userAttributeService;
 
-    public ContactController(ContactService contactService, PersonService personService){
+    public ContactController(
+            ContactService contactService,
+            PersonService personService,
+            UserAttributeService userAttributeService
+    ){
         this.contactService = contactService;
         this.personService = personService;
+        this.userAttributeService = userAttributeService;
     }
 
     @RequestMapping("/contact")
     @PreAuthorize("isAnonymous()")
     public String displayContactPage(Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         model.addAttribute("pageTitle", "Contact Me");
         model.addAttribute("contact", new Contact());
         return "contact";
@@ -45,7 +51,7 @@ public class ContactController {
 
     @RequestMapping(value = "/saveMessage", method = POST)
     public String saveMessage(@Valid @ModelAttribute("contact") Contact contact, Errors errors, Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         if(errors.hasErrors()){
             log.error("Contact form validation failed due to : " + errors);
             return "contact";
@@ -56,7 +62,7 @@ public class ContactController {
 
     @RequestMapping("/displayMessages")
     public ModelAndView displayMessages(Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         List<Contact> contactMessages = contactService.findMessageWithOpenStatus();
         ModelAndView modelAndView = new ModelAndView("messages");
         modelAndView.addObject("contactMessages", contactMessages);
@@ -66,16 +72,16 @@ public class ContactController {
 
     @RequestMapping(value = "/closeMessage", method = GET)
     public String closeMessage(@RequestParam int id, Authentication authentication, Model model){
-        setUserModelAttribute(model, authentication);
+        userAttributeService.setUserModelAttribute(model, authentication);
         contactService.updateMessageStatus(id);
         return "redirect:/displayMessages";
     }
 
-    private void setUserModelAttribute(Model model, Authentication auth){
-        if(auth != null){
-            String email = auth.getName();
-            Person person = personService.findUserByEmail(email);
-            model.addAttribute("person", person);
-        }
-    }
+//    private void setUserModelAttribute(Model model, Authentication auth){
+//        if(auth != null){
+//            String email = auth.getName();
+//            Person person = personService.findUserByEmail(email);
+//            model.addAttribute("person", person);
+//        }
+//    }
 }

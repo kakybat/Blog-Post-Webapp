@@ -40,10 +40,10 @@
     left: 5px;
 }
 .foo-brand .logo-footer .logo-text-footer {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: var(--md-font-size);
     color: var(--gray-color);
-    font-weight: bold;
+    font-weight: 900;
     letter-spacing: 1px;
 }
 

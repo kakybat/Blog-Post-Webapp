@@ -31,7 +31,7 @@ public class WebSecurityConfig{
 //                .csrf(AbstractHttpConfigurer::disable)
                 .csrf((csrf) -> csrf.ignoringRequestMatchers("/saveMessage").ignoringRequestMatchers("/public/**"))
                 .authorizeHttpRequests((auth) -> auth
-                    .requestMatchers("/", "/home", "/blog", "/contact", "/about", "/postHeaderImage/**", "/userImage/**", "/saveMessage", "/public/**").permitAll()
+                    .requestMatchers("/", "/home", "/blog/**", "/contact", "/about", "/postHeaderImage/**", "/userImage/**", "/saveMessage", "/public/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/css/**", "/js/**", "/images/**", "/fonts/**","/posts/*", "/comments/save").permitAll()
                     .requestMatchers("/displayMessages").hasRole("ADMIN")
                     .requestMatchers("/closeMsg/**").hasRole("ADMIN")

@@ -11,28 +11,36 @@
     <title th:text="${post.title}">Post Details</title>
 </head>
 <body>
-    <div th:replace="~{fragments/header :: header}"></div>
+<!--    <div th:replace="~{fragments/header :: header}"></div>-->
     <main>
-        <div class="section header-section">
-            <div class="container">
-                <h2 class="text-center" th:text="${post.title}">No Title</h2>
-                <p class="title-sub">⎯ &#10023 ⎯</p>
+        <div class="light-grad-back">
+            <div th:replace="~{fragments/header :: header}"></div>
+            <div class="section header-section">
+                <div class="container big-padding">
+                    <h1 class="text-center" th:text="${post.title}">No Title</h1>
+                    <p class="title-sub">⎯ &#10023 ⎯</p>
+                </div>
             </div>
         </div>
-        <div class="section">
+
+        <div class="section-pb-100">
             <div class="container">
-                <div class="light-back rounded">
+                <div class="secondary-back rounded">
                     <div class="post-header-image">
                         <img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="post-image">
-                        <div class="btn-over"><a class="btn btn-arrow primary-back box-shadow" th:href="@{/blog}">&#x1F860;</a></div>
+                        <div class="btn-over"><a class="btn btn-arrow primary-back box-shadow" th:href="@{/blog/page/1?sortField=title&sortDir=desc}">&#x1F860;</a></div>
                     </div>
                     <div class="post-padding">
 
                         <div class="post-content">
-
-                            <p th:text="'&#x23F2; Published : ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}">Created At</p>
-                            <p th:if="${post.updatedAt != null}" th:text="'&#x23F2; Updated   : ' + ${#temporals.format(post.updatedAt, 'MMMM d, yyyy')}" class="post-time mr-b-md">Updated At</p>
-
+                            <div class="fit-first-col mr-b-xsm">
+                                <div class="icon-box-sm"><img th:src="@{/images/date.png}" alt="date"> </div>
+                                <div th:text="'Published : ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}" class="start-to-center light-gray-text">Created At</div>
+                            </div>
+                            <div th:if="${post.updatedAt != null}"  class="fit-first-col mr-b-md">
+                                <div class="icon-box-sm"><img th:src="@{/images/update.png}" alt="update"> </div>
+                                <div th:text="'Updated : ' + ${#temporals.format(post.updatedAt, 'MMMM d, yyyy')}" class="start-to-center light-gray-text mr-b-xsm ">Updated At</div>
+                            </div>
 
                             <div class="start-to-end fit-first-col mr-b-md">
                                 <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
@@ -42,7 +50,7 @@
                             <div class="post-body"><p th:utext="${post.body}">Post Body</p></div>
 
                             <div th:if="${#authentication.name} == ${post.getPerson().getEmail()}" class="mr-t">
-                                <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-md secondary-back">&#9998 Edit</a>
+                                <a th:href="@{'/posts/' + ${post.id} + '/edit'}" class="btn btn-md grad-back-two">&#9998 Edit</a>
                                 <a th:href="@{'/posts/' + ${post.id} + '/delete'}" class="btn btn-md danger-back">Delete</a>
                             </div>
                         </div>
@@ -52,7 +60,7 @@
         </div>
         <div class="section-pb-100">
             <div class="container">
-                <div class="post-padding light-back rounded">
+                <div class="post-padding secondary-back rounded">
                     <h4 class="mr-b-md">Comments</h4>
                     <!-- Display comments -->
                     <div th:each="comment : ${post.comments}" class="mr-b-md">
@@ -72,19 +80,18 @@
 
                     </div>
                 </div>
-                <div class="post-padding light-back rounded mr-t">
-                    <!-- Comment form -->
-                    <form th:action="@{'/posts/'+ ${post.id} +'/comments'}" th:object="${newComment}" method="post" class="body-form">
-                        <label for="body-body">Your Comment</label>
-                        <textarea th:field="*{body}" id="body-body" name="body" rows="4" cols="50" placeholder="Write a comment" required></textarea>
+                <div class="post-padding secondary-back rounded mr-t">
+                    <form th:action="@{'/posts/'+ ${post.id} +'/comments'}" th:object="${newComment}" method="post">
+                        <label for="body">Your Comment</label>
+                        <textarea th:field="*{body}" id="body" name="body" rows="4" cols="50" placeholder="Write a comment" required></textarea>
 
-                        <button type="submit" class="btn btn-md secondary-back">Publish Comment</button>
+                        <button type="submit" class="btn btn-md grad-back-two">Publish Comment</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="section light-back" sec:authorize="!isAuthenticated()">
+        <div class="section" sec:authorize="!isAuthenticated()">
             <div class="container">
                 <div th:replace="~{fragments/loginAction :: loginAction}"></div>
             </div>

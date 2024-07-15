@@ -1,8 +1,10 @@
 package com.kakybat.model;
 
 
-import com.kakybat.annotation.FieldsValueMatch;
-import com.kakybat.annotation.PasswordValidator;
+import com.kakybat.annotation.EmailMatch;
+//import com.kakybat.annotation.FieldsValueMatch;
+import com.kakybat.annotation.PasswordMatch;
+//import com.kakybat.annotation.PasswordValidator;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -14,18 +16,20 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@FieldsValueMatch.List({
-        @FieldsValueMatch(
-                field = "password",
-                fieldMatch = "confirmPassword",
-                message = "Passwords do not match!"
-        ),
-        @FieldsValueMatch(
-                field = "email",
-                fieldMatch = "confirmEmail",
-                message = "Email address do not match!"
-        )
-})
+@EmailMatch
+@PasswordMatch
+//@FieldsValueMatch.List({
+//        @FieldsValueMatch(
+//                field = "password",
+//                fieldMatch = "confirmPassword",
+//                message = "Passwords do not match!"
+//        ),
+//        @FieldsValueMatch(
+//                field = "email",
+//                fieldMatch = "confirmEmail",
+//                message = "Email address do not match!"
+//        )
+//})
 
 public class Person extends BaseEntity{
     @Id
@@ -49,7 +53,7 @@ public class Person extends BaseEntity{
 
     @NotBlank(message = "Password must not be blank")
     @Size(min = 5, message = "Password must be at least 5 characters long")
-    @PasswordValidator
+//    @PasswordValidator
     private String password;
 
     @NotBlank(message = "Confirm Password must not be blank")

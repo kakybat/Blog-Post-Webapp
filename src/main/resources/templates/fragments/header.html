@@ -11,11 +11,10 @@
                 <div class="navbar rounded">
                     <a class="navbar-brand" th:href="@{/}">
                         <div class="logo">
-                            <div class="logo-image"><img th:src="@{/images/k-logo.png}" alt="logo"></div>
+                            <div class="logo-image grad-back-two"><img th:src="@{/images/k-logo.png}" alt="logo"></div>
                             <div class="logo-text">Kakybat</div>
                         </div>
                     </a>
-<!--                    <div class="navbar-brand"><a th:href="@{/}"><span class="k">K</span>AKYBAT</a></div>-->
                     <div class="menu-toggle" id="mobile-menu" th:onclick="toggleNavGroup()">
                         <span class="bar"></span>
                         <span class="bar"></span>
@@ -25,16 +24,18 @@
                         <ul class="nav" sec:authentication="">
                             <li class="nav-item"><a th:href="@{/}">Home</a> </li>
                             <li class="nav-item"><a th:href="@{/about}">About</a> </li>
-                            <li class="nav-item"><a class="especial" th:href="@{/blog}">Blog</a> </li>
+<!--                            <li class="nav-item"><a class="especial" th:href="@{/blog}">Blog</a> </li>-->
+<!--                            <li class="nav-item"><a class="especial" th:href="@{/blog/page/1}">Blog</a> </li>-->
+                            <li class="nav-item"><a class="especial" th:href="@{/blog/page/1?sortField=title&sortDir=desc}">Blog</a> </li>
                             <li class="nav-item"><a th:href="@{/contact}">Contact</a> </li>
                         </ul>
                         <ul class="auth" sec:authorize="!isAuthenticated()">
-                            <li><a th:href="@{/login}" class="btn btn-md accent-back">Sign In</a></li>
+                            <li><a th:href="@{/login}" class="btn btn-md grad-back-two">Sign In</a></li>
 <!--                            <li><a th:href="@{/signup}" class="btn btn-md secondary-back">Sign Up</a></li>-->
-                            <li><a th:href="@{/public/register}" class="btn btn-md secondary-back">Sign Up</a></li>
+                            <li><a th:href="@{/public/register}" class="btn btn-md primary-back">Sign Up</a></li>
                         </ul>
                         <ul class="auth" sec:authorize="isAuthenticated()" >
-                            <li><a th:href="@{/logout}"  class="btn btn-md secondary-back">Logout</a></li>
+                            <li><a th:href="@{/logout}"  class="btn btn-md primary-back">Logout</a></li>
                             <li class="end-to-center"><a th:href="@{/dashboard}"><div class="user-img"><img th:src="@{'/userImage/' + ${person.imageFilePath}}" alt="person"></div></a></li>
                         </ul>
                     </div>

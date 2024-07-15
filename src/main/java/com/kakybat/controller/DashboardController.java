@@ -8,6 +8,7 @@ import com.kakybat.repository.PersonRepository;
 import com.kakybat.service.FileService;
 import com.kakybat.service.PersonService;
 import com.kakybat.service.PostService;
+import com.kakybat.service.UserAttributeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -31,11 +32,17 @@ public class DashboardController {
     private final PostService postService;
     private final FileService fileService;
     private final CommentRepository commentRepository;
-    public DashboardController(PersonService personService, PostService postService, FileService fileService, CommentRepository commentRepository){
+    private final UserAttributeService userAttributeService;
+    public DashboardController(PersonService personService,
+                               PostService postService,
+                               FileService fileService,
+                               CommentRepository commentRepository,
+                               UserAttributeService userAttributeService){
         this.personService = personService;
         this.postService = postService;
         this.fileService = fileService;
         this.commentRepository = commentRepository;
+        this.userAttributeService = userAttributeService;
     }
     @Autowired
     PersonRepository personRepository;
@@ -61,7 +68,7 @@ public class DashboardController {
     @GetMapping("/myPosts/{postId}")
     @PreAuthorize("isAuthenticated()")
     public String getSinglePost(@PathVariable Long postId, Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         Comment newComment = new Comment();
         model.addAttribute("newComment", newComment);
 
@@ -78,7 +85,7 @@ public class DashboardController {
 
     @PostMapping("/myPosts/{postId}/comments")
     public String addComment(@PathVariable Long postId, @ModelAttribute("newComment") Comment newComment, Model model, Authentication auth) {
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         Post post = postService.findById(postId);
         Person person = personService.findUserByEmail(auth.getName());
         newComment.setPerson(person);
@@ -88,7 +95,7 @@ public class DashboardController {
     }
     @GetMapping("/myPostComments/deleteComment/{commentId}")
     public String deleteComment(@PathVariable Long commentId, Model model, Authentication auth) {
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Comment not found"));
         Post post = comment.getPost();
         postService.save(post);
@@ -104,7 +111,7 @@ public class DashboardController {
     @GetMapping("/edit-user-details")
     @PreAuthorize("isAuthenticated()")
     public String selfUserEdit(Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         model.addAttribute("pageTitle", "Edit User Details");
         return "edit_me";
     }
@@ -112,7 +119,7 @@ public class DashboardController {
     @PostMapping("/update_me")
     @PreAuthorize("isAuthenticated()")
     public String updateMe(Model model, Authentication auth, @RequestParam("file") MultipartFile file){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         String email = auth.getName();
         Person person = personService.findUserByEmail(email);
         model.addAttribute("person", person);
@@ -137,19 +144,19 @@ public class DashboardController {
 
     @GetMapping("/users")
     public String getAllUsers(Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         model.addAttribute("pageTitle", "User Details");
             List<Person> people = personService.findAllUsers();
             model.addAttribute("users", people);
         return "users";
     }
 
-    private void setUserModelAttribute(Model model, Authentication auth){
-        if(auth != null){
-            String email = auth.getName();
-            Person person = personService.findUserByEmail(email);
-            model.addAttribute("person", person);
-        }
-    }
+//    private void setUserModelAttribute(Model model, Authentication auth){
+//        if(auth != null){
+//            String email = auth.getName();
+//            Person person = personService.findUserByEmail(email);
+//            model.addAttribute("person", person);
+//        }
+//    }
 
 }

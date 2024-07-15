@@ -11,12 +11,14 @@
     <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <main>
-    <div class="section header-section">
-        <div class="container rounded big-padding light-blue4-back">
-            <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
-            <p class="title-sub">⎯ &#10023 ⎯</p>
+    <div class="light-grad-back">
+        <div th:replace="~{fragments/header :: header}"></div>
+        <div class="section header-section">
+            <div class="container rounded big-padding light-blue4-back">
+                <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
+            </div>
         </div>
     </div>
     <div class="section">
@@ -30,7 +32,7 @@
                 <div class="end-to-center"><a th:href="@{/deleteUser}" class="btn btn-md danger-back">Delete User</a> </div>
             </div>
             <div class="center-to-center">
-                <a th:href="@{/dashboard}" class="btn btn-md secondary-back">BACK</a>
+                <a th:href="@{/dashboard}" class="btn btn-md grad-back-two">BACK</a>
             </div>
         </div>
     </div>

@@ -15,11 +15,11 @@ public class Post extends BaseEntity {
     private Long id;
 
     @NotBlank(message = "Post title must not be blank")
-    @Size(min = 10, max = 120, message = "Post title must be at least 10 characters long")
+    @Size(min = 20, max = 140, message = "Post title should be between 20 and 140 characters")
     private String title;
 
     @NotBlank(message = "Short description must not be blank")
-    @Size(min = 10, max = 180, message = "Short description should be between 20 and 180 characters")
+    @Size(min = 20, max = 200, message = "Short description should be between 20 and 200 characters")
     private String shortDescription;
 
     @Column(columnDefinition = "TEXT")
@@ -28,6 +28,8 @@ public class Post extends BaseEntity {
     private String body;
 
     private String imageFilePath;
+
+    private String  postStatus;
 
 
     @ManyToOne(fetch = FetchType.EAGER)//, cascade = CascadeType.PERSIST, targetEntity = User.class
@@ -41,12 +43,13 @@ public class Post extends BaseEntity {
     public Post() {
     }
 
-    public Post(Long id, String title, String shortDescription, String body, String imageFilePath, Person person, List<Comment> comments) {
+    public Post(Long id, String title, String shortDescription, String body, String imageFilePath, String postStatus, Person person, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.shortDescription = shortDescription;
         this.body = body;
         this.imageFilePath = imageFilePath;
+        this.postStatus = postStatus;
         this.person = person;
         this.comments = comments;
     }
@@ -59,19 +62,19 @@ public class Post extends BaseEntity {
         this.id = id;
     }
 
-    public @NotBlank(message = "Post title must not be blank") @Size(min = 10, max = 120, message = "Post title must be at least 10 characters long") String getTitle() {
+    public @NotBlank(message = "Post title must not be blank") @Size(min = 20, max = 140, message = "Post title should be between 20 and 140 characters") String getTitle() {
         return title;
     }
 
-    public void setTitle(@NotBlank(message = "Post title must not be blank") @Size(min = 10, max = 120, message = "Post title must be at least 10 characters long") String title) {
+    public void setTitle(@NotBlank(message = "Post title must not be blank") @Size(min = 20, max = 140, message = "Post title should be between 20 and 140 characters") String title) {
         this.title = title;
     }
 
-    public @NotBlank(message = "Short description must not be blank") @Size(min = 10, max = 180, message = "Short description should be between 20 and 100 characters") String getShortDescription() {
+    public @NotBlank(message = "Short description must not be blank") @Size(min = 20, max = 200, message = "Short description should be between 20 and 200 characters") String getShortDescription() {
         return shortDescription;
     }
 
-    public void setShortDescription(@NotBlank(message = "Short description must not be blank") @Size(min = 10, max = 180, message = "Short description should be between 20 and 100 characters") String shortDescription) {
+    public void setShortDescription(@NotBlank(message = "Short description must not be blank") @Size(min = 20, max = 200, message = "Short description should be between 20 and 200 characters") String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
@@ -89,6 +92,13 @@ public class Post extends BaseEntity {
 
     public void setImageFilePath(String imageFilePath) {
         this.imageFilePath = imageFilePath;
+    }
+    public String getPostStatus(){
+        return postStatus;
+    }
+
+    public void setPostStatus(String postStatus){
+        this.postStatus = postStatus;
     }
 
     public Person getPerson() {
@@ -115,6 +125,7 @@ public class Post extends BaseEntity {
                 ", title='" + title + '\'' +
                 ", shortDescription='" + shortDescription + '\'' +
                 ", imageFilePath='" + imageFilePath + '\'' +
+                ", postStatus='" + postStatus + '\'' +
                 ", person=" + person +
                 ", comments=" + comments +
                 '}';

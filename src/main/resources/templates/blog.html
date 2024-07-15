@@ -11,26 +11,37 @@
     <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <main>
-    <div class="section header-section">
-        <div class="container rounded big-padding light-blue4-back">
-            <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
-            <p class="title-sub">⎯ &#10023 ⎯</p>
+    <div class="light-grad-back">
+        <div th:replace="~{fragments/header :: header}"></div>
+        <div class="section header-section">
+            <div class="container big-padding">
+                <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
+            </div>
         </div>
     </div>
-    <div class="section">
+    <div class="section-pb-100">
         <div class="container">
-            <div class="end-to-end"><div class="rounded md-padding light-back"><a class="btn btn-icon secondary-back" th:href="@{/posts/new}">+</a></div></div>
+            <div class="end-to-end"><div class="rounded md-padding secondary-back"><a class="btn btn-icon grad-back-two" th:href="@{/posts/new}">+</a></div></div>
+<!--            Post Template-->
+            <div class="three-col-grid">
+                <div>
+                    <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} }">Title</a>
+                </div>
+            </div>
             <div class="posts-list"  th:each="post : ${posts}">
-                <div class="post rounded light-back bx">
+                <div class="post rounded secondary-back bx">
                     <div class="post-img">
                         <img th:src="@{'/postHeaderImage/' + ${post.imageFilePath}}" alt="Post Image">
                     </div>
                     <div class="post-desc">
                         <div class="post-desc-text">
-                            <h3 th:text="${post.title}">Title</h3>
-                            <p th:text="'&#x23F2; ' + ${#temporals.format(post.createdAt, 'MMMM d, yyyy')}" class="mr-b-md">Created At</p>
+                            <div class="fit-first-col  mr-b-xsm">
+                                <div class="icon-box-sm"><img th:src="@{/images/date.png}" alt="date"></div>
+                                <div th:text="${#temporals.format(post.createdAt, 'MMMM d, yyyy')}" class="start-to-center light-gray-text">Created At</div>
+                            </div>
+                            <h3 th:text="${post.title}" class="mr-b-md">Title</h3>
                             <p th:text="${post.shortDescription}" class="start-to-center light-gray-text">Short Description</p>
                         </div>
                         <div class="two-col-grid">
@@ -42,6 +53,34 @@
                         </div>
                     </div>
                 </div>
+            </div>
+<!--        &#xbb;  right arrow -->
+<!--            End of Post Template-->
+            <div class="mr-t">
+                <ul class="pagination-parent">
+                    <li class="pagination-child">
+                        <a th:if="${currentPage > 1}" th:href="@{'/blog/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                            <span class="btn btn-arrow grad-back-two" aria-hidden="true">&#x1F860;</span>
+                        </a>
+                        <a th:unless="${currentPage > 1}" class="not-allowed" disabled="">
+                            <span class="btn btn-arrow btn-passive" aria-hidden="true">&#x1F860;</span>
+                        </a>
+                    </li>
+                    <span class="pagination-child" th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <li>
+                            <a th:if="${currentPage != i}" th:href="@{'/blog/page' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"></a>
+                            <a class="btn btn-md grad-back-two" th:unless="${currentPage != i}">[[${i}]]</a>
+                        </li>
+                    </span>
+                    <li class="pagination-child">
+                        <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                            <span class="btn btn-arrow grad-back-two" aria-hidden="true">&#x1F862;</span>
+                        </a>
+                        <a th:unless="${currentPage < totalPages}" class="not-allowed" disabled="">
+                            <span class="btn btn-arrow btn-passive" aria-hidden="true">&#x1F862;</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

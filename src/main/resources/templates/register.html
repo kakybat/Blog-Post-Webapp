@@ -11,23 +11,22 @@
   <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <main>
-  <div class="section header-section">
-    <div class="container rounded big-padding light-blue4-back">
-      <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
-      <p class="title-sub">⎯ &#10023 ⎯</p>
+  <div class="light-grad-back">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="section header-section">
+      <div class="container big-padding">
+        <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
+        <p class="title-sub">⎯ &#10023 ⎯</p>
+      </div>
     </div>
   </div>
-  <div class="section">
+  <div class="section-pb-100">
     <div class="container">
       <div class="form-container" id="signupContainer">
 
         <h3 class="text-center">Welcome! &#x1F389;</h3>
         <p class="text-center">Please, enter your details and start your work!</p>
-        <ul>
-          <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('person.*')}" th:text="${error}"></li>
-        </ul>
 
         <ul>
           <li class="success-msg" th:if="${!#strings.isEmpty(registerMessage)}" th:text="${registerMessage}" />
@@ -35,10 +34,13 @@
 
         <form id="signupForm" th:action="@{/public/createUser}"  method="post" th:object="${person}">
           <input type="text" th:field="*{name}" placeholder="Full name" />
+          <div class="warning-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
           <input type="text" th:field="*{email}" placeholder="Your email" />
+          <div class="warning-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
           <input type="text" th:field="*{confirmEmail}" placeholder="Confirm email" />
+          <div class="warning-msg" th:if="${#fields.hasErrors('confirmEmail')}" th:errors="*{confirmEmail}"></div>
 
           <div class="two-col-grid">
             <div class="form-element">
@@ -48,7 +50,10 @@
               <input type="password" th:field="*{confirmPassword}" placeholder="Confirm password" />
             </div>
           </div>
-          <button type="submit" class="btn btn-md accent-back">Register Now</button>
+          <div class="warning-msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+          <div class="warning-msg" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></div>
+
+          <button type="submit" class="btn btn-md grad-back-two mr-t-sm">Register Now</button>
         </form>
         <div class="form-switcher">
           <p> Already have an account? <a th:href="@{/login}">Login here</a>. </p>

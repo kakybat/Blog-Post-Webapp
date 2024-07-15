@@ -10,12 +10,14 @@
   <title th:text="${pageTitle}">Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <main>
-  <div class="section header-section">
-    <div class="container">
-      <h2 class="text-center" th:text="${pageTitle}">Title</h2>
-      <p class="title-sub">⎯ &#10023 ⎯</p>
+  <div class="light-grad-back">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="section header-section">
+      <div class="container big-padding">
+        <h1 class="text-center" th:text="${pageTitle}">Title</h1>
+        <p class="title-sub">⎯ &#10023 ⎯</p>
+      </div>
     </div>
   </div>
   <div class="section">
@@ -61,9 +63,9 @@
 
           <div>
             <a th:href="@{/dashboard}">
-                <button class="btn btn-md secondary-back" th:formaction="@{/dashboard}">BACK</button>
+                <button class="btn btn-md primary-back" th:formaction="@{/dashboard}">BACK</button>
             </a>
-            <button type="submit" class="btn btn-md accent-back">Update</button>
+            <button type="submit" class="btn btn-md grad-back-two">Update</button>
           </div>
         </form>
       </div>

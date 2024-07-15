@@ -11,43 +11,57 @@
     <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
+<!--<div th:replace="~{fragments/header :: header}"></div>-->
 <main>
-    <div class="section header-section">
-        <div class="container rounded big-padding light-blue4-back">
-            <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
-            <p class="title-sub">⎯ &#10023 ⎯</p>
+    <div class="light-grad-back">
+        <div th:replace="~{fragments/header :: header}"></div>
+        <div class="section header-section">
+            <div class="container big-padding">
+                <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
+            </div>
         </div>
     </div>
-    <div class="section">
+    <div class="section-pb-100">
         <div class="container">
-            <h2 class="text-center">Get in Touch</h2>
-            <hr class="dark-hr">
             <div class="contact-form">
-                <div class="contact-info rounded center-to-center">
+                <div class="contact-info rounded center-to-center grad-back-two">
                     <h3 class="text-center">Contact Information</h3>
                     <div>
-                        <p class="md-padding"><b>Personal Email:</b> kakybat@gmail.com</p>
-                        <p class="md-padding"><b>Phone Number:</b> +7(777)016-73-64</p>
-                        <p class="md-padding"><b>Address:</b> Kazakhstan, Almaty city</p>
+                        <div class="fit-first-col md-padding">
+                            <div class="icon-box"><img th:src="@{/images/emailto.png}" alt="email"></div>
+                            <div class="start-to-center">kakybat@gmail.com</div>
+                        </div>
+                        <div class="fit-first-col md-padding">
+                            <div class="icon-box"><img th:src="@{/images/phone.png}" alt="phone"></div>
+                            <div class="start-to-center">+7(777)016-73-64</div>
+                        </div>
+                        <div class="fit-first-col md-padding">
+                            <div class="icon-box"><img th:src="@{/images/location.png}" alt="location"></div>
+                            <div class="start-to-center">Kazakhstan, Almaty city</div>
+                        </div>
                     </div>
 
                 </div>
                 <div class="form-container">
                     <h3 class="text-center">Send Me A Message &#x1F4EC;</h3>
-                    <ul>
-                        <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('contact.*')}" th:text="${error}" />
-                    </ul>
+<!--                    <ul>-->
+<!--                        <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('contact.*')}" th:text="${error}" />-->
+<!--                    </ul>-->
                     <form id="contactForm" th:action="@{/saveMessage}" method="post" th:object="${contact}">
 <!--                        <label for="contactName">Username:</label>-->
                         <input type="text" th:field="*{contactName}" placeholder="Name"/>
+                        <div class="warning-msg" th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}"></div>
 <!--                        <label for="contactEmail">Your Email:</label>-->
                         <input type="text" th:field="*{contactEmail}" placeholder="Email" />
+                        <div class="warning-msg" th:if="${#fields.hasErrors('contactEmail')}" th:errors="*{contactEmail}"></div>
 <!--                        <label for="Subject">Subject:</label>-->
                         <input type="text" th:field="*{contactSubject}" placeholder="Subject"/>
+                        <div class="warning-msg" th:if="${#fields.hasErrors('contactSubject')}" th:errors="*{contactSubject}"></div>
 <!--                        <label for="contactMessage">Your Message:</label>-->
                         <textarea th:field="*{contactMessage}" rows="4" placeholder="Message ..."></textarea>
-                        <button class="btn accent-back btn-md">Send Message</button>
+                        <div class="warning-msg" th:if="${#fields.hasErrors('contactMessage')}" th:errors="*{contactMessage}"></div>
+                        <button class="btn btn-md grad-back-two">Send Message</button>
                     </form>
                 </div>
             </div>

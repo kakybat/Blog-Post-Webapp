@@ -2,6 +2,7 @@ package com.kakybat.controller;
 
 import com.kakybat.model.Person;
 import com.kakybat.service.PersonService;
+import com.kakybat.service.UserAttributeService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //    @RequestMapping(value = "/register", method = {RequestMethod.GET})
 //    @PreAuthorize("isAnonymous()")
 //    public String displayRegisterPage(Model model, Authentication auth){
-//        setUserModelAttribute(model, auth);
+//        userAttributeService.setUserModelAttribute(model, auth);
 //        model.addAttribute("person", new Person());
 //        model.addAttribute("pageTitle", "Register");
 //        return "register";
@@ -38,7 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 //    @PreAuthorize("isAnonymous()")
 //    public String createUser(@Valid @ModelAttribute("person") Person person, Model model, Authentication auth, Errors errors
 //    ){
-//        setUserModelAttribute(model, auth);
+//        userAttributeService.setUserModelAttribute(model, auth);
 //        if(errors.hasErrors()){
 //            return "register";
 //        }
@@ -55,10 +56,12 @@ public class PublicController {
 
     @Autowired
     PersonService personService;
+    @Autowired
+    UserAttributeService userAttributeService;
 
     @RequestMapping(value ="/register",method = { RequestMethod.GET})
     public String displayRegisterPage(@RequestParam(value = "register", required = false) String register, Model model, Authentication auth) {
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         String registerMessage = null;
         if(register != null){
             registerMessage = "You have been registered successfully, please log in";
@@ -71,7 +74,7 @@ public class PublicController {
 
     @RequestMapping(value ="/createUser",method = { RequestMethod.POST})
     public String createUser(@Valid @ModelAttribute("person") Person person, Errors errors, Model model, Authentication auth) {
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         if(errors.hasErrors()){
             return "register";
         }
@@ -87,11 +90,11 @@ public class PublicController {
 
 
 
-    private void setUserModelAttribute(Model model, Authentication auth){
-        if(auth != null){
-            String email = auth.getName();
-            Person person = personService.findUserByEmail(email);
-            model.addAttribute("person", person);
-        }
-    }
+//    private void setUserModelAttribute(Model model, Authentication auth){
+//        if(auth != null){
+//            String email = auth.getName();
+//            Person person = personService.findUserByEmail(email);
+//            model.addAttribute("person", person);
+//        }
+//    }
 }

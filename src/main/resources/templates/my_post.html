@@ -15,7 +15,7 @@
     <main>
         <div class="section header-section">
             <div class="container">
-                <h2 class="text-center" th:text="${myPost.title}">No Title</h2>
+                <h1 class="text-center" th:text="${myPost.title}">No Title</h1>
                 <p class="title-sub">⎯ &#10023 ⎯</p>
             </div>
         </div>
@@ -42,7 +42,7 @@
                             <div class="post-body"><p th:utext="${myPost.body}">Post Body</p></div>
 
                             <div th:if="${#authentication.name} == ${myPost.getPerson().getEmail()}" class="mr-t">
-                                <a th:href="@{'/posts/' + ${myPost.id} + '/edit'}" class="btn btn-md secondary-back">&#9998 Edit</a>
+                                <a th:href="@{'/posts/' + ${myPost.id} + '/edit'}" class="btn btn-md grad-back-two">&#9998 Edit</a>
                                 <a th:href="@{'/posts/' + ${myPost.id} + '/delete'}" class="btn btn-md danger-back">Delete</a>
                             </div>
                         </div>

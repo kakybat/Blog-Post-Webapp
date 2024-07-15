@@ -5,6 +5,7 @@ import com.kakybat.model.Person;
 import com.kakybat.model.Profile;
 import com.kakybat.repository.PersonRepository;
 import com.kakybat.service.PersonService;
+import com.kakybat.service.UserAttributeService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -22,16 +23,18 @@ public class ProfileController {
 
     private final PersonService personService;
     private final PersonRepository personRepository;
+    private final UserAttributeService userAttributeService;
 
-    public ProfileController(PersonService personService, PersonRepository personRepository) {
+    public ProfileController(PersonService personService, PersonRepository personRepository, UserAttributeService userAttributeService) {
         this.personService = personService;
         this.personRepository = personRepository;
+        this.userAttributeService = userAttributeService;
     }
 
     @RequestMapping("/displayProfile")
     public ModelAndView displayProfile(Model model, Authentication auth, HttpSession session){
         model.addAttribute("pageTitle", "Profile");
-        setUserModelAttributes(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
 
         Person person = (Person) session.getAttribute("loggedUser");
         Profile profile = new Profile();
@@ -54,7 +57,7 @@ public class ProfileController {
 
     @PostMapping(value = "/updateProfile")
     public String updateProfile(@Valid @ModelAttribute("profile") Profile profile, Errors errors, Model model, Authentication auth, HttpSession session){
-        setUserModelAttributes(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         if(errors.hasErrors()){
             return "profile";
         }
@@ -75,11 +78,11 @@ public class ProfileController {
     }
 
 
-    private void setUserModelAttributes(Model model, Authentication auth){
-        if(auth != null){
-            String email = auth.getName();
-            Person person = personService.findUserByEmail(email);
-            model.addAttribute("person", person);
-        }
-    }
+//    private void setUserModelAttribute(Model model, Authentication auth){
+//        if(auth != null){
+//            String email = auth.getName();
+//            Person person = personService.findUserByEmail(email);
+//            model.addAttribute("person", person);
+//        }
+//    }
 }

@@ -7,11 +7,13 @@ import com.kakybat.repository.CommentRepository;
 import com.kakybat.service.FileService;
 import com.kakybat.service.PersonService;
 import com.kakybat.service.PostService;
+import com.kakybat.service.UserAttributeService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class PostController {
@@ -29,9 +35,11 @@ public class PostController {
     private final PostService postService;
     private final PersonService personService;
     private final FileService fileService;
-//    private final CommentService commentService;
+
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    UserAttributeService userAttributeService;
 
     public PostController(PostService postService, PersonService personService, FileService fileService){
         this.postService = postService;
@@ -40,20 +48,33 @@ public class PostController {
 
     }
 
-    @GetMapping("/blog")
+//    @GetMapping("/blog")
+    @GetMapping("/blog/page/{pageNumber}")
     @PreAuthorize("isAnonymous()")
-    public String getPostList(Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
-        List<Post> posts = postService.getAll();
-        model.addAttribute("pageTitle", "Blog");
+    public String getPostList(Model model, Authentication auth,
+                              @PathVariable(name = "pageNumber") int pageNumber,
+                              @RequestParam(name = "sortField") String sortField,
+                              @RequestParam("sortDir") String sortDir
+    ){
+
+        userAttributeService.setUserModelAttribute(model, auth);
+        Page<Post> postPage = postService.getPostsWithActiveStatus(pageNumber, sortField, sortDir);
+        List<Post> posts = postPage.getContent();
+        model.addAttribute("pageTitle", "Blog Spotlight");
         model.addAttribute("posts", posts);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", postPage.getTotalPages());
+        model.addAttribute("totalPosts", postPage.getTotalElements());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         return "blog";
     }
 
     @GetMapping("/posts/{postId}")
     @PreAuthorize("isAnonymous()")
     public String getSinglePost(@PathVariable Long postId, Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
 
         Comment newComment = new Comment();
         model.addAttribute("newComment", newComment);
@@ -71,18 +92,18 @@ public class PostController {
     @GetMapping("/posts/new")
     @PreAuthorize("isAnonymous()")
     public String createNewPost(Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         Post post = new Post();
         model.addAttribute("post", post);
         return "new_post";
     }
     @RequestMapping(value = "/posts/save", method = {RequestMethod.POST})
     public String saveNewPost(@Valid @ModelAttribute("post") Post post, Errors errors, Model model, Authentication auth, MultipartFile file){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         if(errors.hasErrors()){
             return "new_post";
         } else {
-            String authUsername = "anonymousUser";
+            String authUsername;
             if(auth != null){
                 authUsername = auth.getName();
                 Person person = personService.findUserByEmail(authUsername);
@@ -106,7 +127,7 @@ public class PostController {
     @RequestMapping("/posts/{id}/edit")
     @PreAuthorize("isAuthenticated()")
     public String getPostForEdit(@PathVariable Long id, Model model, Authentication auth){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         Optional<Post> optionalPost = postService.getById(id);
         if(optionalPost.isPresent()){
             Post post = optionalPost.get();
@@ -120,7 +141,7 @@ public class PostController {
     @PostMapping("/posts/{id}")
     @PreAuthorize("isAuthenticated()")
     public String updatePost(@Valid @ModelAttribute("post") Post post, Errors errors, @PathVariable Long id, Model model, Authentication auth, @RequestParam("file") MultipartFile file){
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         if(errors.hasErrors()){
             Optional<Post> optionalPost = postService.getById(id);
             if(optionalPost.isPresent()){
@@ -165,7 +186,7 @@ public class PostController {
 
     @PostMapping("/posts/{postId}/comments")
     public String addComment(@PathVariable Long postId, @ModelAttribute("newComment") Comment newComment, Model model, Authentication auth) {
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         Post post = postService.findById(postId);
         Person person = personService.findUserByEmail(auth.getName());
         newComment.setPerson(person);
@@ -175,7 +196,7 @@ public class PostController {
     }
     @GetMapping("/comments/deleteComment/{commentId}")
     public String deleteComment(@PathVariable Long commentId, Model model, Authentication auth) {
-        setUserModelAttribute(model, auth);
+        userAttributeService.setUserModelAttribute(model, auth);
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new EntityNotFoundException("Comment not found"));
         Post post = comment.getPost();
         postService.save(post);
@@ -187,14 +208,29 @@ public class PostController {
         }
     }
 
-
-
-    private void setUserModelAttribute(Model model, Authentication auth){
-        if(auth != null){
-            String email = auth.getName();
-            Person person = personService.findUserByEmail(email);
-            model.addAttribute("person", person);
-        }
+    @RequestMapping("/displayInactivePosts")
+    public ModelAndView displayPosts(Model model, Authentication auth){
+        userAttributeService.setUserModelAttribute(model, auth);
+        List<Post> inactivePosts = postService.findPostsWithInactiveStatus();
+        ModelAndView modelAndView = new ModelAndView("posts");
+        modelAndView.addObject("inactivePosts", inactivePosts);
+        return modelAndView;
     }
 
+//    @RequestMapping("/displayNullStatusPosts")
+//    public ModelAndView displayNullStatusPosts(Model model, Authentication auth){
+//        userAttributeService.setUserModelAttribute(model, auth);
+//        List<Post> nullPosts = postService.getPostsWithNullStatus();
+//        ModelAndView modelAndView = new ModelAndView("posts");
+//        modelAndView.addObject("nullPosts", nullPosts);
+//        return modelAndView;
+//    }
+
+    @RequestMapping(value = "/activatePost", method = GET)
+    public String activatePost(@RequestParam Long id, Authentication auth, Model model){
+        userAttributeService.setUserModelAttribute(model, auth);
+        postService.updatePostStatus(id);
+//        return "redirect:/displayNullStatusPosts";
+        return "redirect:/displayInactivePosts";
+    }
 }

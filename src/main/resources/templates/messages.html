@@ -9,22 +9,24 @@
         <title th:text="${pageTitle}">No Title</title>
     </head>
     <body>
-        <div th:replace="~{fragments/header :: header}"></div>
         <main>
-            <div class="section header-section">
-                <div class="container">
-                    <h2 class="text-center" th:text="${pageTitle}">Title</h2>
-                    <p class="title-sub">⎯ &#10023 ⎯</p>
+            <div class="light-grad-back">
+                <div th:replace="~{fragments/header :: header}"></div>
+                <div class="section header-section">
+                    <div class="container big-padding">
+                        <h1 class="text-center" th:text="${pageTitle}">Title</h1>
+                        <p class="title-sub">⎯ &#10023 ⎯</p>
+                    </div>
                 </div>
             </div>
-            <div class="section">
+            <div class="section-pb-100">
                 <div class="container">
                     <h2 class="text-center">Open Contact Messages</h2>
                     <hr class="dark-hr">
                     <div class="three-col-grid mr-b-md">
                         <div class="rounded light-back" th:each="message : ${contactMessages}">
-                            <div class="rounded secondary-back md-padding mr-b-md">
-                                <div class="btn btn-sm grad-back mr-b-md" th:text="${message.createdAt}"></div>
+                            <div class="rounded accent-back md-padding mr-b-md">
+                                <div class="btn btn-sm grad-back-two mr-b-md" th:text="${message.createdAt}"></div>
                                 <h3 class="text-center mr-b-md" th:text="${message.contactSubject}"></h3>
                                 <div><p><b>&#x1F4EC; </b><span th:text="${message.contactEmail}"></span></p></div>
                             </div>
@@ -36,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="center-to-center"><a th:href="@{/dashboard}" class="btn btn-md secondary-back">&#x1F860; BACK</a> </div>
+                    <div class="center-to-center"><a th:href="@{/dashboard}" class="btn btn-md grad-back-two">&#x1F860; BACK</a> </div>
                 </div>
             </div>
         </main>

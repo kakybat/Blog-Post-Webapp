@@ -11,58 +11,63 @@
     <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <main>
-    <div class="section header-section">
-        <div class="container rounded big-padding light-blue4-back">
-            <h2 class="text-center" th:text="${pageTitle}">No Title</h2>
-            <p class="title-sub">⎯ &#10023 ⎯</p>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="light-grad-back">
+        <div class="section header-section">
+            <div class="container rounded big-padding">
+                <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
+                <p class="title-sub">⎯ &#10023 ⎯</p>
+            </div>
         </div>
-    </div>
 
-    <div class="section">
-        <div class="container">
-            <div class="about-me secondary-back rounded">
-            <div class="two-col-grid  center-to-center">
-                <div class="grid-item start-to-center">
-                    <p class="md-font">
-                        <b><i>Greetings,</i></b>
-                        <br>
-                        I am a self-taught Full Stack Java developer. Until now, I have worked as a
-                        mathematics teacher in different schools for more than 10 years. Currently, I am studying
-                        at the Kazakh-British Technical University (<i>KBTU, Kazakhstan, Almaty</i>) for a master's degree. My future goal is to
-                        become a strong software engineer and work in the field of information technology.
-                    </p>
-                    <p class="md-font"><b><i>Best regards,<br>
-                            Kakybat</i></b>
-                    </p>
-                </div>
-                <div class="grid-item center-to-center">
-                    <div class="image-box grad-back">
-                        <img th:src="@{/images/portrait.jpg}" alt="portrait">
+        <div class="section-pb-100 ">
+            <div class="container">
+                <!--            <div class="about-me secondary-back rounded">-->
+                <div class="about-me">
+                    <div class="two-col-grid  center-to-center">
+                        <div class="grid-item start-to-center">
+                            <p class="md-font">
+                                <b><i>Greetings,</i></b>
+                                <br>
+                                I am a self-taught Full Stack Java developer. Until now, I have worked as a
+                                mathematics teacher in different schools for more than 10 years. Currently, I am studying
+                                at the Kazakh-British Technical University (<i>KBTU, Kazakhstan, Almaty</i>) for a master's degree. My future goal is to
+                                become a strong software engineer and work in the field of information technology.
+                            </p>
+                            <p class="md-font"><b><i>Best regards,<br>
+                                Kakybat</i></b>
+                            </p>
+                        </div>
+                        <div class="grid-item center-to-center">
+                            <div class="image-box secondary-back">
+                                <img th:src="@{/images/portrait.jpg}" alt="portrait">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
+
+
     <div class="section">
         <div class="container">
             <h2 class="text-center">Timeline of Work & Learning Journey</h2>
             <hr class="dark-hr">
             <div class="timeline rounded">
                 <div class="tm-item rounded">
-                    <div class="tm-yr rounded grad-back">2007 - 2011</div>
+                    <div class="tm-yr rounded grad-back-two">2007 - 2011</div>
                     <div class="tm-desc">I pursued a Bachelor's degree in mathematics at Abay University. </div>
                 </div>
                 <div class="vertical-line"></div>
                 <div class="tm-item rounded">
-                    <div class="tm-yr rounded grad-back">2011  - 2022</div>
+                    <div class="tm-yr rounded grad-back-two">2011  - 2022</div>
                     <div class="tm-desc">I taught mathematics to students for over 10 years in different schools.</div>
                 </div>
                 <div class="vertical-line"></div>
                 <div class="tm-item rounded">
-                    <div class="tm-yr rounded grad-back">2022 - 2024</div>
+                    <div class="tm-yr rounded grad-back-two">2022 - 2024</div>
                     <div class="tm-desc">I am studying for a master's degree in Software Engineering at KBTU.</div>
                 </div>
             </div>
