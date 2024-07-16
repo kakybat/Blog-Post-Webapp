@@ -1,8 +1,7 @@
 :root{
     /*colors*/
-    --primary-color: #d7d8de /*#202126/*#f5f4f9/*#f7f7f7/*#dee8f1*/;
+    --primary-color: #f4f5fd /*#202126/*#f5f4f9/*#f7f7f7/*#dee8f1*/;
     --secondary-color: #ffffff/*#202126/*#031371*/;
-    /*--secondary-lighter: #33353d;*/
     --additional: rgb(74, 1, 183) /*#f60046*/;
     --additional2: #210fcc /*#b510e3*/;
     --accent-color: #210fcc/*#f73a9c*/;
