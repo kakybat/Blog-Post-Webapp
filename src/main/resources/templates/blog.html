@@ -23,11 +23,19 @@
     </div>
     <div class="section-pb-100">
         <div class="container">
-            <div class="end-to-end"><div class="rounded md-padding secondary-back"><a class="btn btn-icon grad-back-two" th:href="@{/posts/new}">+</a></div></div>
+
 <!--            Post Template-->
             <div class="three-col-grid">
                 <div>
-                    <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} }">Title</a>
+                    <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} }" class="btn btn-md grad-back-two">Sort By Title</a>
+                </div>
+                <div>
+                    <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} }" class="btn btn-md grad-back-two">Sort By Author</a>
+                </div>
+                <div class="end-to-end">
+                    <div class="rounded md-padding secondary-back">
+                        <a class="btn btn-icon grad-back-two" th:href="@{/posts/new}">+</a>
+                    </div>
                 </div>
             </div>
             <div class="posts-list"  th:each="post : ${posts}">
