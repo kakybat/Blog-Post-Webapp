@@ -22,7 +22,7 @@
 
 .foo-brand .logo-footer {
     display: grid;
-    grid-template-columns: min-content 1fr;/*1fr 8fr*/;
+    grid-template-columns: min-content 1fr;
     gap: 10px;
     justify-content: center;
     align-items: center;

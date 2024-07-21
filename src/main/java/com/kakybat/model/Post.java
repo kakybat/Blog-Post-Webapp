@@ -32,7 +32,7 @@ public class Post extends BaseEntity {
     private String  postStatus;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)//, cascade = CascadeType.PERSIST, targetEntity = User.class
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "userId", nullable = false)
     private Person person;
 

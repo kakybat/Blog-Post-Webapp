@@ -15,9 +15,9 @@
     <main>
         <div th:replace="~{fragments/header :: header}"></div>
         <div class="section about-header header-section">
-            <div class="container big-padding">
+            <div class="container">
                 <div class="two-col-grid">
-                    <div class="grid-item start-to-center">
+                    <div class="grid-item ct-parent">
                         <div class="core-tech grad-back-two rounded bx">
                             <div class="ct-name">
                                 <div class="tech-box"><img th:src="@{images/portrait.jpg}" alt="KM"></div><p>Kakybat Markaba</p>
@@ -33,7 +33,7 @@
                     <div class="grid-item center-to-center">
                         <h1>Hi, &#x1F44B; <br>I'm Kakybat <br> a Java developer</h1>
                         <p class="content">Welcome to my personal blog website. If you are from the IT field, feel free to read some posts or share your knowledge here...</p>
-                        <a th:href="@{/blog}" class="btn btn-lg grad-back-two">Go to Blog &#x1F862;</a>
+                        <a th:href="@{/blog/page/1?sortField=title&sortDir=desc}" class="btn btn-lg btn-txt grad-back-two">Go to Blog <img th:src="@{/images/arrow_forward_16_white.svg}" alt="next"> </a>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                 <div class="three-col-grid">
                     <div class="grid-item secondary-back rounded bx start-to-start">
                         <div class="card-header"><div><img th:src="@{/images/front.jpg}" alt="Front"></div></div>
-                        <div class="card-img-box"><img th:src="@{/images/front.png}" alt="front"></div>
+                        <div class="card-img-box"><img th:src="@{/images/front.svg}" alt="front"></div>
                         <h4 class="text-center">Frontend</h4>
                         <p class="text-center">
                             In my learning experience, I worked with HTML, CSS, a little bit of JS, and React JS.
@@ -55,7 +55,7 @@
                     </div>
                     <div class="grid-item rounded secondary-back bx start-to-start">
                         <div class="card-header"><div><img th:src="@{/images/back.jpg}" alt="Back"></div></div>
-                        <div class="card-img-box"><img th:src="@{/images/back.png}" alt="front"></div>
+                        <div class="card-img-box"><img th:src="@{/images/back.svg}" alt="front"></div>
                         <h4 class="text-center">Backend</h4>
                         <p class="text-center">
                             Currently, I have a skill of OOP in Java and continue to learn. Also, I'm learning
@@ -64,7 +64,7 @@
                     </div>
                     <div class="grid-item rounded secondary-back bx start-to-start">
                         <div class="card-header"><div><img th:src="@{/images/db.jpg}" alt="Front"></div></div>
-                        <div class="card-img-box"><img th:src="@{/images/db.png}" alt="front"></div>
+                        <div class="card-img-box"><img th:src="@{/images/db.svg}" alt="front"></div>
                         <h4 class="text-center">Database</h4>
                         <p class="text-center">
                             In my learning journey, I have completed some toy projects using H2, database,
@@ -153,8 +153,8 @@
                             <div class="skill-percent grad-back-two">70%+</div>
                         </div>
                     </div>
-                    <div id="prevBtn">&#x1F860;</div>
-                    <div id="nextBtn">&#x1F862;</div>
+                    <div id="prevBtn"><img th:src="@{/images/arrow_back_16_white.svg}" alt="next"></div>
+                    <div id="nextBtn"><img th:src="@{/images/arrow_forward_16_white.svg}" alt="prev"></div>
                 </div>
             </div>
         </div>
@@ -189,9 +189,9 @@
                         <p>Linux Distribution</p>
                     </div>
                     <div class="bx tool-box rounded">
-                        <h3 class="text-center">Jenkins</h3>
-                        <div class="tool-item"><img th:src="@{images/jenkins.png}" alt="Hibernate"></div>
-                        <p>Automation server</p>
+                        <h3 class="text-center">VS Code</h3>
+                        <div class="tool-item"><img th:src="@{images/vscode.png}" alt="Hibernate"></div>
+                        <p>Code Editor</p>
                     </div>
                 </div>
             </div>

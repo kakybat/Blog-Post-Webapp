@@ -44,7 +44,6 @@ public class ContactController {
     @PreAuthorize("isAnonymous()")
     public String displayContactPage(Model model, Authentication auth){
         userAttributeService.setUserModelAttribute(model, auth);
-        model.addAttribute("pageTitle", "Contact Me");
         model.addAttribute("contact", new Contact());
         return "contact";
     }
@@ -76,12 +75,4 @@ public class ContactController {
         contactService.updateMessageStatus(id);
         return "redirect:/displayMessages";
     }
-
-//    private void setUserModelAttribute(Model model, Authentication auth){
-//        if(auth != null){
-//            String email = auth.getName();
-//            Person person = personService.findUserByEmail(email);
-//            model.addAttribute("person", person);
-//        }
-//    }
 }

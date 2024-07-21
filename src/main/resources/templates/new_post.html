@@ -19,7 +19,7 @@
             <div class="section header-section">
                 <div class="container big-padding">
                     <h1 class="text-center">Add New Post</h1>
-                    <p class="title-sub">⎯ &#10023 ⎯</p>
+                    <p class="title-sub">⎯ &#10044; ⎯</p>
                 </div>
             </div>
         </div>
@@ -36,21 +36,18 @@
                     <form id="postEdit" th:action="@{'/posts/save'}" th:object="${post}" enctype="multipart/form-data" method="post">
                         <input type="hidden" th:field="*{person.userId}">
                         <input type="hidden" th:field="*{createdAt}" />
-<!--                        <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="img-fluid" style="visibility: hidden;" alt="load image"/>-->
-                        <label for="input-field" class="mr-t">Add A Post Header Image:</label>
-                        <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding" required/>
+                        <label for="input-field" class="mr-t">Add A Post Header Image (upload a rectangular-shaped image; avoid square shapes):</label>
+                        <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding-around" required/>
 
-<!--                        <label for="post-title">Post Title:</label>-->
+
                         <input type="text" id="post-title" name="post-title" th:field="*{title}"
                                placeholder="Post Title" />
                         <div class="warning-msg" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
 
-<!--                        <label for="short-description">Short Description:</label>-->
                         <input type="text" id="short-description" name="short-description" th:field="*{shortDescription}"
                                placeholder="Short Description" />
                         <div class="warning-msg" th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></div>
 
-<!--                        <label for="post-body">Main Content:</label>-->
                         <textarea id="post-body" name="body" th:field="*{body}" rows="10" placeholder="Main Content"
                                   ></textarea>
                         <div class="warning-msg" th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></div>

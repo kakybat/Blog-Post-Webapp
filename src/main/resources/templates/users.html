@@ -17,13 +17,13 @@
         <div class="section header-section">
             <div class="container rounded big-padding light-blue4-back">
                 <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
-                <p class="title-sub">⎯ &#10023 ⎯</p>
+                <p class="title-sub">⎯ &#10044; ⎯</p>
             </div>
         </div>
     </div>
     <div class="section">
         <div class="container">
-            <div class="rounded light-back three-col-grid md-padding mr-b-xsm" th:each="user : ${users}">
+            <div class="rounded light-back three-col-grid md-padding-around mr-b-xsm" th:each="user : ${users}">
                 <div class="fit-first-col">
                     <div class="user-img"><img th:src="@{'/userImage/' + ${user.imageFilePath}}" class="start-to-center" alt="User Image"></div>
                     <span th:text="${user.name}" class="start-to-center">Name</span>
@@ -32,7 +32,7 @@
                 <div class="end-to-center"><a th:href="@{/deleteUser}" class="btn btn-md danger-back">Delete User</a> </div>
             </div>
             <div class="center-to-center">
-                <a th:href="@{/dashboard}" class="btn btn-md grad-back-two">BACK</a>
+                <a th:href="@{/dashboard}" class="btn btn-md grad-back-two"><img th:src="@{/images/arrow_back_16_white.svg}" alt="back"> BACK</a>
             </div>
         </div>
     </div>

@@ -13,8 +13,8 @@
     <title>Update Post</title>
 </head>
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
 <main>
+    <div th:replace="~{fragments/header :: header}"></div>
     <div class="section header-section">
         <div class="container">
             <h1 class="text-center">Update Post</h1>
@@ -24,14 +24,11 @@
         <div class="container">
             <div class="post-container light-back">
                 <h3>Update post</h3>
-<!--                <ul>-->
-<!--                    <li class="warning-msg" th:each="error : ${#fields.errors('post.*')}" th:text="${error}"></li>-->
-<!--                </ul>-->
                 <form th:action="@{'/posts/{id}'(id=${post.id})}" th:object="${post}" enctype="multipart/form-data" method="post">
                     <input type="hidden" th:field="*{createdAt}" />
                     <img th:src="@{'/postHeaderImage/' + *{imageFilePath}}" class="rounded img-fluid" alt="load image"/>
                     <label for="input-field">Add A Post Header Image</label>
-                    <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding"/>
+                    <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding-around"/>
 
                     <label for="post-title">Post Title</label>
                     <input type="text" id="post-title" name="post-title" th:field="*{title}" />

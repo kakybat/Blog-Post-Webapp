@@ -59,7 +59,7 @@ public class PostService {
     public Page<Post> getPostsWithActiveStatus(int pageNumber, String sortField, String sortDir){
         int pageSize = 3;
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize,
-                sortDir.equals("asc") ? Sort.by(sortField).ascending() :Sort.by(sortField).descending());
+                sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
 
         return postRepository.findByPostStatus(AppConstants.POST_STATUS_ACTIVE, pageable);
     }

@@ -19,8 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-
 import org.springframework.security.core.Authentication;
 import java.util.List;
 import java.util.Optional;
@@ -59,11 +57,8 @@ public class DashboardController {
         model.addAttribute("role", auth.getAuthorities().toString());
         session.setAttribute("loggedUser", person);
         model.addAttribute("myPosts", myPosts);
-
-
         return "dashboard";
     }
-
 
     @GetMapping("/myPosts/{postId}")
     @PreAuthorize("isAuthenticated()")
@@ -81,7 +76,6 @@ public class DashboardController {
             return "p404";
         }
     }
-
 
     @PostMapping("/myPosts/{postId}/comments")
     public String addComment(@PathVariable Long postId, @ModelAttribute("newComment") Comment newComment, Model model, Authentication auth) {
@@ -106,7 +100,6 @@ public class DashboardController {
             throw new EntityNotFoundException("Comment not found");
         }
     }
-
 
     @GetMapping("/edit-user-details")
     @PreAuthorize("isAuthenticated()")
@@ -134,13 +127,11 @@ public class DashboardController {
         return "redirect:/dashboard";
     }
 
-
     @GetMapping("/user")
     @PreAuthorize("isAuthenticated()")
     public Person findUserByEmail(String email){
         return personService.findUserByEmail(email);
     }
-
 
     @GetMapping("/users")
     public String getAllUsers(Model model, Authentication auth){
@@ -150,13 +141,4 @@ public class DashboardController {
             model.addAttribute("users", people);
         return "users";
     }
-
-//    private void setUserModelAttribute(Model model, Authentication auth){
-//        if(auth != null){
-//            String email = auth.getName();
-//            Person person = personService.findUserByEmail(email);
-//            model.addAttribute("person", person);
-//        }
-//    }
-
 }

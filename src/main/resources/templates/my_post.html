@@ -24,7 +24,7 @@
                 <div class="light-back rounded">
                     <div class="post-header-image">
                         <img th:src="@{'/postHeaderImage/' + ${myPost.imageFilePath}}" alt="post-image">
-                        <div class="btn-over"><a class="btn btn-arrow primary-back box-shadow" th:href="@{/blog/page/1?sortField=title&sortDir=desc}">&#x1F860;</a></div>
+                        <div class="btn-over"><a class="btn btn-arrow primary-back box-shadow" th:href="@{/blog/page/1?sortField=title&sortDir=desc}"><img th:src="@{/images/arrow_forward_16_dark.svg}" alt="back"></a></div>
                     </div>
                     <div class="post-padding">
 
@@ -60,7 +60,7 @@
                             <div class="start-to-start">
                                 <div class="user-img"><img th:src="@{'/userImage/' + ${comment.person.imageFilePath}}" alt="person"></div>
                             </div>
-                            <div class="primary-back rounded md-padding">
+                            <div class="primary-back rounded md-padding-around">
                                 <div class="start-to-start mr-b-xsm"><p><b th:text="${comment.person.name}">Author</b></p></div>
                                 <div class="body-body" th:text="${comment.body}"></div>
                                 <div th:text="'&#x1F4C5; ' + ${#temporals.format(comment.createdAt, 'MMMM d, yyyy')}" class="end-to-end sm-font"></div>
