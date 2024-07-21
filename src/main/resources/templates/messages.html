@@ -15,7 +15,7 @@
                 <div class="section header-section">
                     <div class="container big-padding">
                         <h1 class="text-center" th:text="${pageTitle}">Title</h1>
-                        <p class="title-sub">⎯ &#10023 ⎯</p>
+                        <p class="title-sub">⎯ &#10044; ⎯</p>
                     </div>
                 </div>
             </div>
@@ -25,20 +25,20 @@
                     <hr class="dark-hr">
                     <div class="three-col-grid mr-b-md">
                         <div class="rounded light-back" th:each="message : ${contactMessages}">
-                            <div class="rounded accent-back md-padding mr-b-md">
+                            <div class="rounded accent-back md-padding-around mr-b-md">
                                 <div class="btn btn-sm grad-back-two mr-b-md" th:text="${message.createdAt}"></div>
                                 <h3 class="text-center mr-b-md" th:text="${message.contactSubject}"></h3>
                                 <div><p><b>&#x1F4EC; </b><span th:text="${message.contactEmail}"></span></p></div>
                             </div>
-                            <div class="md-padding mr-b-md" th:text="${message.contactMessage}"></div>
+                            <div class="md-padding-around mr-b-md" th:text="${message.contactMessage}"></div>
                             <hr class="primary-hr">
-                            <div class="md-padding two-col-grid">
+                            <div class="md-padding-around two-col-grid">
                                 <div class="start-to-center"><p>&#x1F4E3; <span th:text="${message.contactName}"></span></p> </div>
                                 <div class="end-to-center"><a th:href="@{/closeMessage(id=${message.contactId})}" class="btn btn-md accent-back">CLOSE</a> </div>
                             </div>
                         </div>
                     </div>
-                    <div class="center-to-center"><a th:href="@{/dashboard}" class="btn btn-md grad-back-two">&#x1F860; BACK</a> </div>
+                    <div class="center-to-center"><a th:href="@{/dashboard}" class="btn btn-md grad-back-two"><img th:src="@{/images/arrow_back_16_white.svg}" alt="next"> BACK</a> </div>
                 </div>
             </div>
         </main>

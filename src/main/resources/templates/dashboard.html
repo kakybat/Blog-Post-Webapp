@@ -12,14 +12,13 @@
     <title th:text="${pageTitle}">Title</title>
 </head>
 <body>
-<!--<div th:replace="~{/fragments/header :: header}"></div>-->
 <main>
     <div class="light-grad-back">
         <div th:replace="~{fragments/header :: header}"></div>
         <div class="section header-section">
             <div class="container big-padding">
                 <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
-                <p class="title-sub">⎯ &#10023 ⎯</p>
+                <p class="title-sub">⎯ &#10044; ⎯</p>
             </div>
         </div>
     </div>
@@ -62,7 +61,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="end-to-center"><div class="rounded md-padding light-back"><a class="btn btn-icon grad-back-two" th:href="@{/posts/new}">+</a></div></div>
+                    <div class="end-to-center"><div class="rounded-sm md-padding-around light-back"><a class="btn btn-icon grad-back-two" th:href="@{/posts/new}">+</a></div></div>
                 </div>
             </div>
 

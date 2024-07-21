@@ -11,14 +11,13 @@
     <title th:text="${pageTitle}">No Title</title>
 </head>
 <body>
-<!--<div th:replace="~{fragments/header :: header}"></div>-->
 <main>
     <div class="light-grad-back">
         <div th:replace="~{fragments/header :: header}"></div>
         <div class="section header-section">
             <div class="container big-padding">
-                <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
-                <p class="title-sub">⎯ &#10023 ⎯</p>
+                <h1 class="text-center">Contact Me</h1>
+                <p class="title-sub">⎯ &#10044; ⎯</p>
             </div>
         </div>
     </div>
@@ -45,20 +44,18 @@
                 </div>
                 <div class="form-container">
                     <h3 class="text-center">Send Me A Message &#x1F4EC;</h3>
-<!--                    <ul>-->
-<!--                        <li class="warning-msg" role="alert" th:each="error : ${#fields.errors('contact.*')}" th:text="${error}" />-->
-<!--                    </ul>-->
+
                     <form id="contactForm" th:action="@{/saveMessage}" method="post" th:object="${contact}">
-<!--                        <label for="contactName">Username:</label>-->
+
                         <input type="text" th:field="*{contactName}" placeholder="Name"/>
                         <div class="warning-msg" th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}"></div>
-<!--                        <label for="contactEmail">Your Email:</label>-->
+
                         <input type="text" th:field="*{contactEmail}" placeholder="Email" />
                         <div class="warning-msg" th:if="${#fields.hasErrors('contactEmail')}" th:errors="*{contactEmail}"></div>
-<!--                        <label for="Subject">Subject:</label>-->
+
                         <input type="text" th:field="*{contactSubject}" placeholder="Subject"/>
                         <div class="warning-msg" th:if="${#fields.hasErrors('contactSubject')}" th:errors="*{contactSubject}"></div>
-<!--                        <label for="contactMessage">Your Message:</label>-->
+
                         <textarea th:field="*{contactMessage}" rows="4" placeholder="Message ..."></textarea>
                         <div class="warning-msg" th:if="${#fields.hasErrors('contactMessage')}" th:errors="*{contactMessage}"></div>
                         <button class="btn btn-md grad-back-two">Send Message</button>

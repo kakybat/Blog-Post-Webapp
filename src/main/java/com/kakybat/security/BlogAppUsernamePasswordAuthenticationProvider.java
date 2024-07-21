@@ -40,7 +40,6 @@ public class BlogAppUsernamePasswordAuthenticationProvider implements Authentica
     private List<GrantedAuthority> getGrantedAuthorities(Role role){
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
-//        grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         return grantedAuthorities;
     }
 

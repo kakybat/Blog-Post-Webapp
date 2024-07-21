@@ -60,7 +60,6 @@ public class FileService {
             if(resource.exists() || resource.isReadable()){
                 return resource;
             } else {
-
                 // If file not found, return default image from uploads folder
                 Path defaultImagePath = root.resolve("user.jpg");
                 Resource defaultImageResource = new UrlResource(defaultImagePath.toUri());

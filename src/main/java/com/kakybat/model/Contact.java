@@ -32,7 +32,7 @@ public class Contact extends BaseEntity {
 
     private String status;
 
-    // Getter & Setters
+
     public int getContactId() {
         return contactId;
     }
@@ -77,7 +77,6 @@ public class Contact extends BaseEntity {
         this.status = status;
     }
 
-    // toString() method
 
     @Override
     public String toString() {

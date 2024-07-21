@@ -1,6 +1,6 @@
 package com.kakybat.controller;
 
-import com.kakybat.model.Person;
+
 import com.kakybat.service.PersonService;
 import com.kakybat.service.UserAttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -37,13 +36,4 @@ public class PageController {
         model.addAttribute("pageTitle", "About Me");
         return "about";
     }
-
-//    private void setUserModelAttribute(Model model, Authentication auth){
-//        if(auth != null){
-//            String email = auth.getName();
-//            Person person = personService.findUserByEmail(email);
-//            model.addAttribute("person", person);
-//        }
-//    }
-
 }

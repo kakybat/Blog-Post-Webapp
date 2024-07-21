@@ -18,19 +18,6 @@ import java.util.List;
 @Table(name = "users")
 @EmailMatch
 @PasswordMatch
-//@FieldsValueMatch.List({
-//        @FieldsValueMatch(
-//                field = "password",
-//                fieldMatch = "confirmPassword",
-//                message = "Passwords do not match!"
-//        ),
-//        @FieldsValueMatch(
-//                field = "email",
-//                fieldMatch = "confirmEmail",
-//                message = "Email address do not match!"
-//        )
-//})
-
 public class Person extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -53,7 +40,6 @@ public class Person extends BaseEntity{
 
     @NotBlank(message = "Password must not be blank")
     @Size(min = 5, message = "Password must be at least 5 characters long")
-//    @PasswordValidator
     private String password;
 
     @NotBlank(message = "Confirm Password must not be blank")

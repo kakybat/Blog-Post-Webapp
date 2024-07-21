@@ -17,23 +17,27 @@
         <div class="section header-section">
             <div class="container big-padding">
                 <h1 class="text-center" th:text="${pageTitle}">No Title</h1>
-                <p class="title-sub">⎯ &#10023 ⎯</p>
+                <p class="title-sub">⎯ &#10044; ⎯</p>
             </div>
         </div>
     </div>
     <div class="section-pb-100">
         <div class="container">
 
-<!--            Post Template-->
-            <div class="three-col-grid">
-                <div>
-                    <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} }" class="btn btn-md grad-back-two">Sort By Title</a>
-                </div>
-                <div>
-                    <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} }" class="btn btn-md grad-back-two">Sort By Author</a>
-                </div>
-                <div class="end-to-end">
-                    <div class="rounded md-padding secondary-back">
+
+            <div class="sorting-parent">
+
+                    <div class="sorting-child">
+                        <div class="sorting-child">
+                            <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} }" class="btn btn-md grad-back-two">By Title</a>
+                        </div>
+                        <div class="sorting-child">
+                            <a th:href="@{'/blog/page/' + ${currentPage} + '?sortField=person.name&sortDir=' + ${reverseSortDir} }" class="btn btn-md grad-back-two">By Author</a>
+                        </div>
+                    </div>
+
+                <div class="sorting-child">
+                    <div class="rounded-sm sm-padding-around secondary-back">
                         <a class="btn btn-icon grad-back-two" th:href="@{/posts/new}">+</a>
                     </div>
                 </div>
@@ -57,35 +61,34 @@
                                 <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
                                 <div class="start-to-center"><p th:text="${post.getPerson().name}">Author</p></div>
                             </div>
-                            <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn btn-lg primary-back"> Read More &#x1F86A;</a></div>
+                            <div class=" end-to-end"><a th:href="@{'/posts/' + ${post.id}}" class="btn btn-lg btn-txt primary-back"> Read More <img th:src="@{/images/arrow_forward_16_dark.svg}" alt="back"></a></div>
                         </div>
                     </div>
                 </div>
             </div>
-<!--        &#xbb;  right arrow -->
-<!--            End of Post Template-->
+
             <div class="mr-t">
                 <ul class="pagination-parent">
                     <li class="pagination-child">
                         <a th:if="${currentPage > 1}" th:href="@{'/blog/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-                            <span class="btn btn-arrow grad-back-two" aria-hidden="true">&#x1F860;</span>
+                            <span class="btn btn-arrow grad-back-two" aria-hidden="true"><img th:src="@{/images/arrow_back_16_white.svg}" alt="back"></span>
                         </a>
                         <a th:unless="${currentPage > 1}" class="not-allowed" disabled="">
-                            <span class="btn btn-arrow btn-passive" aria-hidden="true">&#x1F860;</span>
+                            <span class="btn btn-arrow btn-passive" aria-hidden="true"><img th:src="@{/images/arrow_back_16_dark.svg}" alt="back"></span>
                         </a>
                     </li>
                     <span class="pagination-child" th:each="i : ${#numbers.sequence(1, totalPages)}">
                         <li>
-                            <a th:if="${currentPage != i}" th:href="@{'/blog/page' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"></a>
-                            <a class="btn btn-md grad-back-two" th:unless="${currentPage != i}">[[${i}]]</a>
+                            <a class="btn btn-icon btn-allow" th:if="${currentPage != i}" th:href="@{'/blog/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                            <a class="btn btn-icon grad-back-two" th:unless="${currentPage != i}">[[${i}]]</a>
                         </li>
                     </span>
                     <li class="pagination-child">
                         <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-                            <span class="btn btn-arrow grad-back-two" aria-hidden="true">&#x1F862;</span>
+                            <span class="btn btn-arrow grad-back-two" aria-hidden="true"><img th:src="@{/images/arrow_forward_16_white.svg}" alt="back"></span>
                         </a>
                         <a th:unless="${currentPage < totalPages}" class="not-allowed" disabled="">
-                            <span class="btn btn-arrow btn-passive" aria-hidden="true">&#x1F862;</span>
+                            <span class="btn btn-arrow btn-passive" aria-hidden="true"><img th:src="@{/images/arrow_forward_16_dark.svg}" alt="back"></span>
                         </a>
                     </li>
                 </ul>

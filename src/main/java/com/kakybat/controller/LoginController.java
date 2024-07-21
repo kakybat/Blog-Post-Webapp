@@ -35,21 +35,18 @@ public class LoginController {
 
         String errorMessage = null;
         String logoutMessage = null;
-//        String registerMessage = null;
+
         if(error != null){
             errorMessage = "Username or Password is incorrect";
         }
         else if(logout != null){
             logoutMessage = "You have been logged out successfully";
         }
-//        else if(register != null){
-//            registerMessage = "You have been registered successfully, please log in";
-//        }
+
         model.addAttribute("pageTitle", "Login");
         model.addAttribute("person", new Person());
         model.addAttribute("errorMessage", errorMessage);
         model.addAttribute("logoutMessage", logoutMessage);
-//        model.addAttribute("registerMessage", registerMessage);
         return "/login";
     }
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -62,12 +59,4 @@ public class LoginController {
         return "redirect:/login?logout=true";
 
     }
-
-//    private void setUserModelAttribute(Model model, Authentication auth){
-//        if(auth != null){
-//            String email = auth.getName();
-//            Person person = personService.findUserByEmail(email);
-//            model.addAttribute("person", person);
-//        }
-//    }
 }

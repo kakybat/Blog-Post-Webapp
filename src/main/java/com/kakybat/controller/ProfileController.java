@@ -76,13 +76,4 @@ public class ProfileController {
         session.setAttribute("loggedUser", person);
         return "redirect:/displayProfile";
     }
-
-
-//    private void setUserModelAttribute(Model model, Authentication auth){
-//        if(auth != null){
-//            String email = auth.getName();
-//            Person person = personService.findUserByEmail(email);
-//            model.addAttribute("person", person);
-//        }
-//    }
 }
