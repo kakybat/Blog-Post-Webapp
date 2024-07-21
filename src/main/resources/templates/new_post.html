@@ -36,8 +36,10 @@
                     <form id="postEdit" th:action="@{'/posts/save'}" th:object="${post}" enctype="multipart/form-data" method="post">
                         <input type="hidden" th:field="*{person.userId}">
                         <input type="hidden" th:field="*{createdAt}" />
-                        <label for="input-field" class="mr-t">Add A Post Header Image (upload a rectangular-shaped image; avoid square shapes):</label>
-                        <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding-around" required/>
+                        <label for="input-field" class="mr-t">Add A Post Header Image </label>
+                        <p class="warning-msg">* upload a rectangular-shaped image; avoid square shapes</p>
+                        <p class="warning-msg">* file uploads of less than 2 MB are allowed</p>
+                        <input id="input-field" type="file" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded-sm md-padding-around" required/>
 
 
                         <input type="text" id="post-title" name="post-title" th:field="*{title}"

@@ -24,7 +24,7 @@
                         <h2>User Information</h2>
                         <form th:action="@{/update_me}" th:object="${person}" enctype="multipart/form-data" method="post">
                             <label for="imageFilePath">Upload your image (upload a square-shaped image):</label>
-                            <input type="file" id="imageFilePath" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded md-padding-around">
+                            <input type="file" id="imageFilePath" name="file" accept="image/png, image/jpeg, image/jpg, image/bmp" class="primary-back rounded-sm md-padding-around">
                             <div th:errors="*{imageFilePath}" class="warning-msg" th:if="${#fields.hasErrors('imageFilePath')}"></div>
                             <label for="name">Update your name if necessary:</label>
                             <input type="text" id="name" name="lastName" th:field="*{name}" placeholder="last name" required>

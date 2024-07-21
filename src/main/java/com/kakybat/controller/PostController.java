@@ -178,7 +178,7 @@ public class PostController {
         if(optionalPost.isPresent()){
             Post post = optionalPost.get();
             postService.delete(post);
-            return "redirect:/blog";
+            return "redirect:/blog/page/1?sortField=title&sortDir=desc";
         } else {
             return "error";
         }

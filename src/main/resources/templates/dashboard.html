@@ -94,6 +94,7 @@
                                 <h3 th:text="${post.title}" class="mr-b-md">Title</h3>
                                 <p th:text="${post.shortDescription}" class="start-to-center light-gray-text">Short Description</p>
                             </div>
+                            <div th:if="${post.postStatus == 'INACTIVE'}" class="rounded-sm danger-back sm-padding-around"><p><b>*</b> Currently, your post is private, after Admin review it may become public</p></div>
                             <div class="two-col-grid">
                                 <div class="start-to-end fit-first-col">
                                     <div class="user-img"><img th:src="@{'/userImage/' + ${post.getPerson().imageFilePath}}" alt="person"></div>
